@@ -75,7 +75,7 @@ void Candidato::setEstatusInicial() {
 void Candidato::mostrarInformacion() {
     cout << "Nombre: " << nombre << endl;
     cout << "Partido: " << getNombrePartido() << endl;
-    cout << "\n" << endl;
+   // cout << "\n" << endl;
 
 };
 

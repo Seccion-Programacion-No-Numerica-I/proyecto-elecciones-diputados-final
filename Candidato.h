@@ -11,7 +11,7 @@ private:
     string cedula, nombre, apellido, partido;
     int idPartido, votos;
     //Lista<string> pilaEstatus;
-    string nombresPartidos[5] = {"Partido A", "Partido B", "Partido C", "Partido D", "Partido E"};
+    string nombresPartidos[5] = {"A", "B", "C", "D", "E"};
 
 public:
     Candidato();
