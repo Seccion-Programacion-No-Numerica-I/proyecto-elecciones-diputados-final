@@ -48,7 +48,7 @@ bool Inscripcion::verificarDisponibilidad(Candidato cand){
 void Inscripcion::RegistrarCandidato(Candidato cand) {
 
     candidatos.InsertarNodoCola(cand);
-
+    partidos[cand.getIdPartido()].InsertarNodoCola(cand);
     candidatosPorPartido[cand.getIdPartido()]++;
     std::cout << "Candidato inscrito exitosamente en RegistrarCandidato." << std::endl; // Mensaje de depuración
 }
@@ -109,6 +109,34 @@ void Inscripcion::MostrarCandidatos() {
     }
 }
 
+void Inscripcion::ReporteGeneral() {
+    // hay que mostrar a los candidatos por partido
+   int i = 0;
+   while (i <= 5) 
+   {
+       Lista<Candidato> partidoActual = partidos[i];
+
+       if (!partidoActual.Vacia()) {  
+       nodo<Candidato>* actual = partidoActual.ObtPrimero();
+       std::cout << "==================================" << endl;
+       std::cout << "Partido " << partidoActual.ObtInfo(actual).getNombrePartido() << endl;
+       std::cout << "==================================" << endl;
+       while (actual) {
+       Candidato candidatoActual = partidoActual.ObtInfo(actual);
+       cout << "Candidato: " << candidatoActual.getNombre()  << " " << candidatoActual.getApellido() <<  endl;
+       cout << "Cedula: " << candidatoActual.getCedula() << endl;
+       actual = partidoActual.ObtProx(actual);
+       }
+
+       std::cout << endl;
+    }
+
+    i++;
+
+   }
+    
+}
+
 Candidato Inscripcion::BuscarCandidato(string ced) {
 
     if (candidatos.Vacia()) cout << "Lista vacia" << endl;
@@ -118,7 +146,7 @@ Candidato Inscripcion::BuscarCandidato(string ced) {
 
     marca = CrearMarca();
 
-    marca.getCedula() = "$$$";
+   // marca.getCedula() = "$$$";
 
     candidatos.InsFinal(marca);
 
@@ -148,3 +176,4 @@ Candidato Inscripcion::BuscarCandidato(string ced) {
 
     return encontrado;
 }
+

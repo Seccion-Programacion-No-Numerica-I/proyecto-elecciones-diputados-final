@@ -26,7 +26,8 @@ int main() {
             cout << "2. Mostrar candidatos" << endl;
             cout << "3. Buscar candidato" << endl;
             cout << "4. Eliminar candidato" << endl;
-            cout << "5. Salir" << endl;
+            cout << "5. Resumen Inscripcion" << endl;
+            cout << "6. Salir" << endl;
             cout << "Elige una opcion: ";
             cin >> opcion;
             cin.ignore(); // Limpiar el buffer de entrada
@@ -90,7 +91,11 @@ int main() {
                     inscripcion.EliminarCandidato(cedEliminar);
                     break;
 
-                case 5:
+                case 5: 
+                    inscripcion.ReporteGeneral();
+                    break;
+
+                case 6:
                     cout << "Saliendo del sistema de gestion de candidatos." << endl;
                     break;
 

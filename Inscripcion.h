@@ -6,11 +6,15 @@
 #include "Libreria/Lista.h"
 using namespace std;
 
+
+ 
 class Inscripcion {
 
    private:
    	Lista<Candidato> candidatos;
-    int candidatosPorPartido[5] = {0};  
+    int candidatosPorPartido[5] = {0};
+    Lista<Candidato> partidos[5];
+
 
    public:
     // Constructor
@@ -32,6 +36,11 @@ class Inscripcion {
     void MostrarCandidatos();
     
     Candidato BuscarCandidato(string cedula);
+
+    // reportes
+    void ReporteGeneral();
+
+
 };
 
 #endif
