@@ -109,6 +109,44 @@ void Inscripcion::MostrarCandidatos() {
     }
 }
 
+void Inscripcion::ModificarCandidato(string cedula){
+    Candidato candAux, marca;
+    bool existe = false;
+    marca = CrearMarca();
+    if(!candidatos.Llena()){
+        candidatos.InsertarNodoCola(marca);
+        while(true){
+        	candidatos.RemoverNodoCola(candAux);
+
+        	if (candAux.getCedula() == marca.getCedula()) {
+        		break;
+        	}
+
+        	if (candAux.getCedula() == cedula) {
+        		cout << "\n\nIngrese los nuevos datos para el candidato con cedula "<<candAux.getCedula()<<" \n\n";
+        		existe = true;
+        		string nuevoNombre, nuevoApellido, nuevoStatus;
+        		int idNuevoPartido;
+        		cout<<"Nombre: "; cin>>nuevoNombre;
+        		cout<<"Apellido: "; cin>>nuevoApellido;
+        		cout<<"Nuevo ID del partido: "; cin>>idNuevoPartido;
+        		cout<<"Nuevo estatus del candidato: "; cin>>nuevoStatus;
+
+        		candAux.setNombre(nuevoNombre);
+        		candAux.setApellido(nuevoApellido);
+        		candAux.setIdPartido(idNuevoPartido);
+        		candAux.setStatus(nuevoStatus);
+
+        		cout << "Candidato modificado exitosamente.\n\n";
+        	}
+        	candidatos.InsertarNodoCola(candAux);
+        }
+        if (!existe) {
+        	cout << "Candidato no encontrado." << endl;
+        }
+    }
+}
+
 void Inscripcion::ReporteGeneral() {
     // hay que mostrar a los candidatos por partido
    int i = 0;

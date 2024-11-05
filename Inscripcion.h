@@ -30,6 +30,9 @@ class Inscripcion {
     // Metodo para registrar un candidato
     void RegistrarCandidato(Candidato);
 
+    //Metodo para modificar candidato
+    void ModificarCandidato(string);
+
     //Método para eliminar un candidato
     void EliminarCandidato(string);
 

@@ -8,7 +8,7 @@ Candidato::Candidato(const string& ced, const string& nom, const string& ape, in
 {
     // Establece el estatus inicial como "Activo" al crear un nuevo candidato
     //std::cout << "Pila estatus " << pilaEstatus.ObtInfo(pilaEstatus.ObtPrimero()) << std::endl; // Mensaje de depuración
-    //pilaEstatus.InsComienzo("Activo");
+    status.insertarPila("Activo");
     //std::cout << "Pila estatus " << pilaEstatus.ObtInfo(pilaEstatus.ObtPrimero()) << std::endl; // Mensaje de depuración
     
 }
@@ -45,16 +45,24 @@ int Candidato::getIdPartido() {
     return idPartido;
 }
 
+string Candidato::getStatus() {
+    return status.obtenerPila();
+}
+
+void Candidato::setStatus(string str){
+	status.insertarPila(str);
+}
+
 string Candidato::getNombrePartido() {
     return nombresPartidos[idPartido - 1];
 }
 
-string Candidato::getEstatus() {
+/*string Candidato::getEstatus() {
     string est;  // Se declara una variable de tipo string
     //pilaEstatus.EliComienzo(est);  // Se intenta eliminar el estado de la pila y se almacena en 'estatus'
     //pilaEstatus.InsComienzo(est);  // Se vuelve a insertar el estado eliminado en la pila
     return est;  // Se retorna el estado
-}
+}*/
 
 void Candidato::ModificarEstatus(string nuevoEstatus) {
     /*

@@ -9,7 +9,7 @@ int main() {
     //inscripcion.mensaje();
     int opcionInicial;
     string cedEliminar;
-    
+
     // Menu inicial
     cout << "Bienvenido al sistema de gestion de elecciones." << endl;
     cout << "1. Entrar al sistema de gestion de candidatos" << endl;
@@ -25,9 +25,10 @@ int main() {
             cout << "1. Registrar candidato" << endl;
             cout << "2. Mostrar candidatos" << endl;
             cout << "3. Buscar candidato" << endl;
-            cout << "4. Eliminar candidato" << endl;
-            cout << "5. Resumen Inscripcion" << endl;
-            cout << "6. Salir" << endl;
+            cout << "4. Modificar candidato" << endl;
+            cout << "5. Eliminar candidato" << endl;
+            cout << "6. Resumen Inscripcion" << endl;
+            cout << "7. Salir" << endl;
             cout << "Elige una opcion: ";
             cin >> opcion;
             cin.ignore(); // Limpiar el buffer de entrada
@@ -50,7 +51,7 @@ int main() {
                     Candidato candidato(cedula, nombre, apellido, idPartido);
                     cout << "Registrando candidato: " << candidato.getCedula() << ", " << candidato.getNombre() << ", " << candidato.getApellido() << ", " << candidato.getNombrePartido()<< endl;
 
-                    
+
                     if(inscripcion.verificarDisponibilidad(candidato)){
                         inscripcion.RegistrarCandidato(candidato);
                         cout << "Candidato registrado exitosamente." << endl; // Mensaje de depuración
@@ -59,7 +60,7 @@ int main() {
                         cout << "No se registro el candidato" << endl; // Mensaje de depuración
                         break;
                     }
-                    
+
                 }
                 case 2:
                     inscripcion.MostrarCandidatos();
@@ -78,31 +79,37 @@ int main() {
                         cout << " Cedula: " << candi.getCedula();
                         cout << " Nombre Completo: " << candi.getNombre() << " " << candi.getApellido();
                         cout << " Partido: " << candi.getNombrePartido();
-                        cout << " Status: " << candi.getEstatus() << endl;
+                        cout << " Status: " << candi.getStatus();
                     }
                     break;
 
                 }
-                    
-                case 4:
+                case 4: {
+                	string cedulaModificar;
+                	cout<<"Ingrese la cedula del candidato a modificar: "; cin>>cedulaModificar;
+                	inscripcion.ModificarCandidato(cedulaModificar);
+					break;
+                }
+
+                case 5:
                     cout << "Ingrese la cedula del candidato a eliminar: ";
                     cin >> cedEliminar;
                     cin.ignore(); // Limpiar el buffer de entrada
                     inscripcion.EliminarCandidato(cedEliminar);
                     break;
 
-                case 5: 
+                case 6:
                     inscripcion.ReporteGeneral();
                     break;
 
-                case 6:
+                case 7:
                     cout << "Saliendo del sistema de gestion de candidatos." << endl;
                     break;
 
                 default:
                     cout << "Opcion no valida. Intenta de nuevo." << endl;
             }
-        } while (opcion == 1 || opcion == 2 || opcion == 3);
+        } while (opcion != 7);
     } else if (opcionInicial == 2) {
         cout << "Saliendo del programa." << endl;
     } else {
