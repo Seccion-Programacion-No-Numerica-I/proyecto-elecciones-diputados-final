@@ -36,31 +36,40 @@ void Inscripcion::Registrar() {
         while (cedula.empty()) {
         cin.ignore();    
         cout << "Ingrese la cédula: ";
-        getline(cin, cedula);
+        cin >> cedula;
         if (cedula.empty()) {
             cout << "La cédula no puede estar vacia" << endl;
+        } else {
+
+        cout << "Cedula: " << cedula << " guardada" << endl;
         }
         }
 
-         while (nombre.empty()) {
-            
-        cin.ignore();
-        cout << "Ingrese la nombre: ";
-        getline(cin, nombre);
+        while (nombre.empty()) {
+        cin.ignore();    
+        cout << "Ingrese el nombre: ";
+        cin >> nombre;
         if (nombre.empty()) {
-            cout << "El nombre no puede estar vacia" << endl;
+            cout << "el nombre no puede estar vacio" << endl;
+        } else {
+
+        cout << "Nombre: " << nombre << " guardado" << endl;
         }
         }
 
-         while (apellido.empty()) {
-    
-        cout << "Ingrese la apellido: " ;
-        getline(cin, apellido);
+        while (apellido.empty()) {
+        cin.ignore();    
+        cout << "Ingrese el apellido: ";
+        cin >> apellido;
         if (apellido.empty()) {
-            cout << "El apellido no puede estar vacia" << endl;
+            cout << "el apellido no puede estar vacio" << endl;
+        } else {
+
+        cout << "Apellido: " << apellido << " guardado" << endl;
         }
         }
-         
+
+     
         
         while (partido < 1 || partido > 5) {
             
@@ -72,13 +81,11 @@ void Inscripcion::Registrar() {
             }
         }
         
-      
-        
-
         // Crear un objeto Candidato y agregarlo a la lista
         Candidato candidato(cedula, nombre, apellido, partido);
       if(verificarDisponibilidad(candidato)) {
-        candidatos.InsComienzo(candidato);
+        candidato.setStatus("Inscrito"); 
+        candidatos.InsFinal(candidato);
         
         
       }
