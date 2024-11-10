@@ -34,7 +34,7 @@ void Inscripcion::Registrar() {
         cout << "\nRegistro del Candidato " << i + 1 << endl;
         
         while (cedula.empty()) {
-        cin.ignore();    
+        cin.ignore();
         cout << "Ingrese la cédula: ";
         cin >> cedula;
         if (cedula.empty()) {
@@ -84,7 +84,7 @@ void Inscripcion::Registrar() {
         // Crear un objeto Candidato y agregarlo a la lista
         Candidato candidato(cedula, nombre, apellido, partido);
       if(verificarDisponibilidad(candidato)) {
-        candidato.setStatus("Inscrito"); 
+        candidato.setStatus("ACTIVO");
         candidatos.InsFinal(candidato);
         
         
