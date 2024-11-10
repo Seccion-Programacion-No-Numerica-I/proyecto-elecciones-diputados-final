@@ -1,4 +1,3 @@
-
 #ifndef Inscripcion_H
 #define Inscripcion_H
 #include <string>
@@ -27,7 +26,7 @@ class Inscripcion {
     void Buscar(Candidato);
 
     //Modificar un candidato
-    Candidato Modificar(Candidato);
+    Candidato Modificar(Candidato, string cedula);
     void MostrarCandidatosPorPartido(string buscarPartido);
 
     //Eliminar un candidato

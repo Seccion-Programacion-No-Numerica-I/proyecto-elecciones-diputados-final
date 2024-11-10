@@ -57,16 +57,13 @@ void Inscripcion::Buscar(Candidato cand) {
     cand.mostrarInformacion();
 }
 
-Candidato Inscripcion::Modificar(Candidato cand) {
-    Candidato nuevo; string nuevaCedula, nuevoNombre, nuevoApellido, nuevoStatus; int idNuevoPartido;
+Candidato Inscripcion::Modificar(Candidato cand, string cedula) {
+    Candidato nuevo; string nuevoNombre, nuevoApellido; int idNuevoPartido, opcionEstatus;
 
     cout << "\n\nCandidato encontrado\n" << endl;
     cand.mostrarInformacion();
 
     cout << "\tIngrese los nuevos datos para el candidato con cedula "<<cand.getCedula()<<" \n\n";
-
-    cout<<"Cedula:"; cin>>nuevaCedula; cin.ignore();
-    nuevo.setCedula(nuevaCedula);
 
     cout<<"Nombre:"; getline(cin, nuevoNombre);
     nuevo.setNombre(nuevoNombre);
@@ -77,8 +74,20 @@ Candidato Inscripcion::Modificar(Candidato cand) {
     cout<<"ID del partido:"; cin>>idNuevoPartido;
     nuevo.setIdPartido(idNuevoPartido);
 
-    cout<<"Nuevo estatus del candidato: "; cin>>nuevoStatus;
-    nuevo.setStatus(nuevoStatus);
+    cout<<"Nuevo estatus del candidato: \n\n1.- Activo\n2.-Inactivo\n"; cin>>opcionEstatus;
+    do{
+        switch (opcionEstatus){
+        case 1:
+            nuevo.setStatus("ACTIVO");
+            break;
+        case 2:
+            nuevo.setStatus("INACTIVO");
+            break;
+        default:
+            cout<<"Opcion invalida";
+            break;
+        }
+    }while(opcionEstatus < 1 || opcionEstatus > 2);
 
     if(verificarDisponibilidad(nuevo)) {
         cout << "\nCandidato modificado exitosamente:\n";
@@ -120,7 +129,7 @@ void Inscripcion::iterarCandidatos(string busqueda, int opcion) {
                 encontrado = true;
 
                 if(opcion == 1) { Buscar(candAux); } // Buscar candidato individual
-                if(opcion == 2) { candAux = Modificar(candAux); } // Modificar candidato individual
+                if(opcion == 2) { candAux = Modificar(candAux, busqueda); } // Modificar candidato individual
                 if(opcion == 3) { Eliminar(candAux); continue; } // Eliminar candidato individual
 
             }
