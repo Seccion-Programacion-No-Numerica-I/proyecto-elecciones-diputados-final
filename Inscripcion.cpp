@@ -157,18 +157,15 @@ Candidato Inscripcion::Modificar(Candidato cand, string cedula) {
     cand.mostrarInformacion();
 
     cout << "\tIngrese los nuevos datos para el candidato con cedula "<<cand.getCedula()<<" \n\n";
-
+    nuevo.setCedula(cedula);
     cout<<"Nombre:"; getline(cin, nuevoNombre);
     nuevo.setNombre(nuevoNombre);
-
     cout<<"Apellido:"; getline(cin, nuevoApellido);
     nuevo.setApellido(nuevoApellido);
-
     cout<<"ID del partido:"; cin>>idNuevoPartido;
     nuevo.setIdPartido(idNuevoPartido);
-
-    cout<<"Nuevo estatus del candidato: \n\n1.- Activo\n2.-Inactivo\n"; cin>>opcionEstatus;
     do{
+        cout<<"Nuevo estatus del candidato: \n\n1.- Activo\n2.-Inactivo\n"; cin>>opcionEstatus;
         switch (opcionEstatus){
         case 1:
             nuevo.setStatus("ACTIVO");
