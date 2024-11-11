@@ -124,7 +124,7 @@ void Inscripcion::Registrar() {
 
 //     cout<<"ID del partido:"; cin>>idNuevoPartido;
 //     nuevo.setIdPartido(idNuevoPartido);
-
+//  prueba de edicion
 //     // Establece el estatus como activo al crear un nuevo candidato
 //     nuevo.setStatus("Activo");
 
