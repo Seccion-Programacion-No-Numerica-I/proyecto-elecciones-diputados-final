@@ -9,7 +9,7 @@ bool Inscripcion::verificarDisponibilidad(Candidato cand){
 
 
     if (cand.getIdPartido() < 0 || cand.getIdPartido() > 5) {
-        std::cout << "ID de partido no valido." << std::endl;
+        std::cout << "ID de partido no valido." << std::endl;=
         return false;
     }
     if (candidatosPorPartido[cand.getIdPartido()-1] >= 5) {

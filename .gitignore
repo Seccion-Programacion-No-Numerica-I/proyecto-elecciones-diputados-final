@@ -1,5 +1,6 @@
 .vscode
 build/*
+!build/.gitkeep
 CMakeFiles/*
 CMakeCache.txt
 cmake_install.cmake
