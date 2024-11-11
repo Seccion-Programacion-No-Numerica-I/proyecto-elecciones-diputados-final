@@ -36,7 +36,8 @@ int main() {
 
             switch(opcion) {
                 case 1: {
-                    inscripcion.Registrar();
+                    //inscripcion.Registrar();
+                    inscripcion.RegistrarModificado();
                     break;
                 }
 
@@ -74,7 +75,8 @@ int main() {
                 }
 
                 case 6: {
-                    inscripcion.ReporteGeneral();
+                    //inscripcion.ReporteGeneral();
+                    inscripcion.MostrarReporteCompleto(); // hecho por el equipo del Punto 5 - Reporte
                     break;
                 }
 

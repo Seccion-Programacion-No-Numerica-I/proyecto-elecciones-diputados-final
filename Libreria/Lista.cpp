@@ -1,6 +1,6 @@
 #include "Lista.h"
 #include "../Candidato.h" // Include the header file where Candidato is defined
-
+#include "../Partido.h"
 template <class Tipo>
 nodo<Tipo>* Lista<Tipo>::ObtPrimero() {
     return Primero;
@@ -303,3 +303,4 @@ nodo<Tipo>* Lista<Tipo>::ObtFinal() {
 // Explicit instantiation
 template class Lista<std::string>;
 template class Lista<Candidato>;
+template class Lista<Partido>;
