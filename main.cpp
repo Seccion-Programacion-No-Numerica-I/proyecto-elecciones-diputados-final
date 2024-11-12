@@ -36,8 +36,7 @@ int main() {
 
             switch(opcion) {
                 case 1: {
-                    //inscripcion.Registrar();
-                    inscripcion.RegistrarModificado();
+                    inscripcion.Registrar();
                     break;
                 }
 
