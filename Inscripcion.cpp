@@ -110,7 +110,7 @@ void Inscripcion::Registrar() {
     }
 }
 
-void Inscripcion::RegistrarModificado() {
+void Inscripcion::RegistrarModificado() {  // Modificado por el Punto 5 - Reporte para aceptar la nueva clase partido que permita filtrar para el reporte
 
         string cedula, nombre, apellido,nombrePartido;
         int idPartido = 0,preguntaPartido = 0;
