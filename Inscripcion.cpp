@@ -121,37 +121,6 @@ void Inscripcion::Registrar()
 	}
 }
 
-// void Inscripcion::Registrar() {
-//     Candidato nuevo; string nuevaCedula, nuevoNombre, nuevoApellido; int idNuevoPartido;
-
-//     cout << "\tRegistrando Candidato  ------------ \n ";
-
-//     cout<<"Cedula:"; cin>>nuevaCedula; cin.ignore();
-//     nuevo.setCedula(nuevaCedula);
-
-//     cout<<"Nombre:"; getline(cin, nuevoNombre);
-//     nuevo.setNombre(nuevoNombre);
-
-//     cout<<"Apellido:"; getline(cin, nuevoApellido);
-//     nuevo.setApellido(nuevoApellido);
-
-//     cout<<"ID del partido:"; cin>>idNuevoPartido;
-//     nuevo.setIdPartido(idNuevoPartido);
-//  prueba de edicion
-//     // Establece el estatus como activo al crear un nuevo candidato
-//     nuevo.setStatus("Activo");
-
-//     if(verificarDisponibilidad(nuevo)) {
-//         candidatos.InsertarNodoCola(nuevo);
-//         partidos[nuevo.getIdPartido()].InsertarNodoCola(nuevo);
-//         candidatosPorPartido[nuevo.getIdPartido()]++;
-
-//         cout << "\nCandidato registrado exitosamente:\n";
-//         nuevo.mostrarInformacion();
-
-//     } else cout << "\nFallo al registrar el candidato\n";
-// }
-
 void Inscripcion::Eliminar(Candidato cand)
 {
 	std::cout << "\n\nCandidato Eliminado:\n";
@@ -499,41 +468,3 @@ string Inscripcion::generarEsloganAletorio()
 	return esloganes[generarNumeroAleatorio()];
 }
 
-/*
-void Inscripcion::MostrarCandidatosPorPartido(string buscarPartido) {
-	if (candidatos.Vacia()) {
-		cout << "Lista vacía" << endl;
-		return; // Termina el método si la lista está vacía
-	}
-
-	Candidato marca;
-	marca.setCedula("$$$");
-	candidatos.InsFinal(marca);
-
-	int contador = 0;
-
-	auto it = candidatos.ObtPrimero();
-
-	while (candidatos.ObtInfo(it).getCedula() != marca.getCedula()) {
-		Candidato actual = candidatos.ObtInfo(it);
-
-		if (actual.getNombrePartido() == buscarPartido) {
-			cout << "Candidato: " << actual.getNombre() << " " << actual.getApellido() << endl;
-			contador++;
-		}
-
-		candidatos.InsFinal(actual);
-		it = candidatos.ObtProx(it);
-	}
-
-	Candidato primero = candidatos.ObtInfo(it);
-	if (primero.getCedula() == marca.getCedula()) {
-		candidatos.EliComienzo(marca);
-	}
-
-	if (contador == 0) {
-		cout << "No hay candidatos que pertenezcan al partido " << buscarPartido << "." << endl;
-	}
-}
-
-*/
