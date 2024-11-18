@@ -113,7 +113,7 @@ void Inscripcion::Registrar()
 		{
 			candidatos.ObtInfo(p).mostrarInformacion();
 			cout << endl;
-			p = candidatos.ObtProx(p); // Aquí se corrigió el nombre del método
+			p = candidatos.ObtProx(p); // Aquí se corrigió el nombre del metodo
 		}
 		cout << "Pulse enter para continuar...";
 		cin.ignore();
