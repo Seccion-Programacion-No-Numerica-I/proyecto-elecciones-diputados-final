@@ -128,7 +128,7 @@ int main() {
                         break;
                     }
                     case 2: {
-                        cout << "\t Cargando datos desde archivo \n"<<endl;
+                        cout << "Cargando datos desde archivo \n"<<endl;
                         break;
                     }
                     default: {
