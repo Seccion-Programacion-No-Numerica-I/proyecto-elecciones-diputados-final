@@ -6,25 +6,31 @@
 #include <string>
 using namespace std;
 
-class Votante {
+class Elector {
     private:
     string nombre, apellido, cedula;
     int prioridad = 0;
+    string prioridades[3] = {"Normal", "Embarazadas", "Tercera edad"};
 
     public:
     // Constructores
-    Votante();
-    Votante(string cedula, string nombre, string apellido, int prioridad);
+    Elector();
+    Elector(const string& ced, const string& nom, const string& ape, int prio);
+
 
     // Setters y Getters
+    void setCedula(string ced);
     string getNombre();
     void setNombre(string nombre);
     string getApellido();
     void setApellido(string apellido);
-    int getPrioridad();
+    int getPrioridad() const;
     void setPrioridad(int prioridad);
+    string getCedula();
+    string getNombrePrioridad();
 
     // Metodos
+    void mostrarInfo() const;
 
 };
 

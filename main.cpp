@@ -2,11 +2,14 @@
 #include "Inscripcion.h"
 #include <iostream>
 
+#include "Votantes.h"
+
 using namespace std;
 
 int main() {
     Inscripcion inscripcion;
-    //inscripcion.mensaje();
+    Votantes votantes;
+
     int opcionInicial;
     ;
     
@@ -113,6 +116,7 @@ int main() {
             cout << "\nModulo votantes seleccionado\n" << endl;
             cout << "\t 1. Registrar Votante" << endl;
             cout << "\t 2. Cargar Votantes desde archivo" << endl;
+            cout << "\t 3. Mostrar Electores inscritos" << endl;
             cout << "\t 0. Salir" << endl;
 
             cout << "\t Elegir una opcion "; cin >> opcion;
@@ -124,11 +128,17 @@ int main() {
                         break;
                     }
                     case 1: {
-                        cout<<"\t Registrando Votante Manualmente \n"<<endl;
+                        votantes.RegistrarElector();
                         break;
                     }
                     case 2: {
-                        cout << "\tCargando datos desde archivo \n"<<endl;
+                        cout << "\t Cargando datos desde archivo \n"<<endl;
+                        votantes.CargarDatos();
+                        break;
+                    }
+
+                    case 3: {
+                        votantes.MostrarElectores();
                         break;
                     }
                     default: {

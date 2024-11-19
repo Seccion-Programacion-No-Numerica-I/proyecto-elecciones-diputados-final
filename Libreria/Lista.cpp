@@ -1,6 +1,8 @@
 #include "Lista.h"
 #include "../Candidato.h" // Include the header file where Candidato is defined
 #include "../Partido.h"
+#include "../Elector.h"
+
 template <class Tipo>
 nodo<Tipo>* Lista<Tipo>::ObtPrimero() {
     return Primero;
@@ -197,7 +199,7 @@ int Lista<Tipo>::Contar() {
     return cont;
 };
 
-template <class Tipo>
+/*template <class Tipo>
 nodo<Tipo>* Lista<Tipo>::Buscar(Tipo Valor) {
     nodo<Tipo> *aux = NULL;
     Apuntador ap;
@@ -210,7 +212,7 @@ nodo<Tipo>* Lista<Tipo>::Buscar(Tipo Valor) {
             aux = aux->prox;
         }
     }
-};
+};*/
 
 template <class Tipo>
 void Lista<Tipo>::pasarListaAux(Lista<Tipo> &listaFuente, Lista<Tipo> &listaDestino) {
@@ -302,5 +304,6 @@ nodo<Tipo>* Lista<Tipo>::ObtFinal() {
 
 // Explicit instantiation
 template class Lista<std::string>;
+template class Lista<Elector>;
 template class Lista<Candidato>;
 template class Lista<Partido>;
