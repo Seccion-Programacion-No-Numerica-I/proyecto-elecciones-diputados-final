@@ -32,7 +32,7 @@ void Votantes::RegistrarElector()
 		}
 
 		do {
-			cout << "Prioridades (1.- Normal 2.- Embarazadas 3.- Tercera Edad)" << endl;
+			cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << endl;
 			cout << "Selecciona una prioridad: "; cin >> prioridad; cin.ignore();
 			if (prioridad != 1 && prioridad != 2 && prioridad != 3)
 			{
@@ -52,7 +52,7 @@ void Votantes::insertarElector(Elector elector, int electorPrioridad)
 	marca.setCedula("$$$$$$");
 
 	// si es el primer elector a registrar o si la prioridad es normal, insertamos al final
-	if (electores.VaciaPrioridad() || electorPrioridad == 1) {
+	if (electores.VaciaPrioridad() || electorPrioridad == 3) {
 		electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
 		cout << "Elector registrado" << endl;
 	}
@@ -75,7 +75,7 @@ void Votantes::insertarElector(Elector elector, int electorPrioridad)
 			// ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
 
 			// buscamos el primer elector de la prioridad siguiente para registrar antes el nuevo elector
-			if (elecPrioAux < electorPrioridad && realizado == false) {
+			if (elecPrioAux > electorPrioridad && realizado == false) {
 				electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
 				realizado = true;
 				cout << "Elector registrado" << endl;

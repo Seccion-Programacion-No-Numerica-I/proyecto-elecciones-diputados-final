@@ -9,7 +9,7 @@ using namespace std;
 class Elector {
     private:
     string nombre, apellido, cedula;
-    string prioridades[3] = {"Normal", "Embarazadas", "Tercera edad"};
+    string prioridades[3] = {"Tercera edad", "Embarazadas", "Normal"};
 
     public:
     // Constructores
