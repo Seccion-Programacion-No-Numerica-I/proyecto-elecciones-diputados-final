@@ -9,25 +9,23 @@
 
 Elector::Elector() {}
 
-Elector::Elector(const string& ced, const string& nom, const string& ape, int prio)
-    : cedula(ced), nombre(nom), apellido(ape), prioridad(prio) // Inicializa los atributos
+Elector::Elector(const string& ced, const string& nom, const string& ape)
+    : cedula(ced), nombre(nom), apellido(ape) // Inicializa los atributos
 {}
 
 void Elector::setCedula(string ced) { cedula = ced; }
 void Elector::setNombre(string nom) { nombre = nom; }
 void Elector::setApellido(string ape) { apellido = ape; }
-void Elector::setPrioridad(int prio) { prioridad = prio; }
 string Elector::getCedula() { return cedula; }
 string Elector::getNombre() { return nombre; }
 string Elector::getApellido() { return apellido; }
-int Elector::getPrioridad() const { return prioridad; }
-string Elector::getNombrePrioridad() { return prioridades[prioridad-1]; }
+string Elector::getNombrePrioridad(int p) { return prioridades[p-1]; }
 
-void Elector::mostrarInfo() const {
+void Elector::mostrarInfo(int p) {
     cout << "\nMostrando Datos del elector" << endl;
     cout << "Cedula: " << cedula << endl;
     cout << "Nombre: " << nombre << " " << apellido << endl;
-    cout << "Prioridad: " << prioridad << "\n\n"<< endl;
+    cout << "Prioridad: " << getNombrePrioridad(p) << "\n\n"<< endl;
 }
 
 

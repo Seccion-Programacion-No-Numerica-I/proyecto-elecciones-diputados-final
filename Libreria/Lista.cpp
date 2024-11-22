@@ -14,10 +14,14 @@ void Lista<Tipo>::AsigPrimero(nodo<Tipo>* p) {
 };
 
 template <class Tipo>
-Lista<Tipo>::Lista() {
+Lista<Tipo>::Lista(){
     Primero = NULL;
     Final = NULL; // Asegurarse de inicializar Final
-};
+
+    PrimeroPrioridad = NULL;
+    FinalPrioridad = NULL;
+} ;
+
 /*
 template <class Tipo>
 Lista<Tipo>::Lista(const Lista<Tipo> &that) {
@@ -48,6 +52,7 @@ Lista<Tipo>::Lista(const Lista<Tipo> &that) {
     }
 };
 */
+
 template <class Tipo>
 Lista<Tipo>& Lista<Tipo>::operator= (const Lista<Tipo> &that) {
     if (this != &that) {
@@ -296,11 +301,96 @@ bool Lista<Tipo>::InsFinal(Tipo Valor) {
     }
 }
 
-
 template <class Tipo>
 nodo<Tipo>* Lista<Tipo>::ObtFinal() {
     return Final;
 }
+
+
+
+
+// METODOS DE COLA PRIORIDAD
+
+template <class Tipo>
+bool Lista<Tipo>::VaciaPrioridad() {
+    return PrimeroPrioridad == NULL;
+};
+
+template <class Tipo>
+bool Lista<Tipo>::LlenaPrioridad() {
+    nodoPrioridad<Tipo> *p;
+    p = new nodoPrioridad<Tipo>;
+    if (p == NULL)
+        return true;
+    else {
+        delete p;
+        return false;
+    }
+};
+
+template <class Tipo>
+Tipo Lista<Tipo>::ObtInfoPrioridad(ApuntadorPrioridad p) {
+    return p->info;
+};
+
+template <class Tipo>
+int Lista<Tipo>::ObtPrioridad(ApuntadorPrioridad p) {
+    return p->prioridad;
+};
+
+template <class Tipo>
+nodoPrioridad<Tipo>* Lista<Tipo>::ObtPrimeroPrioridad() {
+    return PrimeroPrioridad;
+};
+
+template <class Tipo>
+nodoPrioridad<Tipo>* Lista<Tipo>::ObtProxPrioridad(ApuntadorPrioridad p) {
+    return p->prox;
+};
+
+template <class Tipo>
+bool Lista<Tipo>::InsertarNodoColaPrioridad(Tipo Valor, int p) {
+
+    ApuntadorPrioridad nuevo;
+
+    // verificar si la lista no estaa llena
+    if (!LlenaPrioridad()) {
+
+        // crear un nodo
+        nuevo = new nodoPrioridad<Tipo>;
+        nuevo->info = Valor;
+        nuevo->prioridad = p;
+        nuevo->prox = NULL;
+        if (FinalPrioridad == NULL) {
+            PrimeroPrioridad = nuevo;
+        } else {
+            FinalPrioridad->prox = nuevo;
+        }
+        FinalPrioridad = nuevo;
+        return true;
+    } else {
+        std::cout << "Memoria insuficiente para insertar nodo." << std::endl; // Mensaje de depuración
+        return false;
+    }
+};
+
+template <class Tipo>
+bool Lista<Tipo>::RemoverNodoColaPrioridad(Tipo &Valor, int &p) {
+    // verificar si la lista no estaa vacia
+    if (!VaciaPrioridad()) {
+        ApuntadorPrioridad viejo = PrimeroPrioridad;
+        Valor = viejo->info;
+        p = viejo->prioridad;
+        PrimeroPrioridad = viejo->prox;
+        if (PrimeroPrioridad == NULL)
+            FinalPrioridad = NULL;
+        delete viejo;
+
+        return true;
+    }
+    return false;
+};
+
 
 // Explicit instantiation
 template class Lista<std::string>;
