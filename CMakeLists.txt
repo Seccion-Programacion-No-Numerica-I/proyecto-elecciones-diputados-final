@@ -20,4 +20,5 @@ add_executable(proyecto_elecciones_diputados
         Elector.h
         Elector.cpp
         Votantes.cpp
-        Votantes.h)
+        Votantes.h
+)

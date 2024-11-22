@@ -42,31 +42,32 @@ void Votantes::RegistrarElector()
 		} while (prioridad != 1 && prioridad != 2 && prioridad != 3);
 
 		// Crear un objeto Elector y agregarlo a la lista
-		Elector elector(cedula, nombre, apellido, prioridad);
-		insertarElector(elector);
+		Elector elector(cedula, nombre, apellido);
+		insertarElector(elector, prioridad);
 };
 
-void Votantes::insertarElector(Elector elector)
+void Votantes::insertarElector(Elector elector, int electorPrioridad)
 {
 	Elector marca;
 	marca.setCedula("$$$$$$");
 
 	// si es el primer elector a registrar o si la prioridad es normal, insertamos al final
-	if (electores.Vacia() || elector.getPrioridad() == 1) {
-		electores.InsFinal(elector);
+	if (electores.VaciaPrioridad() || electorPrioridad == 1) {
+		electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
 		cout << "Elector registrado" << endl;
 	}
 	else
 	{
 		Elector elecAux;
+		int elecPrioAux;
 		bool realizado = false;
 
-		electores.InsertarNodoCola(marca);
+		electores.InsertarNodoColaPrioridad(marca,0);
 
 		while (true)
 		{
 
-			electores.RemoverNodoCola(elecAux);
+			electores.RemoverNodoColaPrioridad(elecAux,elecPrioAux);
 
 			if (elecAux.getCedula() == marca.getCedula()) { break; }
 
@@ -74,8 +75,8 @@ void Votantes::insertarElector(Elector elector)
 			// ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
 
 			// buscamos el primer elector de la prioridad siguiente para registrar antes el nuevo elector
-			if (elecAux.getPrioridad() < elector.getPrioridad() && realizado == false) {
-				electores.InsFinal(elector);
+			if (elecPrioAux < electorPrioridad && realizado == false) {
+				electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
 				realizado = true;
 				cout << "Elector registrado" << endl;
 			}
@@ -83,7 +84,7 @@ void Votantes::insertarElector(Elector elector)
 			// ⬆️⬆️⬆️⬆️⬆️⬆️⬆️
 			// FIN DEL CODIGO QUE SE EJECUTA PARA CADA ITERACION DE ELECTOR
 
-			electores.InsertarNodoCola(elecAux);
+			electores.InsertarNodoColaPrioridad(elecAux,elecPrioAux);
 		}
 
 		if (!realizado)
@@ -95,15 +96,15 @@ void Votantes::insertarElector(Elector elector)
 
 void Votantes::MostrarElectores()
 {
-	nodo<Elector> *actual = electores.ObtPrimero();
+	nodoPrioridad<Elector> *actual = electores.ObtPrimeroPrioridad();
 	if (!actual) { cout << "No hay electores inscritos en la cola." << endl; return; }
 
 	cout << "Electores inscritos: \n" << endl;
 	while (actual)
 	{
-		Elector electorActual = electores.ObtInfo(actual);
-		electorActual.mostrarInfo();
-		actual = electores.ObtProx(actual);
+		Elector electorActual = electores.ObtInfoPrioridad(actual);
+		electorActual.mostrarInfo(electores.ObtPrioridad(actual));
+		actual = electores.ObtProxPrioridad(actual);
 	}
 }
 
@@ -113,21 +114,25 @@ void Votantes::CargarDatos() {
 
 	int cont = 0; // Declaramos un contador para llevar el control de la estructura de archivo
 	auto *elector = new Elector();
+	int electorPrioridad = 1;
 	while (archivo >> dato) { // leemos cada palabra del archivo y la asignamos al dato.
 		cont ++;
 		// dependiendo de la estructura que se lleve, se asigna el dato al atributo
 		if (cont % 5 == 1) { elector->setCedula(dato); }
 		if (cont % 5 == 2) { elector->setNombre(dato); }
 		if (cont % 5 == 3) { elector->setApellido(dato); }
-		if (cont % 5 == 4) { elector->setPrioridad(stoi(dato)); }
+		if (cont % 5 == 4) { electorPrioridad = stoi(dato); }
 		if (dato == ";") { // al encontrar un ; en el archivo registra el elector
-			insertarElector(*elector);
-			elector->mostrarInfo();
+			insertarElector(*elector, electorPrioridad);
+			//elector->mostrarInfo(electorPrioridad);
 			elector = new Elector();
+			electorPrioridad = 1;
 		}
 	}
 	archivo.close();
 	delete elector;
+	cout << "\033[2J\033[1;1H";
+	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 
 
