@@ -16,7 +16,7 @@ int main() {
     do {
     // Menu inicial
         cout << "\033[2J\033[1;1H"; // mantiene el menu en la parte de arriba de la terminal
-    cout << "Bienvenido al sistema de gestion de elecciones." << endl;
+    cout << "\nBienvenido al sistema de gestion de elecciones." << endl;
     cout << "1. Entrar al sistema de gestion de candidatos" << endl;
     cout << "2. Entrar al modulo votantes" << endl;
     cout << "3. Salir" << endl;
