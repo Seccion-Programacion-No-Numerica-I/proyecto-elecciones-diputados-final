@@ -62,14 +62,11 @@ void Votantes::insertarElector(Elector elector, int electorPrioridad)
 		int elecPrioAux;
 		bool realizado = false;
 
-		electores.InsertarNodoColaPrioridad(marca,0);
+		electores.InsertarNodoColaPrioridad(marca,777);
 
-		while (true)
-		{
+		do{
 
 			electores.RemoverNodoColaPrioridad(elecAux,elecPrioAux);
-
-			if (elecAux.getCedula() == marca.getCedula()) { break; }
 
 			// CODIGO QUE SE EJECUTA PARA CADA ITERACION DE ELECTOR
 			// ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
@@ -84,8 +81,11 @@ void Votantes::insertarElector(Elector elector, int electorPrioridad)
 			// ⬆️⬆️⬆️⬆️⬆️⬆️⬆️
 			// FIN DEL CODIGO QUE SE EJECUTA PARA CADA ITERACION DE ELECTOR
 
-			electores.InsertarNodoColaPrioridad(elecAux,elecPrioAux);
-		}
+			if(elecAux.getCedula() != marca.getCedula()) {
+				electores.InsertarNodoColaPrioridad(elecAux,elecPrioAux);
+			} else if (elecAux.getCedula() == marca.getCedula()){ break; }
+
+		}while (true);
 
 		if (!realizado)
 		{
@@ -114,7 +114,7 @@ void Votantes::CargarDatos() {
 
 	int cont = 0; // Declaramos un contador para llevar el control de la estructura de archivo
 	auto *elector = new Elector();
-	int electorPrioridad = 1;
+	int electorPrioridad = 3;
 	while (archivo >> dato) { // leemos cada palabra del archivo y la asignamos al dato.
 		cont ++;
 		// dependiendo de la estructura que se lleve, se asigna el dato al atributo
@@ -126,7 +126,7 @@ void Votantes::CargarDatos() {
 			insertarElector(*elector, electorPrioridad);
 			//elector->mostrarInfo(electorPrioridad);
 			elector = new Elector();
-			electorPrioridad = 1;
+			electorPrioridad = 3;
 		}
 	}
 	archivo.close();
