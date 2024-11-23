@@ -13,13 +13,17 @@ using namespace std;
 class Votantes {
     private:
     Lista<Elector> electores;
-
+    Lista<Elector> colaVotantes; 
+    Lista<Elector> colaNoVotantes; 
     public:
     Votantes(); //Constructor
 
     //Registrar un elector
     void insertarElector(Elector elector, int prioridad);
     void RegistrarElector();
+
+    //Votacion
+    bool ProcesarVotantes(); 
 
     //Mostrar los electores registrados
     void MostrarElectores();

@@ -3,7 +3,7 @@
 //
 
 #include "Votantes.h"
-
+#include
 #include <fstream>
 #include <iostream>
 #include <bits/parse_numbers.h>
@@ -135,6 +135,25 @@ void Votantes::CargarDatos() {
 	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 
+bool Votantes::ProcesarVotantes() {
+	// Iterar sobre los electores 
 
+	while (electores.ObtPrimeroPrioridad()) {
+		nodoPrioridad<Elector>* currentNode = electores.ObtPrimeroPrioridad();
+		Elector currentElector = electores.ObtInfoPrioridad(currentNode);
+		// preguntamos si la persona votara o no
+		int procesarElector = 0; 
+		cout << "Desea procesar el voto del ciudadano(a) " << currentElector.getNombre() << " de C.I. " << currentElector.getCedula() << " Si(1) No(2)" << endl; 
+		cin >> procesarElector; 
 
+		// en caso de no procesarlo, se lleva a la cola de no votantes
+		if (procesarElector != 1) {
+			colaNoVotantes.InsertarNodoColaPrioridad(currentElector); 
+		} else {
+			// mostrar las opciones para los candidatos zzzz
+			Lista<
+		}
 
+		
+	}
+}
