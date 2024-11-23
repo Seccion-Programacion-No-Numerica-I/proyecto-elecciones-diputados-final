@@ -9,7 +9,6 @@
 #include <cctype>
 #include <chrono>
 #include "Candidato.h"
-#include "Partido.h"
 #include "Libreria/Lista.h"
 using namespace std;
 
