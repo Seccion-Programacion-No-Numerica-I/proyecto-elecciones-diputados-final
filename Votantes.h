@@ -7,6 +7,7 @@
 
 #include "Libreria/Lista.h"
 #include "Elector.h"
+#include "Candidato.h"
 #include <string>
 using namespace std;
 
@@ -23,7 +24,7 @@ class Votantes {
     void RegistrarElector();
 
     //Votacion
-    bool ProcesarVotantes(); 
+    bool ProcesarVotantes(Lista<Candidato> candidatos); 
 
     //Mostrar los electores registrados
     void MostrarElectores();

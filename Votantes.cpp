@@ -3,7 +3,6 @@
 //
 
 #include "Votantes.h"
-#include
 #include <fstream>
 #include <iostream>
 #include <bits/parse_numbers.h>
@@ -135,7 +134,7 @@ void Votantes::CargarDatos() {
 	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 
-bool Votantes::ProcesarVotantes() {
+bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos) {
 	// Iterar sobre los electores 
 
 	while (electores.ObtPrimeroPrioridad()) {
@@ -148,10 +147,27 @@ bool Votantes::ProcesarVotantes() {
 
 		// en caso de no procesarlo, se lleva a la cola de no votantes
 		if (procesarElector != 1) {
-			colaNoVotantes.InsertarNodoColaPrioridad(currentElector); 
+			colaNoVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode)); 
+			continue; 
 		} else {
+
+			for (int i = 0; i < 5; i++) {
 			// mostrar las opciones para los candidatos zzzz
-			Lista<
+			Lista<Candidato> listaTempCanditatos = candidatos; 
+				//iteracion i
+				int eleccion = 0; 
+				cout << "Escoja un candidato, ingresando el indice" << endl; 
+
+				while (listaTempCanditatos.ObtPrimero()) {
+					int indice = 0; 
+					nodo<Candidato>* candidatoNodo = listaTempCanditatos.ObtPrimero(); 
+					Candidato c = listaTempCanditatos.ObtInfo(candidatoNodo); 
+					cout << indice + 1 << " - " << c.getNombre() << " " << c.getApellido() << " Partido: " << c.getNombrePartido() << endl; 
+
+					indice++; 
+					listaTempCanditatos.EliComienzo(c); 
+				}
+			}
 		}
 
 		
