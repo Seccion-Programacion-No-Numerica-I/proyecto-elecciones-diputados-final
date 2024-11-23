@@ -1,6 +1,5 @@
 #include "Lista.h"
 #include "../Candidato.h" // Include the header file where Candidato is defined
-#include "../Partido.h"
 #include "../Elector.h"
 
 template <class Tipo>
@@ -396,4 +395,4 @@ bool Lista<Tipo>::RemoverNodoColaPrioridad(Tipo &Valor, int &p) {
 template class Lista<std::string>;
 template class Lista<Elector>;
 template class Lista<Candidato>;
-template class Lista<Partido>;
+

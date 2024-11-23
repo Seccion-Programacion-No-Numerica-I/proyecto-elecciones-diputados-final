@@ -15,8 +15,6 @@ add_executable(proyecto_elecciones_diputados
     Inscripcion.cpp
     Inscripcion.h
     main.cpp
-    Partido.cpp
-    Partido.h
         Elector.h
         Elector.cpp
         Votantes.cpp
