@@ -152,8 +152,8 @@ void Votantes::ListarCandidatos(Lista<Candidato>& cadidatos) {
 bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos) {
 	// Iterar sobre los electores 
 
-	while (!electores.VaciaPrioridad()) {
-		nodoPrioridad<Elector>* currentNode = electores.ObtPrimeroPrioridad();
+	nodoPrioridad<Elector>* currentNode = electores.ObtPrimeroPrioridad();
+	while (currentNode) {
 		Elector currentElector = electores.ObtInfoPrioridad(currentNode);
 		// preguntamos si la persona votara o no
 		int procesarElector = 0; 
@@ -164,6 +164,7 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos) {
 		// en caso de no procesarlo, se lleva a la cola de no votantes
 		if (procesarElector != 1) {
 			colaNoVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode)); 
+			currentNode = electores.ObtProxPrioridad(currentNode); 
 			continue; 
 		} else {
 
