@@ -197,9 +197,8 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
 	{
 		Candidato candidatoActual = cadidatos.ObtInfo(actual);
 		string info = counter + ". " + candidatoActual.getNombre() + " " + candidatoActual.getApellido() + " - " + candidatoActual.getNombrePartido();
-		if (mostrarVotos) info += " votos: " + to_string(candidatoActual.getVotos());
+		info += mostrarVotos ? "Votos: " + to_string(candidatoActual.getVotos()) : "";
 		cout << info << endl;
-
 		actual = cadidatos.ObtProx(actual);
 		counter++;
 	}
@@ -264,9 +263,8 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
 			// Ahora sumamos los votos
 		
 			nodo<Candidato> *iterator = candidatos.ObtPrimero();
-			for (int i = 1; i < candidatos.Contar(); i++)
+			for (int i = 1; i <= candidatos.Contar(); i++)
 			{
-				
 
 					if (i  == elecciones[0] ||
 						i == elecciones[1] ||
