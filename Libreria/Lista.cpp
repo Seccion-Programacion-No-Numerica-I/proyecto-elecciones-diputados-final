@@ -390,6 +390,43 @@ bool Lista<Tipo>::RemoverNodoColaPrioridad(Tipo &Valor, int &p) {
     return false;
 };
 
+template <class Tipo>
+void Lista<Tipo>::InsertarNodoOrdenado(Tipo inf, int prio)
+{
+    Tipo marca;
+
+    if (VaciaPrioridad() || prio == 3) {
+        InsertarNodoColaPrioridad(inf, prio);
+    }
+    else
+    {
+        Tipo infAux;
+        int prioAux;
+        bool result = false;
+
+        InsertarNodoColaPrioridad(marca,777);
+
+        do{
+
+            RemoverNodoColaPrioridad(infAux,prioAux);
+
+            if (prioAux > prio && result == false) {
+                InsertarNodoColaPrioridad(inf, prio);
+                result = true;
+            }
+
+            if (prioAux == 777){ break; }
+            InsertarNodoColaPrioridad(infAux, prioAux);
+
+        }while (prioAux != 777);
+
+        if (!result)
+        {
+            cout << "No se ha registrado el elector." << std::endl;
+        }
+    }
+}
+
 
 // Explicit instantiation
 template class Lista<std::string>;

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#include "Elector.h"
+
 using namespace std;
 
 template <class Tipo>
@@ -69,6 +71,8 @@ public:
     nodoPrioridad<Tipo> *ObtProxPrioridad(ApuntadorPrioridad p);
     bool InsertarNodoColaPrioridad(Tipo Valor, int p);
     bool RemoverNodoColaPrioridad(Tipo &Valor, int &p);
+    void InsertarNodoOrdenado(Tipo inf, int prio);
+
 
     // Métodos Colas
     bool InsertarNodoCola(Tipo Valor);

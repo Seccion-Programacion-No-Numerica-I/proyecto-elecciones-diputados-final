@@ -18,7 +18,7 @@ class Votantes {
     Votantes(); //Constructor
 
     //Registrar un elector
-    void insertarElector(Elector elector, int prioridad);
+    //void insertarElector(Elector elector, int prioridad);
     void RegistrarElector();
 
     //Mostrar los electores registrados

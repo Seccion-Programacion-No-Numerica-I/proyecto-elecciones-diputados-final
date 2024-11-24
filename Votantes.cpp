@@ -43,9 +43,10 @@ void Votantes::RegistrarElector()
 
 		// Crear un objeto Elector y agregarlo a la lista
 		Elector elector(cedula, nombre, apellido);
-		insertarElector(elector, prioridad);
+		electores.InsertarNodoOrdenado(elector, prioridad);
 };
 
+/*
 void Votantes::insertarElector(Elector elector, int electorPrioridad)
 {
 	Elector marca;
@@ -93,6 +94,7 @@ void Votantes::insertarElector(Elector elector, int electorPrioridad)
 		}
 	}
 }
+*/
 
 void Votantes::MostrarElectores()
 {
@@ -123,8 +125,8 @@ void Votantes::CargarDatos() {
 		if (cont % 5 == 3) { elector->setApellido(dato); }
 		if (cont % 5 == 4) { electorPrioridad = stoi(dato); }
 		if (dato == ";") { // al encontrar un ; en el archivo registra el elector
-			insertarElector(*elector, electorPrioridad);
-			//elector->mostrarInfo(electorPrioridad);
+
+			electores.InsertarNodoOrdenado(*elector, electorPrioridad);
 			elector = new Elector();
 			electorPrioridad = 3;
 		}
