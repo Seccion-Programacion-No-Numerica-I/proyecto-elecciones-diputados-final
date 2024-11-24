@@ -24,7 +24,7 @@ class Votantes {
     void RegistrarElector();
 
     //Votacion
-    void ListarCandidatos(Lista<Candidato>& candidatos);
+    void ListarCandidatos(Lista<Candidato>& candidatos, bool mostrarVotos);
     bool ProcesarVotantes(Lista<Candidato> candidatos); 
 
     //Mostrar los electores registrados
