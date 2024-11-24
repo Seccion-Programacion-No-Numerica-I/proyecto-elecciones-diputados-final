@@ -133,7 +133,7 @@ void Votantes::CargarDatos() {
 	}
 	archivo.close();
 	delete elector;
-	cout << "\033[2J\033[1;1H";
+	cout << "\033[H\033[2J";
 	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 
