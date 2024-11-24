@@ -82,8 +82,8 @@ int main() {
                     }
 
                     case 6: {
-                        //inscripcion.ReporteGeneral();
-                        inscripcion.MostrarReporteCompleto(); // hecho por el equipo del Punto 5 - Reporte
+                        inscripcion.ReporteGeneral();
+                        // inscripcion.MostrarReporteCompleto(); // hecho por el equipo del Punto 5 - Reporte
                         break;
                     }
 
@@ -117,6 +117,8 @@ int main() {
             cout << "\t 1. Registrar Votante" << endl;
             cout << "\t 2. Cargar Votantes desde archivo" << endl;
             cout << "\t 3. Mostrar Electores inscritos" << endl;
+            cout << "\t 4. Procesar Votantes" << endl;
+
             cout << "\t 0. Salir" << endl;
 
             cout << "\t Elegir una opcion "; cin >> opcion;
@@ -139,6 +141,10 @@ int main() {
 
                     case 3: {
                         votantes.MostrarElectores();
+                        break;
+                    }
+                    case 4: {
+                        votantes.ProcesarVotantes(inscripcion.getCandidatos());
                         break;
                     }
                     default: {

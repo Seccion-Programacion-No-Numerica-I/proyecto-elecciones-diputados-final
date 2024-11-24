@@ -203,6 +203,18 @@ int Lista<Tipo>::Contar() {
     return cont;
 };
 
+template <class Tipo>
+int Lista<Tipo>::ContarNodosPrioridad() {
+    nodoPrioridad<Tipo>* p;
+    int cont = 0;
+    p = PrimeroPrioridad;
+    while (p != NULL) {
+        cont++;
+        p = p->prox;
+    }
+    return cont;
+};
+
 /*template <class Tipo>
 nodo<Tipo>* Lista<Tipo>::Buscar(Tipo Valor) {
     nodo<Tipo> *aux = NULL;

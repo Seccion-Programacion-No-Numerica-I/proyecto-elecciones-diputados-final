@@ -348,123 +348,126 @@ void Inscripcion::ReporteGeneral()
         cin.get();
 }
 
-void Inscripcion::MostrarReporteCompleto()
-{
-	int cont = 1;
-	// variable auxiliar que utilizamos para almacenar si hay candidatos en algun partido y posteriormente mostar un mensaje.
-	bool AuxHayCandidatos = false;
-	string partidos[5] = {"A", "B", "C", "D", "E"};
+// void Inscripcion::MostrarReporteCompleto()
+// {
+// 	int cont = 1;
+// 	// variable auxiliar que utilizamos para almacenar si hay candidatos en algun partido y posteriormente mostar un mensaje.
+// 	bool AuxHayCandidatos = false;
+// 	string partidos[5] = {"A", "B", "C", "D", "E"};
 
-	if (candidatos.Vacia())
-	{
-		cout << "\n No hay Candidatos inscritos. \n"
-			 << endl;
+// 	if (candidatos.Vacia())
+// 	{
+// 		cout << "\n No hay Candidatos inscritos. \n"
+// 			 << endl;
 
-		cout << "Pulse enter para continuar...";
-        cin.get();
+// 		cout << "Pulse enter para continuar...";
+//         cin.get();
 
-		return;
-	}
+// 		return;
+// 	}
 
-	for (int i = 0; i < 5; i++)
-	{
-		AuxHayCandidatos = false;
-		cout << "\n Candidatos Por el partido: " << endl;
-		printFullLine();
-		printCentered(partidos[i]);
-		printCentered(generarEsloganAletorio());
+// 	for (int i = 0; i < 5; i++)
+// 	{
+// 		AuxHayCandidatos = false;
+// 		cout << "\n Candidatos Por el partido: " << endl;
+// 		printFullLine();
+// 		printCentered(partidos[i]);
+// 		printCentered(generarEsloganAletorio());
 
-		printFullLine();
+// 		printFullLine();
 
-		nodo<Candidato> *actualCandidato = candidatos.ObtPrimero();
-		while (actualCandidato)
-		{
-			Candidato cand = candidatos.ObtInfo(actualCandidato);
-			if (i == cand.getIdPartido() - 1)
-			{
+// 		nodo<Candidato> *actualCandidato = candidatos.ObtPrimero();
+// 		while (actualCandidato)
+// 		{
+// 			Candidato cand = candidatos.ObtInfo(actualCandidato);
+// 			if (i == cand.getIdPartido() - 1)
+// 			{
 
-				string nombreCompleto = cand.getNombre() + " " + cand.getApellido();
-				cout << " " << cont << ".";
-				cout << "\n " << nombreCompleto << endl;
-				cout << " C.I: " << cand.getCedula() << endl;
-				cont++;
-				AuxHayCandidatos = true;
-			}
-			actualCandidato = candidatos.ObtProx(actualCandidato);
-		}
-		if (!AuxHayCandidatos)
-		{
-			cout << " No Hay Candidatos Inscritos por el partido " << "\"" << partidos[i] << "\". \n"
-				 << endl;
-		}
-		cont = 1;
-		printFullLine();
-	}
-	cout << "Pulse enter para continuar...";
-        cin.get();
-	return;
+// 				string nombreCompleto = cand.getNombre() + " " + cand.getApellido();
+// 				cout << " " << cont << ".";
+// 				cout << "\n " << nombreCompleto << endl;
+// 				cout << " C.I: " << cand.getCedula() << endl;
+// 				cont++;
+// 				AuxHayCandidatos = true;
+// 			}
+// 			actualCandidato = candidatos.ObtProx(actualCandidato);
+// 		}
+// 		if (!AuxHayCandidatos)
+// 		{
+// 			cout << " No Hay Candidatos Inscritos por el partido " << "\"" << partidos[i] << "\". \n"
+// 				 << endl;
+// 		}
+// 		cont = 1;
+// 		printFullLine();
+// 	}
+// 	cout << "Pulse enter para continuar...";
+//         cin.get();
+// 	return;
+// }
+
+// void Inscripcion::printCentered(const string &text)
+// {
+
+// 	CONSOLE_SCREEN_BUFFER_INFO csbi;
+// 	int consoleWidth;
+// 	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+// 	{
+// 		consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+// 	}
+// 	else
+// 	{
+// 		consoleWidth = 80;
+// 	}
+
+// 	int padding = (consoleWidth - text.length()) / 2;
+
+// 	cout << std::string(padding, ' ') << text << endl;
+// }
+
+// void Inscripcion::printFullLine(char symbol)
+// {
+
+// 	CONSOLE_SCREEN_BUFFER_INFO csbi;
+// 	int consoleWidth;
+// 	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+// 	{
+// 		consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+// 	}
+// 	else
+// 	{
+// 		consoleWidth = 80;
+// 	}
+
+// 	std::cout << std::string(consoleWidth, symbol) << std::endl;
+// }
+
+// string Inscripcion::trim(const string &str)
+// {
+// 	// Encontrar la primera posición no blanca desde el inicio
+// 	size_t start = str.find_first_not_of(" \t\n\r\f\v");
+// 	if (start == std::string::npos) // La cadena está completamente en blanco
+// 		return "";
+
+// 	// Encontrar la última posición no blanca desde el final
+// 	size_t end = str.find_last_not_of(" \t\n\r\f\v");
+
+// 	// Retornar la subcadena que va desde `start` hasta `end`
+// 	return str.substr(start, end - start + 1);
+// }
+
+// int Inscripcion::generarNumeroAleatorio()
+// {
+// 	srand(static_cast<unsigned int>(chrono::system_clock::now().time_since_epoch().count()));
+// 	// generar numero aleatorio desde el 0 hasta el 9
+// 	int numeroAleatorio = rand() % 10;
+// 	return numeroAleatorio;
+// }
+
+// string Inscripcion::generarEsloganAletorio()
+// {
+// 	return esloganes[generarNumeroAleatorio()];
+// }
+
+Lista<Candidato> Inscripcion::getCandidatos() {
+	return candidatos; 
 }
-
-void Inscripcion::printCentered(const string &text)
-{
-
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	int consoleWidth;
-	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
-	{
-		consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	}
-	else
-	{
-		consoleWidth = 80;
-	}
-
-	int padding = (consoleWidth - text.length()) / 2;
-
-	cout << std::string(padding, ' ') << text << endl;
-}
-
-void Inscripcion::printFullLine(char symbol)
-{
-
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	int consoleWidth;
-	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
-	{
-		consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	}
-	else
-	{
-		consoleWidth = 80;
-	}
-
-	std::cout << std::string(consoleWidth, symbol) << std::endl;
-}
-
-string Inscripcion::trim(const string &str)
-{
-	// Encontrar la primera posición no blanca desde el inicio
-	size_t start = str.find_first_not_of(" \t\n\r\f\v");
-	if (start == std::string::npos) // La cadena está completamente en blanco
-		return "";
-
-	// Encontrar la última posición no blanca desde el final
-	size_t end = str.find_last_not_of(" \t\n\r\f\v");
-
-	// Retornar la subcadena que va desde `start` hasta `end`
-	return str.substr(start, end - start + 1);
-}
-
-int Inscripcion::generarNumeroAleatorio()
-{
-	srand(static_cast<unsigned int>(chrono::system_clock::now().time_since_epoch().count()));
-	// generar numero aleatorio desde el 0 hasta el 9
-	int numeroAleatorio = rand() % 10;
-	return numeroAleatorio;
-}
-
-string Inscripcion::generarEsloganAletorio()
-{
-	return esloganes[generarNumeroAleatorio()];
-}
-

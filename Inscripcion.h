@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <string>
 #include <ctime>
-#include <windows.h>
+// #include <windows.h>
 #include <algorithm>
 #include <cctype>
 #include <chrono>
@@ -39,7 +39,7 @@ class Inscripcion {
 		//Verificar si se puede ingresar el candidato
 		bool verificarDisponibilidad(Candidato);
 
-
+		Lista<Candidato> getCandidatos(); 
 		//Registrar un candidato
 		void Registrar();
 

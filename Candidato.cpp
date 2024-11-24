@@ -51,11 +51,16 @@ string Candidato::getNombrePartido() {
     return nombresPartidos[idPartido - 1];
 }
 
+int Candidato::getVotos() {
+    return votos;
+}
+
 void Candidato::mostrarInformacion() {
     cout << "Cedula: " << cedula<< endl;
     cout << "Nombre: " << nombre << " " << apellido << endl;
     cout << "Partido: " << getNombrePartido() << endl;
     cout << "Estatus: " << getStatus() << endl;
+    cout << "Votos: " << getVotos() << endl;
     cout << "\n" << endl;
 
 };
