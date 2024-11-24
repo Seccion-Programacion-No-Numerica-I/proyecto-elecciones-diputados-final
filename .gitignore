@@ -14,3 +14,6 @@ Makefile
 *.a
 *.so
 *.dylib
+Definitivo.dev
+Definitivo.layout
+Makefile.win
