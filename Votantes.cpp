@@ -43,7 +43,9 @@ void Votantes::RegistrarElector()
 
 		// Crear un objeto Elector y agregarlo a la lista
 		Elector elector(cedula, nombre, apellido);
-		electores.InsertarNodoOrdenado(elector, prioridad);
+		if(electores.InsertarNodoOrdenado(elector, prioridad)) {
+			cout << "\n Registro Exitoso \n" << endl;
+		} else { cout << "\n Fallo al registrar \n" << endl; }
 };
 
 /*

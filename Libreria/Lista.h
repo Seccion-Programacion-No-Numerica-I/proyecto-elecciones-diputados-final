@@ -71,7 +71,7 @@ public:
     nodoPrioridad<Tipo> *ObtProxPrioridad(ApuntadorPrioridad p);
     bool InsertarNodoColaPrioridad(Tipo Valor, int p);
     bool RemoverNodoColaPrioridad(Tipo &Valor, int &p);
-    void InsertarNodoOrdenado(Tipo inf, int prio);
+    bool InsertarNodoOrdenado(Tipo inf, int prio);
 
 
     // Métodos Colas
