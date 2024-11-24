@@ -43,9 +43,12 @@ void Votantes::RegistrarElector()
 
 		// Crear un objeto Elector y agregarlo a la lista
 		Elector elector(cedula, nombre, apellido);
-		insertarElector(elector, prioridad);
+		if(electores.InsertarNodoOrdenado(elector, prioridad)) {
+			cout << "\n Registro Exitoso \n" << endl;
+		} else { cout << "\n Fallo al registrar \n" << endl; }
 };
 
+/*
 void Votantes::insertarElector(Elector elector, int electorPrioridad)
 {
 	Elector marca;
@@ -93,6 +96,7 @@ void Votantes::insertarElector(Elector elector, int electorPrioridad)
 		}
 	}
 }
+*/
 
 void Votantes::MostrarElectores()
 {
@@ -123,15 +127,15 @@ void Votantes::CargarDatos() {
 		if (cont % 5 == 3) { elector->setApellido(dato); }
 		if (cont % 5 == 4) { electorPrioridad = stoi(dato); }
 		if (dato == ";") { // al encontrar un ; en el archivo registra el elector
-			insertarElector(*elector, electorPrioridad);
-			//elector->mostrarInfo(electorPrioridad);
+
+			electores.InsertarNodoOrdenado(*elector, electorPrioridad);
 			elector = new Elector();
 			electorPrioridad = 3;
 		}
 	}
 	archivo.close();
 	delete elector;
-	cout << "\033[2J\033[1;1H";
+	cout << "\033[H\033[2J";
 	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 

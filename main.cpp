@@ -15,7 +15,7 @@ int main() {
     
     do {
     // Menu inicial
-        cout << "\033[2J\033[1;1H"; // mantiene el menu en la parte de arriba de la terminal
+        cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
     cout << "\nBienvenido al sistema de gestion de elecciones." << endl;
     cout << "1. Entrar al sistema de gestion de candidatos" << endl;
     cout << "2. Entrar al modulo votantes" << endl;
@@ -27,7 +27,7 @@ int main() {
         if (opcionInicial == 1) {
             int opcion;
             do {
-                cout << "\033[2J\033[1;1H"; // mantiene el menu en la parte de arriba de la terminal
+                cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
 
                 cout << "\n--- Menu de gestion de candidatos ---" << endl;
                 cout << "1. Registrar candidato" << endl;
@@ -112,7 +112,7 @@ int main() {
         else if (opcionInicial == 2) {
             int opcion;
             do {
-                cout << "\033[2J\033[1;1H"; // mantiene el menu en la parte de arriba de la terminal
+                cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
             cout << "\nModulo votantes seleccionado\n" << endl;
             cout << "\t 1. Registrar Votante" << endl;
             cout << "\t 2. Cargar Votantes desde archivo" << endl;
