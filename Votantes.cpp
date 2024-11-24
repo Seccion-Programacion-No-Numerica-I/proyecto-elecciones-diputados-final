@@ -196,7 +196,7 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
 	while (actual)
 	{
 		Candidato candidatoActual = cadidatos.ObtInfo(actual);
-		string info = counter + ". " + candidatoActual.getNombre() + " " + candidatoActual.getApellido() + " - " + candidatoActual.getNombrePartido();
+		string info = to_string(counter) + ". " + candidatoActual.getNombre() + " " + candidatoActual.getApellido() + " - " + candidatoActual.getNombrePartido();
 		info += mostrarVotos ? "Votos: " + to_string(candidatoActual.getVotos()) : "";
 		cout << info << endl;
 		actual = cadidatos.ObtProx(actual);
