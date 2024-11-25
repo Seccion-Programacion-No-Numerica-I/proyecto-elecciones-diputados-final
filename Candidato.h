@@ -10,7 +10,7 @@ using namespace std;
 class Candidato {
 private:
     string cedula, nombre, apellido, partido;
-    int idPartido, votos;
+    int idPartido, votos = 0;
     Pila status;
     string nombresPartidos[5] = {"A", "B", "C", "D", "E"};
 

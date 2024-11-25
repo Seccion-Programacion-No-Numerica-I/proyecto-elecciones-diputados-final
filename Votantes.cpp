@@ -4,7 +4,9 @@
 
 #include "Votantes.h"
 #include <fstream>
+#include <iomanip>
 #include <iostream>
+using namespace std;
 #include <bits/parse_numbers.h>
 
 Votantes::Votantes() {}
@@ -187,21 +189,42 @@ void Votantes::CargarDatos()
 
 void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
 {
-	nodo<Candidato> *actual = cadidatos.ObtPrimero();
 	int counter = 1;
-	if (!actual)
-	{
-		cout << "No hay candidatos inscritos en la lista." << endl;
-	}
-	while (actual)
-	{
-		Candidato candidatoActual = cadidatos.ObtInfo(actual);
-		string info = to_string(counter) + ". " + candidatoActual.getNombre() + " " + candidatoActual.getApellido() + " - " + candidatoActual.getNombrePartido();
-		info += mostrarVotos ? "Votos: " + to_string(candidatoActual.getVotos()) : "";
-		cout << info << endl;
-		actual = cadidatos.ObtProx(actual);
-		counter++;
-	}
+
+		// CREAMOS VARIABLES PARA ALMACENAR LOS CANDIDATOS POR PARTIDOS
+		ostringstream candidatosPartidoA; candidatosPartidoA << "\n\t Partido A ------------------ \n";
+		ostringstream candidatosPartidoB; candidatosPartidoB << "\n\t Partido B ------------------ \n";
+		ostringstream candidatosPartidoC; candidatosPartidoC << "\n\t Partido C ------------------ \n";
+		ostringstream candidatosPartidoD; candidatosPartidoD << "\n\t Partido D ------------------ \n";
+		ostringstream candidatosPartidoE; candidatosPartidoE << "\n\t Partido E ------------------ \n";
+
+		nodo<Candidato> *actual = cadidatos.ObtPrimero();
+		if (!actual)
+		{
+			cout << "No hay candidatos inscritos." << endl;
+		}
+		while (actual){
+			Candidato candidatoActual = cadidatos.ObtInfo(actual);
+			string info = to_string(counter) + ". " + candidatoActual.getNombre() + " " + candidatoActual.getApellido();
+			info += mostrarVotos ? "Votos: " + to_string(candidatoActual.getVotos()) : "";
+			// CARGAMOS EL CANDIDATO AL LA VARIABLE DEL PARTIDO
+			if (candidatoActual.getIdPartido() == 1) { candidatosPartidoA << setw(30) << left << info << " ";	}
+			if (candidatoActual.getIdPartido() == 2) { candidatosPartidoB << setw(30) << left << info << " ";	}
+			if (candidatoActual.getIdPartido() == 3) { candidatosPartidoC << setw(30) << left << info << " ";	}
+			if (candidatoActual.getIdPartido() == 4) { candidatosPartidoD << setw(30) << left << info << " ";	}
+			if (candidatoActual.getIdPartido() == 5) { candidatosPartidoE << setw(30) << left << info << " ";	}
+
+			actual = cadidatos.ObtProx(actual);
+			counter++;
+		}
+
+		// MOSTRAMOS LOS PARTIDOS CON CANDIDATOS ANEXADOS
+		if(candidatosPartidoA.str().length()>36){ cout << candidatosPartidoA.str() << endl; }
+		if(candidatosPartidoB.str().length()>36){ cout << candidatosPartidoB.str() << endl; }
+		if(candidatosPartidoC.str().length()>36){ cout << candidatosPartidoC.str() << endl; }
+		if(candidatosPartidoD.str().length()>36){ cout << candidatosPartidoD.str() << endl; }
+		if(candidatosPartidoE.str().length()>36){ cout << candidatosPartidoE.str() << endl; }
+
 }
 
 bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
