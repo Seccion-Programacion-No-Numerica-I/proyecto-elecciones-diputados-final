@@ -4,12 +4,11 @@
 #include <cstdlib>
 #include <string>
 #include <ctime>
-#include <windows.h>
+// #include <windows.h>
 #include <algorithm>
 #include <cctype>
 #include <chrono>
 #include "Candidato.h"
-#include "Partido.h"
 #include "Libreria/Lista.h"
 using namespace std;
 
@@ -40,7 +39,7 @@ class Inscripcion {
 		//Verificar si se puede ingresar el candidato
 		bool verificarDisponibilidad(Candidato);
 
-
+		Lista<Candidato> getCandidatos(); 
 		//Registrar un candidato
 		void Registrar();
 
