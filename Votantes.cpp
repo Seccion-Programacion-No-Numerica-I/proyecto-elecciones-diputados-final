@@ -62,11 +62,14 @@ void Votantes::RegistrarElector()
 		}
 	} while (prioridad != 1 && prioridad != 2 && prioridad != 3);
 
-	// Crear un objeto Elector y agregarlo a la lista
-	Elector elector(cedula, nombre, apellido);
-	insertarElector(elector, prioridad);
+		// Crear un objeto Elector y agregarlo a la lista
+		Elector elector(cedula, nombre, apellido);
+		if(electores.InsertarNodoOrdenado(elector, prioridad)) {
+			cout << "\n Registro Exitoso \n" << endl;
+		} else { cout << "\n Fallo al registrar \n" << endl; }
 };
 
+/*
 void Votantes::insertarElector(Elector elector, int electorPrioridad)
 {
 	Elector marca;
@@ -122,6 +125,7 @@ void Votantes::insertarElector(Elector elector, int electorPrioridad)
 		}
 	}
 }
+*/
 
 void Votantes::MostrarElectores()
 {
@@ -155,34 +159,21 @@ void Votantes::CargarDatos()
 	{ // leemos cada palabra del archivo y la asignamos al dato.
 		cont++;
 		// dependiendo de la estructura que se lleve, se asigna el dato al atributo
-		if (cont % 5 == 1)
-		{
-			elector->setCedula(dato);
-		}
-		if (cont % 5 == 2)
-		{
-			elector->setNombre(dato);
-		}
-		if (cont % 5 == 3)
-		{
-			elector->setApellido(dato);
-		}
-		if (cont % 5 == 4)
-		{
-			electorPrioridad = stoi(dato);
-		}
-		if (dato == ";")
-		{ // al encontrar un ; en el archivo registra el elector
-			insertarElector(*elector, electorPrioridad);
-			// elector->mostrarInfo(electorPrioridad);
+		if (cont % 5 == 1) { elector->setCedula(dato); }
+		if (cont % 5 == 2) { elector->setNombre(dato); }
+		if (cont % 5 == 3) { elector->setApellido(dato); }
+		if (cont % 5 == 4) { electorPrioridad = stoi(dato); }
+		if (dato == ";") { // al encontrar un ; en el archivo registra el elector
+
+			electores.InsertarNodoOrdenado(*elector, electorPrioridad);
 			elector = new Elector();
 			electorPrioridad = 3;
 		}
 	}
 	archivo.close();
 	delete elector;
-	cout << "\033[2J\033[1;1H";
-	cout << "\nRegistrados " << cont / 5 << " electores." << endl;
+	cout << "\033[H\033[2J";
+	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 
 void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
