@@ -31,6 +31,14 @@ class Votantes {
     void MostrarElectores();
 
     void CargarDatos();
+    
+     //Mostrar el menu para los reportes
+    void MostrarMenuReportes();
+    //Reporte por prioridad
+    void ReportePorPrioridad();
+    // Reporte por status ( si voto o no)
+    void ReportePorStatus();
+
 };
 
 #endif //VOTANTES_H

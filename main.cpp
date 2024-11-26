@@ -82,8 +82,8 @@ int main() {
                     }
 
                     case 6: {
-                        inscripcion.ReporteGeneral();
-                        // inscripcion.MostrarReporteCompleto(); // hecho por el equipo del Punto 5 - Reporte
+                       // inscripcion.ReporteGeneral();
+                        inscripcion.MostrarReporteCompleto(); // hecho por el equipo del Punto 5 - Reporte
                         break;
                     }
 
@@ -118,6 +118,7 @@ int main() {
             cout << "\t 2. Cargar Votantes desde archivo" << endl;
             cout << "\t 3. Mostrar Electores inscritos" << endl;
             cout << "\t 4. Procesar Votantes" << endl;
+            cout << "\t 5. Reportes"<<endl;
 
             cout << "\t 0. Salir" << endl;
 
@@ -147,6 +148,10 @@ int main() {
                         votantes.ProcesarVotantes(inscripcion.getCandidatos());
                         break;
                     }
+                    case 5:{
+				     	votantes.MostrarMenuReportes();
+						break;
+					}
                     default: {
                         cout << "Opcion no valida. Intenta de nuevo." << endl;
                     }

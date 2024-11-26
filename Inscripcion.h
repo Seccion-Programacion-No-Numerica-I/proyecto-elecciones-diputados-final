@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <string>
 #include <ctime>
-// #include <windows.h>
 #include <algorithm>
 #include <cctype>
 #include <chrono>
@@ -64,9 +63,6 @@ class Inscripcion {
 		void MostrarReporteCompleto();
 
 		//Metodos Auxiliares - Punto 5 - Reporte
-		void printCentered(const string& text);
-		void printFullLine(char symbol = '-');
-		string trim(const std::string& str);
 		int generarNumeroAleatorio();
 		string generarEsloganAletorio();
 
