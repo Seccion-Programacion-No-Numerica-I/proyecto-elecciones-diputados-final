@@ -20,7 +20,7 @@ class Votantes {
     Votantes(); //Constructor
 
     //Registrar un elector
-    void insertarElector(Elector elector, int prioridad);
+    //void insertarElector(Elector elector, int prioridad);
     void RegistrarElector();
 
     //Votacion
