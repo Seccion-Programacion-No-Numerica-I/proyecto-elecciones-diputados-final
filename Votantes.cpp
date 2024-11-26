@@ -346,6 +346,79 @@ void Votantes::ReportePorPrioridad() {
 
 
 void Votantes::ReportePorStatus() {
+	int statusSeleccionado;
+	int prioridadActual = 0;
+	int prioridadAuxMensaje = 0;
+	nodoPrioridad<Elector> *actual;
+	Elector electorActual;
+
+	do {
+		cout<<" Indique el status por el que desea ver el reporte (1-Procesados, 2- NO procesados): "<<endl;
+		cin>>statusSeleccionado;
+
+		if(statusSeleccionado > 2 || statusSeleccionado == 0) {
+			cout<<" Opcion Invalidad"<<endl;
+		}
+
+	} while(statusSeleccionado < 1 || statusSeleccionado > 2);
+
+	if(statusSeleccionado == 1) {
+		actual = colaVotantes.ObtPrimeroPrioridad();
+	} else {
+		actual = colaNoVotantes.ObtPrimeroPrioridad();
+	}
+
+
+	if (!actual) {
+		if(statusSeleccionado == 1) {
+			cout << "No hay electores Procesados en la cola." << endl;
+
+		} else {
+			cout << "No hay electores NO Procesados en la cola." << endl;
+		}
+		return;
+	}
+
+	while (actual) {
+
+		if(statusSeleccionado == 1) {
+			electorActual = colaVotantes.ObtInfoPrioridad(actual);
+			prioridadActual = colaVotantes.ObtPrioridad(actual);
+		} else {
+			electorActual = colaNoVotantes.ObtInfoPrioridad(actual);
+			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
+		}
+
+
+		if(prioridadActual != prioridadAuxMensaje) {
+			switch(prioridadActual) {
+				case 1: {
+					cout<<"3era Edad:\n"<<endl;
+					break;
+				}
+				case 2: {
+					cout<<"Embarazadas: \n"<<endl;
+					break;
+				}
+				case 3: {
+					cout<<"Normal: \n"<<endl;
+					break;
+				}
+			}
+		}
+
+		cout<<"\t Nombre del elector:"<<" "<<electorActual.getNombre()<<" "<<electorActual.getApellido()<<endl;
+		cout<<"\t Cedula del elector:"<<" "<<electorActual.getCedula()<<" \n"<<endl;
+
+
+		if(statusSeleccionado == 1) {
+			prioridadAuxMensaje = colaVotantes.ObtPrioridad(actual);
+			actual = colaVotantes.ObtProxPrioridad(actual);
+		} else {
+			prioridadAuxMensaje = colaNoVotantes.ObtPrioridad(actual);
+			actual = colaNoVotantes.ObtProxPrioridad(actual);
+		}
+	}
 
 }
 
