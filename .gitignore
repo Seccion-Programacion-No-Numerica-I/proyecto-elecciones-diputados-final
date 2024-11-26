@@ -1,6 +1,7 @@
 .vscode
 build/*
 !build/.gitkeep
+!build/electores.txt
 CMakeFiles/*
 CMakeLists.txt
 CMakeCache.txt
