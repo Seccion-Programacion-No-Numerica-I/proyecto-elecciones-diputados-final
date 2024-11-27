@@ -7,13 +7,15 @@
 
 #include "Libreria/Lista.h"
 #include "Elector.h"
+#include "Candidato.h"
 #include <string>
 using namespace std;
 
 class Votantes {
     private:
     Lista<Elector> electores;
-
+    Lista<Elector> colaVotantes; 
+    Lista<Elector> colaNoVotantes; 
     public:
     Votantes(); //Constructor
 
@@ -21,10 +23,22 @@ class Votantes {
     //void insertarElector(Elector elector, int prioridad);
     void RegistrarElector();
 
+    //Votacion
+    void ListarCandidatos(Lista<Candidato>& candidatos, bool mostrarVotos);
+    bool ProcesarVotantes(Lista<Candidato> candidatos); 
+
     //Mostrar los electores registrados
     void MostrarElectores();
 
     void CargarDatos();
+    
+     //Mostrar el menu para los reportes
+    void MostrarMenuReportes();
+    //Reporte por prioridad
+    void ReportePorPrioridad();
+    // Reporte por status ( si voto o no)
+    void ReportePorStatus();
+
 };
 
 #endif //VOTANTES_H

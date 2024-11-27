@@ -15,7 +15,7 @@ int main() {
     
     do {
     // Menu inicial
-        cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
+        // cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
     cout << "\nBienvenido al sistema de gestion de elecciones." << endl;
     cout << "1. Entrar al sistema de gestion de candidatos" << endl;
     cout << "2. Entrar al modulo votantes" << endl;
@@ -27,7 +27,7 @@ int main() {
         if (opcionInicial == 1) {
             int opcion;
             do {
-                cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
+                // cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
 
                 cout << "\n--- Menu de gestion de candidatos ---" << endl;
                 cout << "1. Registrar candidato" << endl;
@@ -82,7 +82,7 @@ int main() {
                     }
 
                     case 6: {
-                        //inscripcion.ReporteGeneral();
+                       // inscripcion.ReporteGeneral();
                         inscripcion.MostrarReporteCompleto(); // hecho por el equipo del Punto 5 - Reporte
                         break;
                     }
@@ -112,11 +112,14 @@ int main() {
         else if (opcionInicial == 2) {
             int opcion;
             do {
-                cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
+                // cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
             cout << "\nModulo votantes seleccionado\n" << endl;
             cout << "\t 1. Registrar Votante" << endl;
             cout << "\t 2. Cargar Votantes desde archivo" << endl;
             cout << "\t 3. Mostrar Electores inscritos" << endl;
+            cout << "\t 4. Procesar Votantes" << endl;
+            cout << "\t 5. Reportes"<<endl;
+
             cout << "\t 0. Salir" << endl;
 
             cout << "\t Elegir una opcion "; cin >> opcion;
@@ -141,6 +144,14 @@ int main() {
                         votantes.MostrarElectores();
                         break;
                     }
+                    case 4: {
+                        votantes.ProcesarVotantes(inscripcion.getCandidatos());
+                        break;
+                    }
+                    case 5:{
+				     	votantes.MostrarMenuReportes();
+						break;
+					}
                     default: {
                         cout << "Opcion no valida. Intenta de nuevo." << endl;
                     }
@@ -159,3 +170,4 @@ int main() {
     system("pause");
     return 0;
 }
+//prueba de permisos 2

@@ -51,6 +51,7 @@ public:
     Tipo ObtInfo(Apuntador p);
     void AsigInfo(Apuntador p, Tipo Valor);
     int Contar();
+    int ContarNodosPrioridad();
     nodo<Tipo>* Buscar(Tipo Valor);
     void pasarListaAux(Lista<Tipo> &listaFuente, Lista<Tipo> &listaDestino);
     bool InsFinal(Tipo Valor);

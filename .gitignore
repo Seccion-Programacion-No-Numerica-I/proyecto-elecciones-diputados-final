@@ -1,6 +1,7 @@
 .vscode
 build/*
 !build/.gitkeep
+!build/electores.txt
 CMakeFiles/*
 CMakeLists.txt
 CMakeCache.txt
@@ -14,3 +15,6 @@ Makefile
 *.a
 *.so
 *.dylib
+Definitivo.dev
+Definitivo.layout
+Makefile.win
