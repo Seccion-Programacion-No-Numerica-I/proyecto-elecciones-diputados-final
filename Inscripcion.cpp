@@ -1,5 +1,6 @@
 #include "Inscripcion.h"
 #include <iostream>
+#include <fstream>
 
 Inscripcion::Inscripcion() {}
 
@@ -16,6 +17,35 @@ bool Inscripcion::verificarDisponibilidad(Candidato cand) {
 		return false;
 	}
 	return true;
+}
+
+void Inscripcion::CargarCandidatos() {
+	string dato, urlArchivo = "candidatos.txt";
+	fstream archivo;
+	archivo.open(urlArchivo.c_str());
+
+	int cont = 0; // Declaramos un contador para llevar el control de la estructura de archivo
+	auto *candidato = new Candidato();
+	int partido = 1;
+	while (archivo >> dato) {
+		// leemos cada palabra del archivo y la asignamos al dato.
+		cont++;
+		// dependiendo de la estructura que se lleve, se asigna el dato al atributo
+		if (cont % 5 == 1) { candidato->setCedula(dato); }
+		if (cont % 5 == 2) { candidato->setNombre(dato); }
+		if (cont % 5 == 3) { candidato->setApellido(dato); }
+		if (cont % 5 == 4) { partido = stoi(dato); }
+		if (dato == ";") { // al encontrar un ; en el archivo registra el candidato
+
+			candidatos.InsertarNodoCola(*candidato); // insertamos el candidato en la cola
+			candidato = new Candidato();
+			partido = 0;
+		}
+	}
+	archivo.close();
+	delete candidato;
+	// cout << "\033[H\033[2J";
+	cout<<"\nRegistrados " << cont/5 << " candidatos."<< endl;
 }
 
 void Inscripcion::Registrar() {

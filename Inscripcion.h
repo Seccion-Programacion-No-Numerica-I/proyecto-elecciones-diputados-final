@@ -66,6 +66,9 @@ class Inscripcion {
 		int generarNumeroAleatorio();
 		string generarEsloganAletorio();
 
+		//Cargar Candidatos por archivo
+		void CargarCandidatos(); 
+
 };
 
 #endif
