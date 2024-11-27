@@ -174,13 +174,13 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
 	}
 }
 
-bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
+bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos)
 {
 	// Iterar sobre los electores
 	int cantidad_candidatos = candidatos.Contar(); 
 	
-	if (cantidad_candidatos  < 5) { 
-		cout << "Es necesario inscribir 5 candidatos para poder realizar el proceso de votación." << endl;
+	if (cantidad_candidatos  < 25) { 
+		cout << "Es necesario inscribir 25 candidatos para poder realizar el proceso de votación." << endl;
 		
 		return false; 
 		}

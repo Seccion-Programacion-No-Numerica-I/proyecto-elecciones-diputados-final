@@ -151,6 +151,7 @@ int main() {
                         break;
                     }
                     case 4: {
+                         
                         votantes.ProcesarVotantes(inscripcion.getCandidatos());
                         break;
                     }

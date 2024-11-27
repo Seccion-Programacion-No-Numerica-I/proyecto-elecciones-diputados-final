@@ -26,7 +26,7 @@ void Inscripcion::CargarCandidatos() {
 
 	int cont = 0; // Declaramos un contador para llevar el control de la estructura de archivo
 	auto *candidato = new Candidato();
-	int partido = 1;
+	// int partido = 1;
 	while (archivo >> dato) {
 		// leemos cada palabra del archivo y la asignamos al dato.
 		cont++;
@@ -34,16 +34,23 @@ void Inscripcion::CargarCandidatos() {
 		if (cont % 5 == 1) { candidato->setCedula(dato); }
 		if (cont % 5 == 2) { candidato->setNombre(dato); }
 		if (cont % 5 == 3) { candidato->setApellido(dato); }
-		if (cont % 5 == 4) { partido = stoi(dato); }
+		 if (cont % 5 == 4) { 
+			int partido = std::stoi(dato);
+			candidato->setIdPartido(partido); 
+			}
 		if (dato == ";") { // al encontrar un ; en el archivo registra el candidato
-
-			candidatos.InsertarNodoCola(*candidato); // insertamos el candidato en la cola
+			
+			candidato->setStatus("ACTIVO"); // el candidato esta activo
+			candidato->mostrarInformacion(); // muestra la informacion del candidato
+			candidatos.InsertarNodoCola(*candidato); 
+			// candidatosPorPartido[partido - 1]++;
+			// insertamos el candidato en la cola
 			candidato = new Candidato();
-			partido = 0;
+
 		}
 	}
 	archivo.close();
-	delete candidato;
+	 delete candidato;
 	// cout << "\033[H\033[2J";
 	cout<<"\nRegistrados " << cont/5 << " candidatos."<< endl;
 }
@@ -391,6 +398,6 @@ string Inscripcion::generarEsloganAletorio() {
 	return esloganes[generarNumeroAleatorio()];
 }
 
-Lista<Candidato> Inscripcion::getCandidatos() {
+Lista<Candidato>& Inscripcion::getCandidatos() {
 	return candidatos;
 }

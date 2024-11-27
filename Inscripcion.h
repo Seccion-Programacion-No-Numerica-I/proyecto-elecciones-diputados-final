@@ -38,7 +38,7 @@ class Inscripcion {
 		//Verificar si se puede ingresar el candidato
 		bool verificarDisponibilidad(Candidato);
 
-		Lista<Candidato> getCandidatos(); 
+		Lista<Candidato>& getCandidatos(); 
 		//Registrar un candidato
 		void Registrar();
 
@@ -68,7 +68,7 @@ class Inscripcion {
 
 		//Cargar Candidatos por archivo
 		void CargarCandidatos(); 
-
+		
 };
 
 #endif
