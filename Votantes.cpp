@@ -265,7 +265,7 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
 			ListarCandidatos(candidatos, true);
 			
 			// sacamos el elector actual a una cola separada
-			colaVotantes.InsertarNodoCola(currentElector);
+			colaVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
 
 			// pasamos al siguiente elector
 			currentNode = electores.ObtProxPrioridad(currentNode);
