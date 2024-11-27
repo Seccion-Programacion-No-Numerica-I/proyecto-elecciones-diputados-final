@@ -53,11 +53,13 @@ void Votantes::RegistrarElector() {
 		}
 	} while (prioridad != 1 && prioridad != 2 && prioridad != 3);
 
-		// Crear un objeto Elector y agregarlo a la lista
-		Elector elector(cedula, nombre, apellido);
-		if(electores.InsertarNodoOrdenado(elector, prioridad)) {
-			cout << "\n Registro Exitoso \n" << endl;
-		} else { cout << "\n Fallo al registrar \n" << endl; }
+	// Crear un objeto Elector y agregarlo a la lista
+	Elector elector(cedula, nombre, apellido);
+	if(electores.InsertarNodoOrdenado(elector, prioridad)) {
+		cout << "\n Registro Exitoso \n" << endl;
+	} else {
+		cout << "\n Fallo al registrar \n" << endl;
+	}
 };
 
 /*
@@ -137,10 +139,18 @@ void Votantes::CargarDatos() {
 		// leemos cada palabra del archivo y la asignamos al dato.
 		cont++;
 		// dependiendo de la estructura que se lleve, se asigna el dato al atributo
-		if (cont % 5 == 1) { elector->setCedula(dato); }
-		if (cont % 5 == 2) { elector->setNombre(dato); }
-		if (cont % 5 == 3) { elector->setApellido(dato); }
-		if (cont % 5 == 4) { electorPrioridad = stoi(dato); }
+		if (cont % 5 == 1) {
+			elector->setCedula(dato);
+		}
+		if (cont % 5 == 2) {
+			elector->setNombre(dato);
+		}
+		if (cont % 5 == 3) {
+			elector->setApellido(dato);
+		}
+		if (cont % 5 == 4) {
+			electorPrioridad = stoi(dato);
+		}
 		if (dato == ";") { // al encontrar un ; en el archivo registra el elector
 
 			electores.InsertarNodoOrdenado(*elector, electorPrioridad);
@@ -154,8 +164,7 @@ void Votantes::CargarDatos() {
 	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 
-void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
-{
+void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos) {
 	nodo<Candidato> *actual = cadidatos.ObtPrimero();
 	int counter = 1;
 	// if (!actual)
@@ -163,8 +172,7 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
 	// 	cout << "No hay candidatos inscritos en la lista." << endl;
 
 	// }
-	while (actual)
-	{
+	while (actual) {
 		Candidato candidatoActual = cadidatos.ObtInfo(actual);
 		string info = to_string(counter) + ". " + candidatoActual.getNombre() + " " + candidatoActual.getApellido() + " - " + candidatoActual.getNombrePartido();
 		info += mostrarVotos ? "Votos: " + to_string(candidatoActual.getVotos()) : "";
@@ -185,8 +193,7 @@ bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos)
 		return false; 
 		}
 	nodoPrioridad<Elector> *currentNode = electores.ObtPrimeroPrioridad();
-	while (currentNode)
-	{
+	while (currentNode) {
 		Elector currentElector = electores.ObtInfoPrioridad(currentNode);
 		// preguntamos si la persona votara o no
 		int procesarElector = 0;
@@ -195,21 +202,16 @@ bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos)
 
 		int elecciones[5] = {0};
 		// en caso de no procesarlo, se lleva a la cola de no votantes
-		if (procesarElector != 1)
-		{
+		if (procesarElector != 1) {
 			colaNoVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
 			currentNode = electores.ObtProxPrioridad(currentNode);
 			continue;
-		}
-		else
-		{
+		} else {
 
-			for (int i = 0; i < 5; i++)
-			{
+			for (int i = 0; i < 5; i++) {
 				// mostrar las opciones para los candidatos zzzz
 				bool votoCorrecto = false;
-				while (!votoCorrecto)
-				{
+				while (!votoCorrecto) {
 					nodo<Candidato> *iterator = candidatos.ObtPrimero();
 					// iteracion i
 					int eleccion;
@@ -218,16 +220,13 @@ bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos)
 					cin >> eleccion;
 
 					if (eleccion < 1 ||
-						eleccion == elecciones[0] ||
-						eleccion == elecciones[1] ||
-						eleccion == elecciones[2] ||
-						eleccion == elecciones[3] ||
-						eleccion == elecciones[4])
-					{
+					        eleccion == elecciones[0] ||
+					        eleccion == elecciones[1] ||
+					        eleccion == elecciones[2] ||
+					        eleccion == elecciones[3] ||
+					        eleccion == elecciones[4]) {
 						cout << "Opcion invalida, por favor ingrese un indice valido o un candidato que no haya escogido ya" << endl;
-					}
-					else
-					{
+					} else {
 
 						elecciones[i] = eleccion;
 						votoCorrecto = true; // se ha ingresado un voto correcto
@@ -237,42 +236,40 @@ bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos)
 
 
 			// Ahora sumamos los votos
-		
+
 			nodo<Candidato> *iterator = candidatos.ObtPrimero();
-			for (int i = 1; i <= candidatos.Contar(); i++)
-			{
+			for (int i = 1; i <= candidatos.Contar(); i++) {
 
-					if (i  == elecciones[0] ||
-						i == elecciones[1] ||
-						i == elecciones[2] ||
-						i == elecciones[3] ||
-						i == elecciones[4])
-					{
-						//sumar votos al candidato que coincida
+				if (i  == elecciones[0] ||
+				        i == elecciones[1] ||
+				        i == elecciones[2] ||
+				        i == elecciones[3] ||
+				        i == elecciones[4]) {
+					//sumar votos al candidato que coincida
 
-						Candidato c = candidatos.ObtInfo(iterator);
-						c.agregarVoto(); 
-						candidatos.AsigInfo(iterator, c);  
-					}
-					iterator = candidatos.ObtProx(iterator);
-			
+					Candidato c = candidatos.ObtInfo(iterator);
+					c.agregarVoto();
+					candidatos.AsigInfo(iterator, c);
 				}
+				iterator = candidatos.ObtProx(iterator);
+
 			}
-
-			cout << "El elector " << currentElector.getNombre() << " ha votado por los siguientes candidatos: " << endl;
-
-			// verificamos que los candidatos tengan sus votos acumulados
-			ListarCandidatos(candidatos, true);
-			
-			// sacamos el elector actual a una cola separada
-			colaVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
-
-			// pasamos al siguiente elector
-			currentNode = electores.ObtProxPrioridad(currentNode);
 		}
-		return true;
+
+		cout << "El elector " << currentElector.getNombre() << " ha votado por los siguientes candidatos: " << endl;
+
+		// verificamos que los candidatos tengan sus votos acumulados
+		ListarCandidatos(candidatos, true);
+
+		// sacamos el elector actual a una cola separada
+		colaVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
+
+		// pasamos al siguiente elector
+		currentNode = electores.ObtProxPrioridad(currentNode);
 	}
-	
+	return true;
+}
+
 
 void Votantes::MostrarMenuReportes() {
 	int opcionMenu;
@@ -306,10 +303,29 @@ void Votantes::MostrarMenuReportes() {
 }
 
 void Votantes::ReportePorPrioridad() {
-	nodoPrioridad<Elector> *actual = electores.ObtPrimeroPrioridad();
-	int prioridadSeleccionada;
 	int prioridadActual ;
+	int statusSeleccionado;
+	int prioridadSeleccionada;
 	bool priodadVacia = true;
+	nodoPrioridad<Elector> *actual;
+	Elector electorActual;
+	bool mostrarNombrePrioridad = true;
+
+	do {
+		cout<<" Indique el status por el que desea ver el reporte (1-Procesados, 2- NO procesados): "<<endl;
+		cin>>statusSeleccionado;
+
+		if(statusSeleccionado > 2 || statusSeleccionado == 0) {
+			cout<<" Opcion Invalidad."<<endl;
+		}
+
+	} while(statusSeleccionado < 1 || statusSeleccionado > 2);
+
+	if(statusSeleccionado == 1) {
+		actual = colaVotantes.ObtPrimeroPrioridad();
+	} else {
+		actual = colaNoVotantes.ObtPrimeroPrioridad();
+	}
 
 	if (!actual) {
 		cout << "No hay electores inscritos en la cola." << endl;
@@ -327,24 +343,32 @@ void Votantes::ReportePorPrioridad() {
 	} while(prioridadSeleccionada < 1 || prioridadSeleccionada > 3);
 
 	while (actual) {
-		Elector electorActual = electores.ObtInfoPrioridad(actual);
-		prioridadActual = electores.ObtPrioridad(actual);
 
-		switch(prioridadActual) {
-			case 1: {
-				cout<<"3era Edad:\n"<<endl;
-				break;
-			}
-			case 2: {
-				cout<<"Embarazadas: \n"<<endl;
-				break;
-			}
-			case 3: {
-				cout<<"Normal: \n"<<endl;
-				break;
-			}
+		if(statusSeleccionado == 1) {
+			electorActual = colaVotantes.ObtInfoPrioridad(actual);
+			prioridadActual = colaVotantes.ObtPrioridad(actual);
+		} else {
+			electorActual = colaNoVotantes.ObtInfoPrioridad(actual);
+			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
 		}
 
+		if(mostrarNombrePrioridad) {
+			switch(prioridadSeleccionada) {
+				case 1: {
+					cout<<"3era Edad:\n"<<endl;
+					break;
+				}
+				case 2: {
+					cout<<"Embarazadas: \n"<<endl;
+					break;
+				}
+				case 3: {
+					cout<<"Normal: \n"<<endl;
+					break;
+				}
+			}
+			mostrarNombrePrioridad = false;
+		}
 
 		if(prioridadSeleccionada == prioridadActual) {
 
@@ -353,8 +377,13 @@ void Votantes::ReportePorPrioridad() {
 			priodadVacia = false;
 		}
 
-		prioridadActual = electores.ObtPrioridad(actual);
-		actual = electores.ObtProxPrioridad(actual);
+		if(statusSeleccionado == 1) {
+			prioridadActual = colaVotantes.ObtPrioridad(actual);
+			actual = colaVotantes.ObtProxPrioridad(actual);
+		} else {
+			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
+			actual = colaNoVotantes.ObtProxPrioridad(actual);
+		}
 	}
 
 	if(priodadVacia) {
