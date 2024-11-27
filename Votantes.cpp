@@ -172,7 +172,7 @@ void Votantes::CargarDatos()
 	}
 	archivo.close();
 	delete elector;
-	cout << "\033[H\033[2J";
+	// cout << "\033[H\033[2J";
 	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
 }
 
@@ -180,10 +180,11 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
 {
 	nodo<Candidato> *actual = cadidatos.ObtPrimero();
 	int counter = 1;
-	if (!actual)
-	{
-		cout << "No hay candidatos inscritos en la lista." << endl;
-	}
+	// if (!actual)
+	// {
+	// 	cout << "No hay candidatos inscritos en la lista." << endl;
+
+	// }
 	while (actual)
 	{
 		Candidato candidatoActual = cadidatos.ObtInfo(actual);
@@ -198,7 +199,13 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
 bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
 {
 	// Iterar sobre los electores
-
+	int cantidad_candidatos = candidatos.Contar(); 
+	
+	if (cantidad_candidatos  <= 5) { 
+		cout << "Es necesario inscribir 5 candidatos para poder realizar el proceso de votación." << endl;
+		
+		return false; 
+		}
 	nodoPrioridad<Elector> *currentNode = electores.ObtPrimeroPrioridad();
 	while (currentNode)
 	{
