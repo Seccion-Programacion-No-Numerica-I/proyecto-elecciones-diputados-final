@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-#include "Elector.h"
 
 using namespace std;
 

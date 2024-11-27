@@ -2,6 +2,7 @@
 build/*
 !build/.gitkeep
 !build/electores.txt
+!build/candidatos.txt
 CMakeFiles/*
 CMakeLists.txt
 CMakeCache.txt

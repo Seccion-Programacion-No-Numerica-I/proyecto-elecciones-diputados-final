@@ -38,6 +38,7 @@ int main() {
                 cout << "6. Resumen Inscripcion" << endl;
                 cout << "7. Mostrar Candidatos por Partido" << endl;
                 cout << "8. Salir" << endl;
+                cout << "9. Cargar Candidatos" << endl;
                 cout << "Elige una opcion:";
                 cin >> opcion;
                 cin.ignore(); // Limpiar el buffer de entrada
@@ -101,6 +102,11 @@ int main() {
                         opcionInicial = 0;
                     break;
 
+                    case 9: {
+                        inscripcion.CargarCandidatos(); 
+                        break;
+                    }
+
                     default:
                         cout << "Opcion no valida. Intenta de nuevo." << endl;
                 }
@@ -145,6 +151,7 @@ int main() {
                         break;
                     }
                     case 4: {
+                         
                         votantes.ProcesarVotantes(inscripcion.getCandidatos());
                         break;
                     }
