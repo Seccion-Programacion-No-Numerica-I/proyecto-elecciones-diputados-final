@@ -1,0 +1,27 @@
+0124 Laura Torres 1 ;
+0125 Carlos Ramirez 1 ;
+0126 Angela Rios 1 ;
+0127 Fernando Lopez 1 ;
+0128 Valentina Castro 1 ;
+0129 Diego Morales 2 ;
+0130 Gabriela Herrera 2 ;
+0131 Samuel Vargas 2 ;
+0132 Patricia Jimenez 2 ;
+0133 Oscar Paredes 2 ;
+0134 Teresa Salinas 3 ;
+0135 Ricardo Soto 3 ;
+0136 Elena Cordero 3 ;
+0137 Juanita Delgado 3 ;
+0138 Alberto Peña 3 ;
+0139 Rosa Martinez 4 ;
+0140 Manuel Ortega 4 ;
+0141 Lucia Silva 4 ;
+0142 Javier Mendoza 4 ;
+0143 Claudia Torres 4 ;
+0144 Felipe Gonzalez 5 ;
+0145 Mariana Ruiz 5 ;
+0146 Sergio Jimenez 5 ;
+0147 Ana Beltran 5 ;
+0148 Victor Salazar 5 ;
+
+
