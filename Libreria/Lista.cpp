@@ -355,6 +355,13 @@ nodoPrioridad<Tipo>* Lista<Tipo>::ObtPrimeroPrioridad() {
 };
 
 template <class Tipo>
+nodoPrioridad<Tipo>* Lista<Tipo>::SacarTope() {
+    nodoPrioridad<Tipo> *tope = ObtPrimeroPrioridad(); 
+    PrimeroPrioridad = tope->prox; 
+    return tope; 
+}
+
+template <class Tipo>
 nodoPrioridad<Tipo>* Lista<Tipo>::ObtProxPrioridad(ApuntadorPrioridad p) {
     return p->prox;
 };
