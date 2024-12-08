@@ -165,7 +165,7 @@ int main()
 
         else if (opcionInicial == 2)
         {
-            int opcion;
+            int opcion, statusVotacion;
             do
             {
                 cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
@@ -212,8 +212,15 @@ int main()
                 }
                 case 4:
                 {
+                    if (statusVotacion == 3)
+                    {
+                        cout << "Ya la votacion termino" << endl;
+                    }
+                    else
+                    {
 
-                    votantes.ProcesarVotantes(inscripcion.getCandidatos());
+                        statusVotacion = votantes.MenuVotacion(inscripcion.getCandidatos());
+                    }
                     break;
                 }
                 case 5:
