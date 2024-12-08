@@ -9,6 +9,7 @@
 #include <chrono>
 #include "Candidato.h"
 #include "Libreria/Lista.h"
+#include "Libreria/Validaciones.h"
 using namespace std;
 
 class Inscripcion {

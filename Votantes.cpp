@@ -6,124 +6,70 @@
 #include <fstream>
 #include <iostream>
 #include <bits/parse_numbers.h>
+#include "Libreria/Validaciones.h"
 
 Votantes::Votantes() {}
 
-void Votantes::RegistrarElector()
-{
-	cout << "\t Registro de Elector\n"
-		 << endl;
-	string cedula, nombre, apellido;
-	int prioridad = 0;
+void Votantes::RegistrarElector() {
+    std::cout << "\t Registro de Elector\n" << std::endl;
+    std::string cedula, nombre, apellido;
+    int prioridad = 0;
 
-	while (cedula.empty())
-	{
-		cout << "Ingrese la cedula: ";
-		cin >> cedula;
-		cin.ignore();
-		if (cedula.empty())
-		{
-			cout << "La cedula no puede estar vacia" << endl;
-		}
-	}
+    while (true) {
+        std::cout << "Ingrese la cedula: ";
+        std::cin >> cedula;
+        std::cin.ignore();
+        if (!Validaciones::validarCedula(cedula)) {
+            cedula.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
+        } else {
+            break;
+        }
+    }
 
-	while (nombre.empty())
-	{
-		cout << "Ingrese el nombre: ";
-		cin >> nombre;
-		cin.ignore();
-		if (nombre.empty())
-		{
-			cout << "el nombre no puede estar vacio" << endl;
-		}
-	}
+    while (true) {
+        std::cout << "Ingrese el nombre: ";
+        std::cin >> nombre;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar el buffer de entrada
+        if (!Validaciones::validarNombre(nombre)) {
+            std::cout << "Nombre no valido. No debe contener numeros, caracteres especiales ni espacios." << std::endl;
+            nombre.clear(); // Reiniciar el nombre para asegurar que el ciclo continúa
+        } else {
+            break;
+        }
+    }
 
-	while (apellido.empty())
-	{
-		cout << "Ingrese el apellido: ";
-		cin >> apellido;
-		cin.ignore();
-		if (apellido.empty())
-		{
-			cout << "el apellido no puede estar vacio" << endl;
-		}
-	}
+    while (true) {
+        std::cout << "Ingrese el apellido: ";
+        std::cin >> apellido;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar el buffer de entrada
+        if (!Validaciones::validarNombre(apellido)) {
+            std::cout << "Apellido no valido. No debe contener numeros, caracteres especiales ni espacios." << std::endl;
+            apellido.clear(); // Reiniciar el apellido para asegurar que el ciclo continúa
+        } else {
+            break;
+        }
+    }
 
-	do
-	{
-		cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << endl;
-		cout << "Selecciona una prioridad: ";
-		cin >> prioridad;
-		cin.ignore();
-		if (prioridad != 1 && prioridad != 2 && prioridad != 3)
-		{
-			cout << "Ingrese una prioridad valida (1, 2, 3)" << endl;
-			prioridad = 0; // Reiniciar la prioridad para asegurar que el ciclo continua
-		}
-	} while (prioridad != 1 && prioridad != 2 && prioridad != 3);
+    do {
+        std::cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << std::endl;
+        std::cout << "Selecciona una prioridad: ";
+        std::cin >> prioridad;
+        std::cin.ignore();
+        if (prioridad != 1 && prioridad != 2 && prioridad != 3) {
+            std::cout << "Ingrese una prioridad valida (1, 2, 3)" << std::endl;
+            prioridad = 0; // Reiniciar la prioridad para asegurar que el ciclo continua
+        }
+    } while (prioridad != 1 && prioridad != 2 && prioridad != 3);
 
-	// Crear un objeto Elector y agregarlo a la lista
-	Elector elector(cedula, nombre, apellido);
-	if (electores.InsertarNodoOrdenado(elector, prioridad))
-	{
-		cout << "\n Registro Exitoso \n"
-			 << endl;
-	}
-	else
-	{
-		cout << "\n Fallo al registrar \n"
-			 << endl;
-	}
-};
-
-/*
-void Votantes::insertarElector(Elector elector, int electorPrioridad)
-{
-	Elector marca;
-	marca.setCedula("$$$$$$");
-
-	// si es el primer elector a registrar o si la prioridad es normal, insertamos al final
-	if (electores.VaciaPrioridad() || electorPrioridad == 3) {
-		electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
-		cout << "Elector registrado" << endl;
-	} else {
-		Elector elecAux;
-		int elecPrioAux;
-		bool realizado = false;
-
-		electores.InsertarNodoColaPrioridad(marca, 777);
-
-		do {
-
-			electores.RemoverNodoColaPrioridad(elecAux, elecPrioAux);
-
-			// CODIGO QUE SE EJECUTA PARA CADA ITERACION DE ELECTOR
-			// ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
-
-			// buscamos el primer elector de la prioridad siguiente para registrar antes el nuevo elector
-			if (elecPrioAux > electorPrioridad && realizado == false) {
-				electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
-				realizado = true;
-				cout << "Elector registrado" << endl;
-			}
-
-			// ⬆️⬆️⬆️⬆️⬆️⬆️⬆️
-			// FIN DEL CODIGO QUE SE EJECUTA PARA CADA ITERACION DE ELECTOR
-
-			if (elecAux.getCedula() != marca.getCedula()) {
-				electores.InsertarNodoColaPrioridad(elecAux, elecPrioAux);
-			} else if (elecAux.getCedula() == marca.getCedula()) {
-				break;
-			}
-
-		} while (true);
-
-		if (!realizado) {
-			cout << "No se ha registrado el elector." << std::endl;
-		}
-	}
+    // Crear un objeto Elector y agregarlo a la lista
+    Elector elector(cedula, nombre, apellido);
+    if (electores.InsertarNodoOrdenado(elector, prioridad)) {
+        std::cout << "\n Registro Exitoso \n" << std::endl;
+    } else {
+        std::cout << "\n Fallo al registrar \n" << std::endl;
+    }
 }
-*/
+
 
 void Votantes::MostrarElectores()
 {
@@ -360,7 +306,7 @@ void Votantes::ReportePorPrioridad()
 
 		if (statusSeleccionado > 2 || statusSeleccionado == 0)
 		{
-			cout << " Opcion Invalidad." << endl;
+			cout << " Opcion Invalida." << endl;
 		}
 
 	} while (statusSeleccionado < 1 || statusSeleccionado > 2);
@@ -387,7 +333,7 @@ void Votantes::ReportePorPrioridad()
 
 		if (prioridadActual > 3 || prioridadActual == 0)
 		{
-			cout << " Opcion Invalidad" << endl;
+			cout << " Opcion Invalida" << endl;
 		}
 
 	} while (prioridadSeleccionada < 1 || prioridadSeleccionada > 3);
@@ -612,7 +558,7 @@ void Votantes::listarGanadores(Lista<Candidato>& candidatos)
 
 			if (ganadorActual.getStatus() == "ACTIVO")
 			{
-				cout << "\t\tPosicion " << posicion;
+				cout << "\t\tPosicion: " << posicion;
 				cout << " - Votos: " << ganadorActual.getVotos() << "\n"
 					 << endl;
 				cout << "\t Candidato " << ganadorActual.getNombre();

@@ -10,6 +10,8 @@ add_executable(proyecto_elecciones_diputados
     Libreria/Lista.cpp
     Libreria/Lista.h
     Libreria/Pila.h
+    Libreria/Validaciones.h
+    Libreria/Validaciones.cpp
     Candidato.cpp
     Candidato.h
     Inscripcion.cpp
@@ -19,4 +21,5 @@ add_executable(proyecto_elecciones_diputados
         Elector.cpp
         Votantes.cpp
         Votantes.h
+        Votantes.cpp
 )
