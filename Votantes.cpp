@@ -347,7 +347,7 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> &candidatos)
 			return true; 
 		} 
 		// pasamos al siguiente elector
-		currentNode = electores.ObtProxPrioridad(currentNode);
+		currentNode = electores.SacarTope();
 	}
 	return true;
 }
