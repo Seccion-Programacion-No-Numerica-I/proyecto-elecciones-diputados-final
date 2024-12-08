@@ -17,9 +17,9 @@ void Votantes::RegistrarElector() {
 
     while (true) {
         std::cout << "Ingrese la cedula: ";
-        std::cin >> cedula;
-        std::cin.ignore();
+        std::getline(std::cin, cedula);
         if (!Validaciones::validarCedula(cedula)) {
+            std::cout << "Cedula no valida. Debe tener entre 6 y 9 digitos y no debe contener espacios." << std::endl;
             cedula.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
         } else {
             break;
@@ -28,10 +28,9 @@ void Votantes::RegistrarElector() {
 
     while (true) {
         std::cout << "Ingrese el nombre: ";
-        std::cin >> nombre;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar el buffer de entrada
+        std::getline(std::cin, nombre);
         if (!Validaciones::validarNombre(nombre)) {
-            std::cout << "Nombre no valido. No debe contener numeros, caracteres especiales ni espacios." << std::endl;
+            std::cout << "Nombre no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
             nombre.clear(); // Reiniciar el nombre para asegurar que el ciclo continúa
         } else {
             break;
@@ -40,10 +39,9 @@ void Votantes::RegistrarElector() {
 
     while (true) {
         std::cout << "Ingrese el apellido: ";
-        std::cin >> apellido;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar el buffer de entrada
+        std::getline(std::cin, apellido);
         if (!Validaciones::validarNombre(apellido)) {
-            std::cout << "Apellido no valido. No debe contener numeros, caracteres especiales ni espacios." << std::endl;
+            std::cout << "Apellido no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
             apellido.clear(); // Reiniciar el apellido para asegurar que el ciclo continúa
         } else {
             break;
@@ -54,7 +52,7 @@ void Votantes::RegistrarElector() {
         std::cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << std::endl;
         std::cout << "Selecciona una prioridad: ";
         std::cin >> prioridad;
-        std::cin.ignore();
+        std::cin.ignore(); // Limpiar el buffer de entrada
         if (prioridad != 1 && prioridad != 2 && prioridad != 3) {
             std::cout << "Ingrese una prioridad valida (1, 2, 3)" << std::endl;
             prioridad = 0; // Reiniciar la prioridad para asegurar que el ciclo continua
