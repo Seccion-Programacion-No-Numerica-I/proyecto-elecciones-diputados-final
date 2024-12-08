@@ -34,6 +34,10 @@ bool Validaciones::validarString(const std::string& input) {
 }
 
 bool Validaciones::validarNombre(const std::string& input) {
+    if (input.length() < 2 || input.length() > 20) {
+        std::cout << "Nombre no valido. Debe tener entre 2 y 20 caracteres." << std::endl;
+        return false;
+    }
     for (char c : input) {
         if (!std::isalpha(c)) {
             std::cout << "Nombre no valido. No debe contener numeros, caracteres especiales ni espacios." << std::endl;
