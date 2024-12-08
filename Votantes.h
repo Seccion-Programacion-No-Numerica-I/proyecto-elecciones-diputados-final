@@ -39,6 +39,8 @@ class Votantes {
     // Reporte por status ( si voto o no)
     void ReportePorStatus();
 
+    // LISTA LOS GANADORES DESPUES DE LAS ELECCIONES
+    void listarGanadores(Lista<Candidato>& candidatos);
 };
 
 #endif //VOTANTES_H

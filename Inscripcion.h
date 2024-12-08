@@ -63,7 +63,6 @@ class Inscripcion {
 		void ReporteGeneral();
 		void MostrarReporteCompleto();
         
-		void listarGanadores(); // Muestra los 15 candidatos con mayores votos
 
 		//Metodos Auxiliares - Punto 5 - Reporte
 		int generarNumeroAleatorio();
