@@ -573,7 +573,7 @@ void Inscripcion::listarGanadores()
 
 		std::cout << "Candidatos electos: \n"
 				  << std::endl;
-		while (ganador)
+		while (ganador && posicion <= 15)
 		{
 			Candidato ganadorActual = ganadores.ObtInfo(ganador);
 
