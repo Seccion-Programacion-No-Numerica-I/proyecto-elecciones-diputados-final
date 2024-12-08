@@ -38,8 +38,9 @@ class Inscripcion {
 		//Verificar si se puede ingresar el candidato
 		bool verificarDisponibilidad(Candidato);
 
-		Lista<Candidato>& getCandidatos(); 
-		//Registrar un candidato
+		Lista<Candidato>& getCandidatos();
+
+        //Registrar un candidato
 		void Registrar();
 
 		//Buscar un candidato
@@ -61,6 +62,8 @@ class Inscripcion {
 		// reportes
 		void ReporteGeneral();
 		void MostrarReporteCompleto();
+        
+		void listarGanadores(); // Muestra los 15 candidatos con mayores votos
 
 		//Metodos Auxiliares - Punto 5 - Reporte
 		int generarNumeroAleatorio();
