@@ -55,7 +55,7 @@ public:
     void pasarListaAux(Lista<Tipo> &listaFuente, Lista<Tipo> &listaDestino);
     bool InsFinal(Tipo Valor);
 
-
+    nodoPrioridad<Tipo>* SacarTope(); 
 
     nodo<Tipo>* ObtFinal();
 
