@@ -1,6 +1,9 @@
 #include "Inscripcion.h"
 #include <iostream>
 #include <fstream>
+#include "Validaciones.h"
+#include <iostream>
+#include <string>
 
 Inscripcion::Inscripcion() {}
 
@@ -71,159 +74,89 @@ void Inscripcion::CargarCandidatos()
 	}
 	archivo.close();
 	delete candidato;
-	cout << "\033[H\033[2J";
-	cout << "\nRegistrados " << cont / 6 << " candidatos." << endl;
-}
-/*
-void Inscripcion::CargarCandidatos()
-{
-	string dato, urlArchivo = "candidatos.txt";
-	fstream archivo;
-	archivo.open(urlArchivo.c_str());
-
-	int cont = 0; // Declaramos un contador para llevar el control de la estructura de archivo
-	auto *candidato = new Candidato();
-	// int partido = 1;
-	while (archivo >> dato)
-	{
-		// leemos cada palabra del archivo y la asignamos al dato.
-		cont++;
-		// dependiendo de la estructura que se lleve, se asigna el dato al atributo
-		if (cont % 5 == 1)
-		{
-			candidato->setCedula(dato);
-		}
-		if (cont % 5 == 2)
-		{
-			candidato->setNombre(dato);
-		}
-		if (cont % 5 == 3)
-		{
-			candidato->setApellido(dato);
-		}
-		if (cont % 5 == 4)
-		{
-			int partido = std::stoi(dato);
-			candidato->setIdPartido(partido);
-		}
-		if (dato == ";")
-		{ // al encontrar un ; en el archivo registra el candidato
-
-			candidato->setStatus("ACTIVO");	 // el candidato esta activo
-			candidato->mostrarInformacion(); // muestra la informacion del candidato
-			candidatos.InsertarNodoCola(*candidato);
-			// candidatosPorPartido[partido - 1]++;
-			// insertamos el candidato en la cola
-			candidato = new Candidato();
-		}
-	}
-	archivo.close();
-	delete candidato;
-	cout << "\033[H\033[2J";
-	cout << "\nRegistrados " << cont / 5 << " candidatos." << endl;
-}
-*/
-
-void Inscripcion::Registrar()
-{
-	int cantidadCandidatos;
-	cout << "Registro de Candidatos" << endl;
-	cout << "Ingrese la cantidad de candidatos a registrar: ";
-	cin >> cantidadCandidatos;
-	cin.ignore(); // Limpiar el buffer
-
-	for (int i = 0; i < cantidadCandidatos; i++)
-	{
-		string cedula, nombre, apellido;
-		int partido = 0;
-
-		cout << "\nRegistro del Candidato " << i + 1 << endl;
-
-		while (cedula.empty())
-		{
-
-			cout << "Ingrese la cedula: ";
-			cin >> cedula;
-			cin.ignore();
-			if (cedula.empty())
-			{
-				cout << "La cedula no puede estar vacia" << endl;
-			}
-			else
-			{
-
-				cout << "Cedula: " << cedula << " guardada" << endl;
-			}
-		}
-
-		while (nombre.empty())
-		{
-
-			cout << "Ingrese el nombre: ";
-			cin >> nombre;
-			cin.ignore();
-			if (nombre.empty())
-			{
-				cout << "el nombre no puede estar vacio" << endl;
-			}
-			else
-			{
-
-				cout << "Nombre: " << nombre << " guardado" << endl;
-			}
-		}
-
-		while (apellido.empty())
-		{
-
-			cout << "Ingrese el apellido: ";
-			cin >> apellido;
-			cin.ignore();
-			if (apellido.empty())
-			{
-				cout << "el apellido no puede estar vacio" << endl;
-			}
-			else
-			{
-
-				cout << "Apellido: " << apellido << " guardado" << endl;
-			}
-		}
-
-		while (partido < 1 || partido > 5)
-		{
-
-			cout << "Ingrese el partido politico: ";
-			cin >> partido;
-			if (cin.fail() || partido < 1 || partido > 5)
-			{
-				cout << "Ingrese un partido valido (1, 2, 3, 4, 5)" << endl;
-				partido = 0; // Reiniciar el partido para asegurar que el ciclo continua
-			}
-		}
-
-		// Crear un objeto Candidato y agregarlo a la lista
-		Candidato candidato(cedula, nombre, apellido, partido);
-		if (verificarDisponibilidad(candidato))
-		{
-			candidato.setStatus("ACTIVO");
-			candidatos.InsFinal(candidato);
-		}
-		// Mostrar la lista de candidatos registrados
-		cout << "\nLista de Candidatos Registrados:" << endl;
-		nodo<Candidato> *p = candidatos.ObtPrimero();
-		while (p != nullptr)
-		{
-			candidatos.ObtInfo(p).mostrarInformacion();
-			cout << endl;
-			p = candidatos.ObtProx(p); // Aquí se corrigió el nombre del metodo
-		}
-		cout << "Pulse enter para continuar...";
-		cin.ignore();
-		cin.get();
-	}
+	std::cout << "\033[H\033[2J";
+	std::cout << "\nRegistrados " << cont / 6 << " candidatos." << endl;
 }
 
+void Inscripcion::Registrar() {
+    int cantidadCandidatos;
+    std::cout << "Registro de Candidatos" << std::endl;
+    std::cout << "Ingrese la cantidad de candidatos a registrar: ";
+    std::cin >> cantidadCandidatos;
+    std::cin.ignore(); // Limpiar el buffer
+
+    for (int i = 0; i < cantidadCandidatos; i++) {
+        std::string cedula, nombre, apellido;
+        int partido = 0;
+
+        std::cout << "\nRegistro del Candidato " << i + 1 << std::endl;
+
+        while (true) {
+            std::cout << "Ingrese la cedula: ";
+            std::cin >> cedula;
+            std::cin.ignore();
+            if (!Validaciones::validarCedula(cedula)) {
+                cedula.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
+            } else {
+                std::cout << "Cedula: " << cedula << " guardada" << std::endl;
+                break;
+            }
+        }
+
+        while (true) {
+            std::cout << "Ingrese el nombre: ";
+            std::cin >> nombre;
+            std::cin.ignore();
+            if (!Validaciones::validarNombre(nombre)) {
+                nombre.clear(); // Reiniciar el nombre para asegurar que el ciclo continúa
+            } else {
+                std::cout << "Nombre: " << nombre << " guardado" << std::endl;
+                break;
+            }
+        }
+
+        while (true) {
+            std::cout << "Ingrese el apellido: ";
+            std::cin >> apellido;
+            std::cin.ignore();
+            if (!Validaciones::validarNombre(apellido)) {
+                apellido.clear(); // Reiniciar el apellido para asegurar que el ciclo continúa
+            } else {
+                std::cout << "Apellido: " << apellido << " guardado" << std::endl;
+                break;
+            }
+        }
+
+        while (partido < 1 || partido > 5) {
+            std::cout << "Ingrese el partido politico: ";
+            std::cin >> partido;
+            if (std::cin.fail() || partido < 1 || partido > 5) {
+                std::cout << "Ingrese un partido valido (1, 2, 3, 4, 5)" << std::endl;
+                std::cin.clear(); // Limpiar el estado de error de cin
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar el buffer
+                partido = 0; // Reiniciar el partido para asegurar que el ciclo continúa
+            }
+        }
+
+        // Crear un objeto Candidato y agregarlo a la lista
+        Candidato candidato(cedula, nombre, apellido, partido);
+        if (verificarDisponibilidad(candidato)) {
+            candidato.setStatus("ACTIVO");
+            candidatos.InsFinal(candidato);
+        }
+        // Mostrar la lista de candidatos registrados
+        std::cout << "\nLista de Candidatos Registrados:" << std::endl;
+        nodo<Candidato> *p = candidatos.ObtPrimero();
+        while (p != nullptr) {
+            candidatos.ObtInfo(p).mostrarInformacion();
+            std::cout << std::endl;
+            p = candidatos.ObtProx(p); // Aquí se corrigió el nombre del metodo
+        }
+        std::cout << "Pulse enter para continuar...";
+        std::cin.ignore();
+        std::cin.get();
+    }
+}
 void Inscripcion::Eliminar(Candidato cand)
 {
 	std::cout << "\n\nCandidato Eliminado:\n";
@@ -236,69 +169,91 @@ void Inscripcion::Eliminar(Candidato cand)
 
 void Inscripcion::Buscar(Candidato cand)
 {
-	std::cout << "\n\nCandidato Mostrado:\n";
+	std::cout << "\n\nCandidato Mostrado: \n";
 	cand.mostrarInformacion();
 
 	cout << "Pulse enter para continuar...";
 	cin.get();
 }
 
-Candidato Inscripcion::Modificar(Candidato cand, string cedula)
-{
-	Candidato nuevo;
-	string nuevoNombre, nuevoApellido;
-	int idNuevoPartido, opcionEstatus;
+Candidato Inscripcion::Modificar(Candidato cand, std::string cedula) {
+    Candidato nuevo;
+    std::string nuevoNombre, nuevoApellido;
+    int idNuevoPartido, opcionEstatus;
 
-	cout << "\n\nCandidato encontrado\n"
-		 << endl;
-	cand.mostrarInformacion();
+    std::cout << "\n\nCandidato encontrado\n" << std::endl;
+    cand.mostrarInformacion();
 
-	cout << "\tIngrese los nuevos datos para el candidato con cedula " << cand.getCedula() << " \n\n";
-	nuevo.setCedula(cedula);
-	cout << "Nombre:";
-	getline(cin, nuevoNombre);
-	nuevo.setNombre(nuevoNombre);
-	cout << "Apellido:";
-	getline(cin, nuevoApellido);
-	nuevo.setApellido(nuevoApellido);
-	cout << "ID del partido:";
-	cin >> idNuevoPartido;
-	nuevo.setIdPartido(idNuevoPartido);
-	do
-	{
-		cout << "Nuevo estatus del candidato: \n\n1.- Activo\n2.-Inactivo\n";
-		cin >> opcionEstatus;
-		switch (opcionEstatus)
-		{
-		case 1:
-			nuevo.setStatus("ACTIVO");
-			break;
-		case 2:
-			nuevo.setStatus("INACTIVO");
-			break;
-		default:
-			cout << "Opcion invalida";
-			break;
-		}
-	} while (opcionEstatus < 1 || opcionEstatus > 2);
+    std::cout << "\tIngrese los nuevos datos para el candidato con cedula " << cand.getCedula() << " \n\n";
+    nuevo.setCedula(cedula);
 
-	if (verificarDisponibilidad(nuevo))
-	{
-		cout << "\nCandidato modificado exitosamente:\n";
-		nuevo.mostrarInformacion();
+    while (true) {
+        std::cout << "Nombre: ";
+        std::getline(std::cin, nuevoNombre);
+        if (!Validaciones::validarNombre(nuevoNombre)) {
+            nuevoNombre.clear(); // Reiniciar el nombre para asegurar que el ciclo continúa
+        } else {
+            nuevo.setNombre(nuevoNombre);
+            break;
+        }
+    }
 
-		cout << "Pulse enter para continuar...";
-		cin.ignore();
-		cin.get();
+    while (true) {
+        std::cout << "Apellido: ";
+        std::getline(std::cin, nuevoApellido);
+        if (!Validaciones::validarNombre(nuevoApellido)) {
+            nuevoApellido.clear(); // Reiniciar el apellido para asegurar que el ciclo continúa
+        } else {
+            nuevo.setApellido(nuevoApellido);
+            break;
+        }
+    }
 
-		return nuevo;
-	}
-	cout << "\nCandidato no modificado\n";
+    while (true) {
+        std::string idPartidoStr;
+        std::cout << "ID del partido: ";
+        std::cin >> idPartidoStr;
+        std::cin.ignore(); // Limpiar el buffer de entrada
+        if (!Validaciones::validarEntero(idPartidoStr, idNuevoPartido)) {
+            std::cout << "ID del partido no valido. Debe ser un número entero." << std::endl;
+        } else {
+            nuevo.setIdPartido(idNuevoPartido);
+            break;
+        }
+    }
 
-	cout << "Pulse enter para continuar...";
-	cin.get();
+    do {
+        std::cout << "Nuevo estatus del candidato: \n\n1.- Activo\n2.-Inactivo\n";
+        std::cin >> opcionEstatus;
+        switch (opcionEstatus) {
+            case 1:
+                nuevo.setStatus("ACTIVO");
+                break;
+            case 2:
+                nuevo.setStatus("INACTIVO");
+                break;
+            default:
+                std::cout << "Opcion invalida" << std::endl;
+                break;
+        }
+    } while (opcionEstatus < 1 || opcionEstatus > 2);
 
-	return cand;
+    if (verificarDisponibilidad(nuevo)) {
+        std::cout << "\nCandidato modificado exitosamente:\n";
+        nuevo.mostrarInformacion();
+
+        std::cout << "Pulse enter para continuar...";
+        std::cin.ignore();
+        std::cin.get();
+
+        return nuevo;
+    }
+    std::cout << "\nCandidato no modificado\n";
+
+    std::cout << "Pulse enter para continuar...";
+    std::cin.get();
+
+    return cand;
 }
 
 void Inscripcion::iterarCandidatos(string busqueda, int opcion)
@@ -523,4 +478,3 @@ Lista<Candidato> &Inscripcion::getCandidatos()
 {
 	return candidatos;
 }
-

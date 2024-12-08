@@ -1,6 +1,8 @@
 #include "Candidato.h"
 #include "Inscripcion.h"
+#include "Validaciones.h"
 #include <iostream>
+#include <string>
 
 #include "Votantes.h"
 
@@ -43,7 +45,7 @@ int main()
                 cout << "7. Mostrar Candidatos por Partido" << endl;
                 cout << "8. Salir" << endl;
                 cout << "9. Cargar Candidatos" << endl;
-                cout << "Elige una opcion:";
+                cout << "Elige una opcion: ";
                 cin >> opcion;
                 cin.ignore(); // Limpiar el buffer de entrada
 
@@ -64,40 +66,66 @@ int main()
 
                 case 3:
                 {
-
-                    string cedBuscar;
-                    cout << "\tIngrese la cedula del candidato:";
-                    cin >> cedBuscar;
-                    cin.ignore(); // Limpiar el buffer de entrada
-
+                    std::string cedBuscar;
+                    while (true)
+                    {
+                        std::cout << "\tIngrese la cedula del candidato: ";
+                        std::cin >> cedBuscar;
+                        std::cin.ignore(); // Limpiar el buffer de entrada
+                        if (!Validaciones::validarCedula(cedBuscar))
+                        {
+                            cedBuscar.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     inscripcion.iterarCandidatos(cedBuscar, 1);
                     break;
                 }
 
                 case 4:
                 {
-
-                    string cedulaModificar;
-                    cout << "\tIngrese la cedula del candidato a modificar:";
-                    cin >> cedulaModificar;
-                    cin.ignore(); // Limpiar el buffer de entrada
-
+                    std::string cedulaModificar;
+                    while (true)
+                    {
+                        std::cout << "\tIngrese la cedula del candidato a modificar: ";
+                        std::cin >> cedulaModificar;
+                        std::cin.ignore(); // Limpiar el buffer de entrada
+                        if (!Validaciones::validarCedula(cedulaModificar))
+                        {
+                            cedulaModificar.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     inscripcion.iterarCandidatos(cedulaModificar, 2);
                     break;
                 }
 
                 case 5:
                 {
-
-                    string cedEliminar;
-                    cout << "\tIngrese la cedula del candidato a eliminar:";
-                    cin >> cedEliminar;
-                    cin.ignore(); // Limpiar el buffer de entrada
-
+                    std::string cedEliminar;
+                    while (true)
+                    {
+                        std::cout << "\tIngrese la cedula del candidato a eliminar: ";
+                        std::cin >> cedEliminar;
+                        std::cin.ignore(); // Limpiar el buffer de entrada
+                        if (!Validaciones::validarCedula(cedEliminar))
+                        {
+                            cedEliminar.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     inscripcion.iterarCandidatos(cedEliminar, 3);
                     break;
                 }
-
                 case 6:
                 {
                     // inscripcion.ReporteGeneral();
@@ -108,7 +136,7 @@ int main()
                 case 7:
                 {
                     string partido;
-                    cout << "Ingresa el nombre del partido:";
+                    cout << "Ingresa el nombre del partido: ";
                     cin >> partido;
                     cin.ignore(); // Limpiar el buffer de entrada
 
@@ -152,7 +180,7 @@ int main()
 
                 cout << "\t 0. Salir" << endl;
 
-                cout << "\t Elegir una opcion ";
+                cout << "\t Elegir una opcion: ";
                 cin >> opcion;
 
                 switch (opcion)
