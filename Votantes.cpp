@@ -430,6 +430,43 @@ void Votantes::MostrarMenuReportes()
 	} while (opcionMenu != 0);
 }
 
+void Votantes::MostrarMenuReportes()
+{
+	int opcionMenu;
+	do
+	{
+		cout << "\n Menu de reportes para los votantes.\n"
+			 << endl;
+		cout << "\t 1. Reporte de votantes por prioridad." << endl;
+		cout << "\t 2. Reporte de votantes por status." << endl;
+		cout << "\t 0. Salir." << endl;
+		cin >> opcionMenu;
+		switch (opcionMenu)
+		{
+		case 0:
+		{
+			cout << "\t Volviendo al menu anterior." << endl;
+			break;
+		}
+		case 1:
+		{
+			ReportePorPrioridad();
+			break;
+		}
+		case 2:
+		{
+			ReportePorStatus();
+			break;
+		}
+		default:
+		{
+			cout << "\t Opcion invalida, volviendo al menu de reportes" << endl;
+			break;
+		}
+		}
+	} while (opcionMenu != 0);
+}
+
 void Votantes::ReportePorPrioridad()
 {
 	int prioridadActual;
@@ -640,6 +677,79 @@ void Votantes::ReportePorStatus()
 		{
 			prioridadAuxMensaje = colaNoVotantes.ObtPrioridad(actual);
 			actual = colaNoVotantes.ObtProxPrioridad(actual);
+		}
+	}
+}
+
+void Votantes::listarGanadores(Lista<Candidato>& candidatos)
+{
+	Lista<Candidato> ganadores;
+
+	nodo<Candidato> *actual = candidatos.ObtPrimero();
+
+	// ITERAMOS LA LISTA DE CANDIDATOS
+	while (actual)
+	{
+		if (ganadores.Vacia())
+		{
+			ganadores.InsComienzo(candidatos.ObtInfo(actual));
+		}
+		else
+		{ // VACIAMOS
+			nodo<Candidato> *aux1 = ganadores.ObtPrimero();
+			auto *aux2 = candidatos.ObtProx(aux1);
+
+			// ITERAMOS LA LISTA DE GANADORES PARA IR VACIANDO LOS CANDIDATOS POR ORDEN DE VOTOS
+			while (aux1)
+			{
+				if (candidatos.ObtInfo(actual).getVotos() >= candidatos.ObtInfo(aux1).getVotos())
+				{
+
+					ganadores.InsComienzo(candidatos.ObtInfo(actual));
+					break;
+				}
+				else if (aux2 == NULL || candidatos.ObtInfo(actual).getVotos() >= candidatos.ObtInfo(aux2).getVotos())
+				{
+					ganadores.InsDespues(aux1, candidatos.ObtInfo(actual));
+					break;
+				}
+
+				aux1 = aux2;
+				aux2 = candidatos.ObtProx(aux1);
+			}
+		}
+		actual = candidatos.ObtProx(actual);
+	}
+
+	// MOSTRAMOS LOS GANADORES
+	if (!ganadores.Vacia())
+	{
+		int posicion = 1;
+
+		nodo<Candidato> *ganador = ganadores.ObtPrimero();
+
+		std::cout << "Candidatos electos: \n"
+				  << std::endl;
+		while (ganador && posicion <= 15)
+		{
+			Candidato ganadorActual = ganadores.ObtInfo(ganador);
+
+			if (ganadorActual.getStatus() == "ACTIVO")
+			{
+				cout << "\t\tPosicion " << posicion;
+				cout << " - Votos: " << ganadorActual.getVotos() << "\n"
+					 << endl;
+				cout << "\t Candidato " << ganadorActual.getNombre();
+				cout << " " << ganadorActual.getApellido();
+				cout << " - Partido " << ganadorActual.getNombrePartido()
+					 << endl;
+				cout << "\t------------------------------------------------- \n"
+					 << endl;
+
+				posicion++;
+			}
+
+			ganador = ganadores.ObtProx(ganador);
 		}
 	}
 }
