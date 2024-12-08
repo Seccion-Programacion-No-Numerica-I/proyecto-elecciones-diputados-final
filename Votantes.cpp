@@ -288,6 +288,7 @@ void Votantes::EliminarVotante(string cedulaVotante) {
 		if(cedulaVotante == electorActual.getCedula()) {
 			electores.RemoverNodoColaPrioridad(electorActual,prioridadActual);
 			colaEliminados.InsertarNodoColaPrioridad(electorActual,prioridadActual);
+			cout<<"/t el Votante con la cedula: "<<cedulaVotante<<" ha sido eliminado."<<endl;
 			return;
 		}
 
@@ -305,9 +306,9 @@ void Votantes::MostrarMenuReportes() {
 	int opcionMenu;
 	do {
 		cout<<"\n Menu de reportes para los votantes.\n"<<endl;
-		cout<<"\t 1. Reporte de votantes por prioridad."<<endl;
-		cout<<"\t 2. Reporte de votantes por status."<<endl;
-		cout<<"\t 3. Reporte de votantes Eliminados."<<endl;
+		cout<<"\t 1. Reporte de votantes."<<endl;
+		cout<<"\t 2. Reporte de votantes eliminados."<<endl;
+		cout<<"\t 3. Reporte de votantes excluidos."<<endl;
 		cout<<"\t 0. Salir."<<endl;
 		cin>>opcionMenu;
 		switch(opcionMenu) {
@@ -316,15 +317,15 @@ void Votantes::MostrarMenuReportes() {
 				break;
 			}
 			case 1: {
-				ReportePorPrioridad();
+				ReporteDeVotantes();
 				break;
 			}
 			case 2: {
-				ReportePorStatus();
+				ReporteEliminados();
 				break;
 			}
-			case 3: {
-				ReporteEliminados();
+			case 3:{
+				ReporteExcluidos();
 				break;
 			}
 			default: {
@@ -337,58 +338,25 @@ void Votantes::MostrarMenuReportes() {
 
 }
 
-void Votantes::ReportePorPrioridad() {
-	int prioridadActual ;
-	int statusSeleccionado;
-	int prioridadSeleccionada;
-	bool priodadVacia = true;
-	nodoPrioridad<Elector> *actual;
+void Votantes::ReporteDeVotantes() {
+	int prioridadActual;
+	int prioridadAnterior = 0;
 	Elector electorActual;
-	bool mostrarNombrePrioridad = true;
 
-	do {
-		cout<<" Indique el status por el que desea ver el reporte (1-Procesados, 2- NO procesados): "<<endl;
-		cin>>statusSeleccionado;
 
-		if(statusSeleccionado > 2 || statusSeleccionado == 0) {
-			cout<<" Opcion Invalidad."<<endl;
-		}
-
-	} while(statusSeleccionado < 1 || statusSeleccionado > 2);
-
-	if(statusSeleccionado == 1) {
-		actual = colaVotantes.ObtPrimeroPrioridad();
-	} else {
-		actual = colaNoVotantes.ObtPrimeroPrioridad();
-	}
+	nodoPrioridad<Elector> *actual =colaVotantes.ObtPrimeroPrioridad();
 
 	if (!actual) {
 		cout << "No hay electores inscritos en la cola." << endl;
 		return;
 	}
 
-	do {
-		cout<<"Indique la prioridad que desea ver (1.- Tercera edad 2.- Embarazadas 3.- Normal): "<<endl;
-		cin>>prioridadSeleccionada;
-
-		if(prioridadActual > 3 || prioridadActual == 0) {
-			cout<<" Opcion Invalidad"<<endl;
-		}
-
-	} while(prioridadSeleccionada < 1 || prioridadSeleccionada > 3);
-
 	while (actual) {
+		electorActual = colaVotantes.ObtInfoPrioridad(actual);
+		prioridadActual = colaVotantes.ObtPrioridad(actual);
 
-		if(statusSeleccionado == 1) {
-			electorActual = colaVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaVotantes.ObtPrioridad(actual);
-		} else {
-			electorActual = colaNoVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
-		}
-
-		if(mostrarNombrePrioridad) {
-			switch(prioridadSeleccionada) {
+		if(prioridadAnterior != prioridadActual) {
+			switch(prioridadActual) {
 				case 1: {
 					cout<<"3era Edad:\n"<<endl;
 					break;
@@ -402,75 +370,35 @@ void Votantes::ReportePorPrioridad() {
 					break;
 				}
 			}
-			mostrarNombrePrioridad = false;
 		}
 
-		if(prioridadSeleccionada == prioridadActual) {
+		cout<<"\t Nombre del elector:"<<" "<<electorActual.getNombre()<<" "<<electorActual.getApellido()<<endl;
+		cout<<"\t Cedula del elector:"<<" "<<electorActual.getCedula()<<" \n"<<endl;
 
-			cout<<"\t Nombre del elector:"<<" "<<electorActual.getNombre()<<" "<<electorActual.getApellido()<<endl;
-			cout<<"\t Cedula del elector:"<<" "<<electorActual.getCedula()<<" \n"<<endl;
-			priodadVacia = false;
-		}
+		prioridadAnterior = prioridadActual;
+		prioridadActual = colaVotantes.ObtPrioridad(actual);
+		actual = colaVotantes.ObtProxPrioridad(actual);
 
-		if(statusSeleccionado == 1) {
-			prioridadActual = colaVotantes.ObtPrioridad(actual);
-			actual = colaVotantes.ObtProxPrioridad(actual);
-		} else {
-			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
-			actual = colaNoVotantes.ObtProxPrioridad(actual);
-		}
 	}
 
-	if(priodadVacia) {
-		cout<<" Esta Prioridad no tiene votantes inscritos"<<endl;
-	}
 }
 
 
 void Votantes::ReportePorStatus() {
-	int statusSeleccionado;
 	int prioridadActual = 0;
 	int prioridadAuxMensaje = 0;
 	nodoPrioridad<Elector> *actual;
 	Elector electorActual;
 
-	do {
-		cout<<" Indique el status por el que desea ver el reporte (1-Procesados, 2- NO procesados): "<<endl;
-		cin>>statusSeleccionado;
-
-		if(statusSeleccionado > 2 || statusSeleccionado == 0) {
-			cout<<" Opcion Invalidad"<<endl;
-		}
-
-	} while(statusSeleccionado < 1 || statusSeleccionado > 2);
-
-	if(statusSeleccionado == 1) {
-		actual = colaVotantes.ObtPrimeroPrioridad();
-	} else {
-		actual = colaNoVotantes.ObtPrimeroPrioridad();
-	}
-
+	actual = colaVotantes.ObtPrimeroPrioridad();
 
 	if (!actual) {
-		if(statusSeleccionado == 1) {
-			cout << "No hay electores Procesados en la cola." << endl;
-
-		} else {
-			cout << "No hay electores NO Procesados en la cola." << endl;
-		}
-		return;
+		cout << "No hay electores en la cola." << endl;
 	}
 
 	while (actual) {
-
-		if(statusSeleccionado == 1) {
-			electorActual = colaVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaVotantes.ObtPrioridad(actual);
-		} else {
-			electorActual = colaNoVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
-		}
-
+		electorActual = colaVotantes.ObtInfoPrioridad(actual);
+		prioridadActual = colaVotantes.ObtPrioridad(actual);
 
 		if(prioridadActual != prioridadAuxMensaje) {
 			switch(prioridadActual) {
@@ -492,14 +420,9 @@ void Votantes::ReportePorStatus() {
 		cout<<"\t Nombre del elector:"<<" "<<electorActual.getNombre()<<" "<<electorActual.getApellido()<<endl;
 		cout<<"\t Cedula del elector:"<<" "<<electorActual.getCedula()<<" \n"<<endl;
 
+		prioridadAuxMensaje = colaVotantes.ObtPrioridad(actual);
+		actual = colaVotantes.ObtProxPrioridad(actual);
 
-		if(statusSeleccionado == 1) {
-			prioridadAuxMensaje = colaVotantes.ObtPrioridad(actual);
-			actual = colaVotantes.ObtProxPrioridad(actual);
-		} else {
-			prioridadAuxMensaje = colaNoVotantes.ObtPrioridad(actual);
-			actual = colaNoVotantes.ObtProxPrioridad(actual);
-		}
 	}
 
 }
@@ -517,12 +440,31 @@ void Votantes::ReporteEliminados() {
 	while(actual) {
 		electorActual = colaEliminados.ObtInfoPrioridad(actual);
 		prioridadActual = colaEliminados.ObtPrioridad(actual);
-		
+
 		electorActual.mostrarInfo(prioridadActual);
 
 		prioridadActual = colaEliminados.ObtPrioridad(actual);
 		actual = colaEliminados.ObtProxPrioridad(actual);
 	}
+}
+
+void Votantes::ReporteExcluidos() {
+	nodoPrioridad<Elector> *actual = electores.ObtPrimeroPrioridad();
+	if (!actual) {
+		cout << "No hay electores Excluidos." << endl;
+		return;
+	}
+
+	cout<<"Electores Excluidos: "<<endl;
+	while (actual) {
+		Elector electorActual = electores.ObtInfoPrioridad(actual);
+		electorActual.mostrarInfo(electores.ObtPrioridad(actual));
+		actual = electores.ObtProxPrioridad(actual);
+	}
+}
+
+void Votantes::ReporteExcrutinio(){
+	
 }
 
 
