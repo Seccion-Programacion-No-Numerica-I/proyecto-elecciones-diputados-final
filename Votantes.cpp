@@ -392,44 +392,6 @@ int Votantes::MenuVotacion(Lista<Candidato> &candidatos) {
 }
 
 
-
-void Votantes::MostrarMenuReportes()
-{
-	int opcionMenu;
-	do
-	{
-		cout << "\n Menu de reportes para los votantes.\n"
-			 << endl;
-		cout << "\t 1. Reporte de votantes por prioridad." << endl;
-		cout << "\t 2. Reporte de votantes por status." << endl;
-		cout << "\t 0. Salir." << endl;
-		cin >> opcionMenu;
-		switch (opcionMenu)
-		{
-		case 0:
-		{
-			cout << "\t Volviendo al menu anterior." << endl;
-			break;
-		}
-		case 1:
-		{
-			ReportePorPrioridad();
-			break;
-		}
-		case 2:
-		{
-			ReportePorStatus();
-			break;
-		}
-		default:
-		{
-			cout << "\t Opcion invalida, volviendo al menu de reportes" << endl;
-			break;
-		}
-		}
-	} while (opcionMenu != 0);
-}
-
 void Votantes::MostrarMenuReportes()
 {
 	int opcionMenu;
