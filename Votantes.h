@@ -16,6 +16,8 @@ class Votantes {
     Lista<Elector> electores;
     Lista<Elector> colaVotantes; 
     Lista<Elector> colaNoVotantes; 
+    Lista<Elector> colaEliminados;
+    
     public:
     Votantes(); //Constructor
 
@@ -26,6 +28,9 @@ class Votantes {
     //Votacion
     void ListarCandidatos(Lista<Candidato>& candidatos, bool mostrarVotos);
     bool ProcesarVotantes(Lista<Candidato>& candidatos); 
+    
+    //Metodo donde Se elimina el votante de la lista de electores y se pasa a la cola de Eliminados
+    void EliminarVotante(string cedulaVotante);
 
     //Mostrar los electores registrados
     void MostrarElectores();
@@ -38,6 +43,9 @@ class Votantes {
     void ReportePorPrioridad();
     // Reporte por status ( si voto o no)
     void ReportePorStatus();
+    
+	//Reporte de Eliminados
+	void ReporteEliminados();
 
 };
 
