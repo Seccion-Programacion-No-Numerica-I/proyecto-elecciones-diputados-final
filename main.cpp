@@ -117,6 +117,7 @@ int main() {
 
         else if (opcionInicial == 2) {
             int opcion;
+            int statusVotacion = 1; // 1. Sin hacer, 2. En proceso, 3. Cerrada
             do {
                 // cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
             cout << "\nModulo votantes seleccionado\n" << endl;
@@ -151,8 +152,12 @@ int main() {
                         break;
                     }
                     case 4: {
-                         
-                        votantes.ProcesarVotantes(inscripcion.getCandidatos());
+                        if (statusVotacion == 3) {
+                            cout << "Ya la votacion termino" << endl; 
+                        } else {
+
+                        statusVotacion = votantes.MenuVotacion(inscripcion.getCandidatos());
+                        }
                         break;
                     }
                     case 5:{
