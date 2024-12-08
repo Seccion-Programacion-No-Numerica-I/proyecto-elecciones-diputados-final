@@ -248,36 +248,78 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> &candidatos)
 		int votos[5] = {0};
 
 		// procesamos su voto
-		int votando = 1;
-		int cantidad_votos = 0;
+		bool votando = true;
+		int cantidad_votos = 1;
 
-		while (votando == 1)
+		while (votando && cantidad_votos < 5)
 		{
-			int indiceVoto = 0;
-			cout << "Los Candidatos: " << endl;
-			ListarCandidatos(candidatos, true);
-			cout << "Ingrese su voto: ";
-			cin >> indiceVoto;
-
-
-			// validacion de indice valido
-			// validacion de voto repetido
-
-			procesarVoto(candidatos, indiceVoto);
-			cout << "Voto procesado" << endl;
-			ListarCandidatos(candidatos, true);
-			cantidad_votos++;
-
-			cout << "Deseas votar por otro candidato? Si (1) No (2)" << endl;
-			cin >> votando;
-
 			if (cantidad_votos == 5)
 			{
 				cout << "Agotaste tus votos" << endl;
-				votando = 0;
+				break; 
 			}
+
+			int indiceVoto = 0;
+			bool votoCorrecto;
+			cout << "Los Candidatos: " << endl;
+			ListarCandidatos(candidatos, true);
+			cout << "Ingrese su voto nro " << cantidad_votos << ": ";
+			cin >> indiceVoto;
+
+			// validacion de indice valido
+			if ( indiceVoto < 1 || indiceVoto > cantidad_candidatos) 
+			{
+				cout << "Índice de candidato no válido. Intente de nuevo." << endl;
+                continue; 
+			}
+			// validacion voto repetido
+			            bool votoRepetido = false;
+            for (int i = 0; i < cantidad_votos; i++)
+            {
+                if (votos[i] == indiceVoto)
+                {
+                    votoRepetido = true;
+                    break;
+                }
+            }
+
+            if (votoRepetido)
+            {
+                cout << "Ya has votado por este candidato. Intenta con otro." << endl;
+                continue; // Volver a pedir el voto
+            }
+
+			//registrar el voto
+
+			votos[cantidad_votos - 1] = indiceVoto;
+
+			cout << "Voto: " << votos[cantidad_votos - 1] << endl; 
+
+			procesarVoto(candidatos, indiceVoto);
+
+			ListarCandidatos(candidatos, true);
+
+			cantidad_votos++;
+	
+			if (cantidad_votos < 5)
+            {
+                int r; 
+                cout << "Deseas votar por otro candidato? Si (1) No (2)" << endl;
+                cin >> r;
+                votando = (r == 1);
+            }
+            else
+            {
+                cout << "Agotaste tus votos" << endl;
+                votando = false; // No se puede votar más
+            }
+
+			
+			
 		}
 
+		// colocamos al elector en la lista respectiva
+	
 		// pasamos al siguiente elector
 		currentNode = electores.ObtProxPrioridad(currentNode);
 	}
