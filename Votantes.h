@@ -38,7 +38,7 @@ class Votantes {
 		void CargarDatos();
 
 		//Mostrar el menu para los reportes
-		void MostrarMenuReportes();
+		void MostrarMenuReportes(Lista<Candidato>& candidatos);
 		//Reporte de votantes
 		void ReporteDeVotantes();
 		//Reporte de Eliminados
@@ -46,12 +46,7 @@ class Votantes {
 		//Reporte de Exluidos
 		void ReporteExcluidos();
 		//Reporte de la lista de excrutinio
-		void ReporteExcrutinio();
-		// Reporte por status ( si voto o no)
-		void ReportePorStatus();
-
-
-
+		void ReporteExcrutinio(Lista<Candidato>& candidatos);
 };
 
 #endif //VOTANTES_H

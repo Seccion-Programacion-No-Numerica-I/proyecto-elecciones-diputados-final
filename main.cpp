@@ -173,7 +173,7 @@ int main() {
 						break;
 					}
 					case 6: {
-						votantes.MostrarMenuReportes();
+						votantes.MostrarMenuReportes(inscripcion.getCandidatos());
 						break;
 					}
 					default: {
