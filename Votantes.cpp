@@ -272,32 +272,69 @@ bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos) {
 
 void Votantes::EliminarVotante(string cedulaVotante) {
 	nodoPrioridad<Elector> *actual = electores.ObtPrimeroPrioridad();
+	Lista<Elector> colaAux;
 	Elector electorActual;
 	int prioridadActual ;
 	bool mostrarMsjVotanteNoExistente = true;
+	int preguntaVerificacion;
 
 	if (!actual) {
 		cout << "No hay electores en la cola." << endl;
 		return;
 	}
 
+	do {
+		cout<<"\t Esta seguro de eliminar al elector con la cedula: "<<cedulaVotante<<" ? (Si=1 No=2)"<<endl;
+		cin>> preguntaVerificacion;
+		if(preguntaVerificacion != 1 && preguntaVerificacion != 2) {
+			cout<<"\t Opcion invalidad."<<endl;
+		}
+	} while(preguntaVerificacion != 1 && preguntaVerificacion != 2);
+
+	if(preguntaVerificacion == 2) {
+		return;
+	}
+
+	//Se recorre la lista "electores" en busqueda del elector que coincida con la cedula que introdujo el usuario.
 	while(actual) {
 		electorActual = electores.ObtInfoPrioridad(actual);
 		prioridadActual = electores.ObtPrioridad(actual);
 
+		//Se verifica en cada iteracion en busqueda de la cedula requerida
 		if(cedulaVotante == electorActual.getCedula()) {
-			electores.RemoverNodoColaPrioridad(electorActual,prioridadActual);
+			//en caso de encontrarla se inserta el elector en la lista de eliminados
 			colaEliminados.InsertarNodoColaPrioridad(electorActual,prioridadActual);
-			cout<<"/t el Votante con la cedula: "<<cedulaVotante<<" ha sido eliminado."<<endl;
-			return;
+			mostrarMsjVotanteNoExistente = false;
+		} else {
+			//en caso contrario se inserta en una lista aux
+			colaAux.InsertarNodoColaPrioridad(electorActual,prioridadActual);
 		}
+		// se procede a eliminar al elector de la lista "electores"
+		electores.RemoverNodoColaPrioridad(electorActual,prioridadActual);
 
-		prioridadActual = electores.ObtPrioridad(actual);
 		actual = electores.ObtProxPrioridad(actual);
 	}
 
-	cout<<"No existen un votante con esta cedula: "<<cedulaVotante<<endl;
+	actual = colaAux.ObtPrimeroPrioridad();
 
+	// se recorre la lista aux para insertar a los electores en la lista "electores" SIN el elector eliminado en caso de que lo encuentre.
+	while(actual) {
+		electorActual = colaAux.ObtInfoPrioridad(actual);
+		prioridadActual = colaAux.ObtPrioridad(actual);
+
+		electores.InsertarNodoColaPrioridad(electorActual,prioridadActual);
+
+		actual = colaAux.ObtProxPrioridad(actual);
+	}
+
+	if(mostrarMsjVotanteNoExistente) {
+		cout<<"No existen un votante con esta cedula: "<<cedulaVotante<<endl;
+	} else {
+		cout<<"\t el Votante con la cedula: "<<cedulaVotante<<" ha sido eliminado."<<endl;
+	}
+
+	//se procede a usar el destructor.
+	colaAux.~Lista();
 	return;
 }
 
