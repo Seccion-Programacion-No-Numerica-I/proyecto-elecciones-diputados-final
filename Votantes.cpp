@@ -14,51 +14,46 @@ void Votantes::RegistrarElector() {
     std::cout << "\t Registro de Elector\n" << std::endl;
     std::string cedula, nombre, apellido;
     int prioridad = 0;
-
     while (true) {
         std::cout << "Ingrese la cedula: ";
-        std::getline(std::cin, cedula);
+        std::cin >> cedula;
+        std::cin.ignore();
         if (!Validaciones::validarCedula(cedula)) {
-            std::cout << "Cedula no valida. Debe tener entre 6 y 9 digitos y no debe contener espacios." << std::endl;
             cedula.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
         } else {
             break;
         }
     }
-
     while (true) {
         std::cout << "Ingrese el nombre: ";
-        std::getline(std::cin, nombre);
+        std::cin >> nombre;
+        std::cin.ignore(); // Limpiar el buffer de entrada
         if (!Validaciones::validarNombre(nombre)) {
-            std::cout << "Nombre no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
             nombre.clear(); // Reiniciar el nombre para asegurar que el ciclo continúa
         } else {
             break;
         }
     }
-
     while (true) {
         std::cout << "Ingrese el apellido: ";
-        std::getline(std::cin, apellido);
+        std::cin >> apellido;
+        std::cin.ignore(); // Limpiar el buffer de entrada
         if (!Validaciones::validarNombre(apellido)) {
-            std::cout << "Apellido no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
             apellido.clear(); // Reiniciar el apellido para asegurar que el ciclo continúa
         } else {
             break;
         }
     }
-
     do {
         std::cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << std::endl;
         std::cout << "Selecciona una prioridad: ";
         std::cin >> prioridad;
-        std::cin.ignore(); // Limpiar el buffer de entrada
+        std::cin.ignore();
         if (prioridad != 1 && prioridad != 2 && prioridad != 3) {
             std::cout << "Ingrese una prioridad valida (1, 2, 3)" << std::endl;
             prioridad = 0; // Reiniciar la prioridad para asegurar que el ciclo continua
         }
     } while (prioridad != 1 && prioridad != 2 && prioridad != 3);
-
     // Crear un objeto Elector y agregarlo a la lista
     Elector elector(cedula, nombre, apellido);
     if (electores.InsertarNodoOrdenado(elector, prioridad)) {
@@ -336,255 +331,246 @@ int Votantes::MenuVotacion(Lista<Candidato> &candidatos) {
 }
 
 
-void Votantes::MostrarMenuReportes()
-{
-	int opcionMenu;
-	do
-	{
-		cout << "\n Menu de reportes para los votantes.\n"
-			 << endl;
-		cout << "\t 1. Reporte de votantes por prioridad." << endl;
-		cout << "\t 2. Reporte de votantes por status." << endl;
-		cout << "\t 0. Salir." << endl;
-		cin >> opcionMenu;
-		switch (opcionMenu)
-		{
-		case 0:
-		{
-			cout << "\t Volviendo al menu anterior." << endl;
-			break;
+void Votantes::EliminarVotante(string cedulaVotante) {
+	nodoPrioridad<Elector> *actual = electores.ObtPrimeroPrioridad();
+	Lista<Elector> colaAux;
+	Elector electorActual;
+	int prioridadActual ;
+	bool mostrarMsjVotanteNoExistente = true;
+	int preguntaVerificacion;
+
+	if (!actual) {
+		cout << "No hay electores en la cola." << endl;
+		return;
+	}
+
+	do {
+		cout<<"\t Esta seguro de eliminar al elector con la cedula: "<<cedulaVotante<<" ? (Si=1 No=2)"<<endl;
+		cin>> preguntaVerificacion;
+		if(preguntaVerificacion != 1 && preguntaVerificacion != 2) {
+			cout<<"\t Opcion invalidad."<<endl;
 		}
-		case 1:
-		{
-			ReportePorPrioridad();
-			break;
+	} while(preguntaVerificacion != 1 && preguntaVerificacion != 2);
+
+	if(preguntaVerificacion == 2) {
+		return;
+	}
+
+	//Se recorre la lista "electores" en busqueda del elector que coincida con la cedula que introdujo el usuario.
+	while(actual) {
+		electorActual = electores.ObtInfoPrioridad(actual);
+		prioridadActual = electores.ObtPrioridad(actual);
+
+		//Se verifica en cada iteracion en busqueda de la cedula requerida
+		if(cedulaVotante == electorActual.getCedula()) {
+			//en caso de encontrarla se inserta el elector en la lista de eliminados
+			colaEliminados.InsertarNodoColaPrioridad(electorActual,prioridadActual);
+			mostrarMsjVotanteNoExistente = false;
+		} else {
+			//en caso contrario se inserta en una lista aux
+			colaAux.InsertarNodoColaPrioridad(electorActual,prioridadActual);
 		}
-		case 2:
-		{
-			ReportePorStatus();
-			break;
-		}
-		default:
-		{
-			cout << "\t Opcion invalida, volviendo al menu de reportes" << endl;
-			break;
-		}
-		}
-	} while (opcionMenu != 0);
+		// se procede a eliminar al elector de la lista "electores"
+		electores.RemoverNodoColaPrioridad(electorActual,prioridadActual);
+
+		actual = electores.ObtProxPrioridad(actual);
+	}
+
+	actual = colaAux.ObtPrimeroPrioridad();
+
+	// se recorre la lista aux para insertar a los electores en la lista "electores" SIN el elector eliminado en caso de que lo encuentre.
+	while(actual) {
+		electorActual = colaAux.ObtInfoPrioridad(actual);
+		prioridadActual = colaAux.ObtPrioridad(actual);
+
+		electores.InsertarNodoColaPrioridad(electorActual,prioridadActual);
+
+		actual = colaAux.ObtProxPrioridad(actual);
+	}
+
+	if(mostrarMsjVotanteNoExistente) {
+		cout<<"No existen un votante con esta cedula: "<<cedulaVotante<<endl;
+	} else {
+		cout<<"\t el Votante con la cedula: "<<cedulaVotante<<" ha sido eliminado."<<endl;
+	}
+
+	//se procede a usar el destructor.
+	colaAux.~Lista();
+	return;
 }
 
-void Votantes::ReportePorPrioridad()
-{
-	int prioridadActual;
-	int statusSeleccionado;
-	int prioridadSeleccionada;
-	bool priodadVacia = true;
-	nodoPrioridad<Elector> *actual;
-	Elector electorActual;
-	bool mostrarNombrePrioridad = true;
 
-	do
-	{
-		cout << " Indique el status por el que desea ver el reporte (1-Procesados, 2- NO procesados): " << endl;
-		cin >> statusSeleccionado;
+void Votantes::MostrarMenuReportes(Lista<Candidato>& candidatos) {
+	int opcionMenu;
+	do {
+		cout<<"\n Menu de reportes para los votantes.\n"<<endl;
+		cout<<"\t 1. Reporte de votantes."<<endl;
+		cout<<"\t 2. Reporte de votantes eliminados."<<endl;
+		cout<<"\t 3. Reporte de votantes excluidos."<<endl;
+		cout<<"\t 4. Reporte de lista de excrutinio."<<endl;
+		cout<<"\t 0. Salir."<<endl;
+		cin>>opcionMenu;
+		switch(opcionMenu) {
+			case 0: {
+				cout<<"\t Volviendo al menu anterior."<<endl;
+				break;
+			}
+			case 1: {
+				ReporteDeVotantes();
+				break;
+			}
+			case 2: {
+				ReporteEliminados();
+				break;
+			}
+			case 3:{
+				ReporteExcluidos();
+				break;
+			}
+			case 4:{
+				ReporteExcrutinio(candidatos);
+				break;
+			}
+			default: {
+				cout<<"\t Opcion invalida, volviendo al menu de reportes"<<endl;
+				break;
+			}
 
-		if (statusSeleccionado > 2 || statusSeleccionado == 0)
-		{
-			cout << " Opcion Invalida." << endl;
 		}
+	} while(opcionMenu != 0);
 
-	} while (statusSeleccionado < 1 || statusSeleccionado > 2);
+}
 
-	if (statusSeleccionado == 1)
-	{
-		actual = colaVotantes.ObtPrimeroPrioridad();
-	}
-	else
-	{
-		actual = colaNoVotantes.ObtPrimeroPrioridad();
-	}
+void Votantes::ReporteDeVotantes() {
+	int prioridadActual;
+	int prioridadAnterior = 0;
+	Elector electorActual;
 
-	if (!actual)
-	{
+
+	nodoPrioridad<Elector> *actual =colaVotantes.ObtPrimeroPrioridad();
+
+	if (!actual) {
 		cout << "No hay electores inscritos en la cola." << endl;
 		return;
 	}
 
-	do
-	{
-		cout << "Indique la prioridad que desea ver (1.- Tercera edad 2.- Embarazadas 3.- Normal): " << endl;
-		cin >> prioridadSeleccionada;
+	while (actual) {
+		electorActual = colaVotantes.ObtInfoPrioridad(actual);
+		prioridadActual = colaVotantes.ObtPrioridad(actual);
 
-		if (prioridadActual > 3 || prioridadActual == 0)
-		{
-			cout << " Opcion Invalida" << endl;
-		}
-
-	} while (prioridadSeleccionada < 1 || prioridadSeleccionada > 3);
-
-	while (actual)
-	{
-
-		if (statusSeleccionado == 1)
-		{
-			electorActual = colaVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaVotantes.ObtPrioridad(actual);
-		}
-		else
-		{
-			electorActual = colaNoVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
-		}
-
-		if (mostrarNombrePrioridad)
-		{
-			switch (prioridadSeleccionada)
-			{
-			case 1:
-			{
-				cout << "3era Edad:\n"
-					 << endl;
-				break;
+		if(prioridadAnterior != prioridadActual) {
+			switch(prioridadActual) {
+				case 1: {
+					cout<<"3era Edad:\n"<<endl;
+					break;
+				}
+				case 2: {
+					cout<<"Embarazadas: \n"<<endl;
+					break;
+				}
+				case 3: {
+					cout<<"Normal: \n"<<endl;
+					break;
+				}
 			}
-			case 2:
-			{
-				cout << "Embarazadas: \n"
-					 << endl;
-				break;
-			}
-			case 3:
-			{
-				cout << "Normal: \n"
-					 << endl;
-				break;
-			}
-			}
-			mostrarNombrePrioridad = false;
 		}
 
-		if (prioridadSeleccionada == prioridadActual)
-		{
+		cout<<"\t Nombre del elector:"<<" "<<electorActual.getNombre()<<" "<<electorActual.getApellido()<<endl;
+		cout<<"\t Cedula del elector:"<<" "<<electorActual.getCedula()<<" \n"<<endl;
 
-			cout << "\t Nombre del elector:" << " " << electorActual.getNombre() << " " << electorActual.getApellido() << endl;
-			cout << "\t Cedula del elector:" << " " << electorActual.getCedula() << " \n"
-				 << endl;
-			priodadVacia = false;
-		}
+		prioridadAnterior = prioridadActual;
+		prioridadActual = colaVotantes.ObtPrioridad(actual);
+		actual = colaVotantes.ObtProxPrioridad(actual);
 
-		if (statusSeleccionado == 1)
-		{
-			prioridadActual = colaVotantes.ObtPrioridad(actual);
-			actual = colaVotantes.ObtProxPrioridad(actual);
-		}
-		else
-		{
-			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
-			actual = colaNoVotantes.ObtProxPrioridad(actual);
-		}
 	}
 
-	if (priodadVacia)
-	{
-		cout << " Esta Prioridad no tiene votantes inscritos" << endl;
-	}
 }
 
-void Votantes::ReportePorStatus()
-{
-	int statusSeleccionado;
-	int prioridadActual = 0;
-	int prioridadAuxMensaje = 0;
-	nodoPrioridad<Elector> *actual;
+
+void Votantes::ReporteEliminados() {
+	nodoPrioridad<Elector> *actual = colaEliminados.ObtPrimeroPrioridad();
 	Elector electorActual;
+	int prioridadActual;
 
-	do
-	{
-		cout << " Indique el status por el que desea ver el reporte (1-Procesados, 2- NO procesados): " << endl;
-		cin >> statusSeleccionado;
-
-		if (statusSeleccionado > 2 || statusSeleccionado == 0)
-		{
-			cout << " Opcion Invalidad" << endl;
-		}
-
-	} while (statusSeleccionado < 1 || statusSeleccionado > 2);
-
-	if (statusSeleccionado == 1)
-	{
-		actual = colaVotantes.ObtPrimeroPrioridad();
-	}
-	else
-	{
-		actual = colaNoVotantes.ObtPrimeroPrioridad();
-	}
-
-	if (!actual)
-	{
-		if (statusSeleccionado == 1)
-		{
-			cout << "No hay electores Procesados en la cola." << endl;
-		}
-		else
-		{
-			cout << "No hay electores NO Procesados en la cola." << endl;
-		}
+	if (!actual) {
+		cout << "No hay electores Procesados en la cola." << endl;
 		return;
 	}
 
-	while (actual)
-	{
+	while(actual) {
+		electorActual = colaEliminados.ObtInfoPrioridad(actual);
+		prioridadActual = colaEliminados.ObtPrioridad(actual);
 
-		if (statusSeleccionado == 1)
-		{
-			electorActual = colaVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaVotantes.ObtPrioridad(actual);
-		}
-		else
-		{
-			electorActual = colaNoVotantes.ObtInfoPrioridad(actual);
-			prioridadActual = colaNoVotantes.ObtPrioridad(actual);
-		}
+		electorActual.mostrarInfo(prioridadActual);
 
-		if (prioridadActual != prioridadAuxMensaje)
-		{
-			switch (prioridadActual)
-			{
-			case 1:
-			{
-				cout << "3era Edad:\n"
-					 << endl;
-				break;
-			}
-			case 2:
-			{
-				cout << "Embarazadas: \n"
-					 << endl;
-				break;
-			}
-			case 3:
-			{
-				cout << "Normal: \n"
-					 << endl;
-				break;
-			}
-			}
-		}
-
-		cout << "\t Nombre del elector:" << " " << electorActual.getNombre() << " " << electorActual.getApellido() << endl;
-		cout << "\t Cedula del elector:" << " " << electorActual.getCedula() << " \n"
-			 << endl;
-
-		if (statusSeleccionado == 1)
-		{
-			prioridadAuxMensaje = colaVotantes.ObtPrioridad(actual);
-			actual = colaVotantes.ObtProxPrioridad(actual);
-		}
-		else
-		{
-			prioridadAuxMensaje = colaNoVotantes.ObtPrioridad(actual);
-			actual = colaNoVotantes.ObtProxPrioridad(actual);
-		}
+		prioridadActual = colaEliminados.ObtPrioridad(actual);
+		actual = colaEliminados.ObtProxPrioridad(actual);
 	}
+}
+
+void Votantes::ReporteExcluidos() {
+	nodoPrioridad<Elector> *actual = electores.ObtPrimeroPrioridad();
+	if (!actual) {
+		cout << "No hay electores Excluidos." << endl;
+		return;
+	}
+
+	cout<<"Electores Excluidos: "<<endl;
+	while (actual) {
+		Elector electorActual = electores.ObtInfoPrioridad(actual);
+		electorActual.mostrarInfo(electores.ObtPrioridad(actual));
+		actual = electores.ObtProxPrioridad(actual);
+	}
+}
+
+void Votantes::ReporteExcrutinio(Lista<Candidato>& candidatos){
+	int cont = 1;
+	// variable auxiliar que utilizamos para almacenar si hay candidatos en algun partido y posteriormente mostar un mensaje.
+	bool AuxHayCandidatos = false;
+	string partidos[5] = {"A", "B", "C", "D", "E"};
+
+	if (candidatos.Vacia()) {
+		cout << "\n No hay Candidatos inscritos. \n"
+		     << endl;
+
+		cout << "Pulse enter para continuar...";
+		cin.get();
+
+		return;
+	}
+
+	for (int i = 0; i < 5; i++) {
+		AuxHayCandidatos = false;
+		cout << "\n Candidatos Por el partido: " << endl;
+
+		cout<<" "<<partidos[i]<<":"<<endl;
+
+		nodo<Candidato> *actualCandidato = candidatos.ObtPrimero();
+		while (actualCandidato) {
+			Candidato cand = candidatos.ObtInfo(actualCandidato);
+			if (i == cand.getIdPartido() - 1) {
+
+				string nombreCompleto = cand.getNombre() + " " + cand.getApellido();
+				//cout << " " << cont << ".";
+				cout << " " << cont <<"-) "<< nombreCompleto << endl;
+				cout << " C.I: " << cand.getCedula() << endl;
+				cout << " Numero de votos: "<<cand.getVotos()<<endl;
+				cout << "\n";
+				cont++;
+				AuxHayCandidatos = true;
+			}
+			actualCandidato = candidatos.ObtProx(actualCandidato);
+		}
+		if (!AuxHayCandidatos) {
+			cout << " No Hay Candidatos Inscritos por el partido " << "\"" << partidos[i] << "\". \n"
+			     << endl;
+		}
+		cont = 1;
+		
+	}
+	cout << "Pulse enter para continuar...";
+	cin.get();
+	return;
 }
 
 void Votantes::listarGanadores(Lista<Candidato>& candidatos)
