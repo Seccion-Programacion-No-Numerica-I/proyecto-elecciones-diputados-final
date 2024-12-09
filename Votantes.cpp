@@ -231,6 +231,16 @@ bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos) {
 						votoCorrecto = true; // se ha ingresado un voto correcto
 					}
 				}
+
+				//PReguntar si desea continuar votando
+				char continuarVotando = "n";
+				cout << "¿Desea seguir votando? (s/n): ";
+				cin >> continuarVotando;
+
+				if (continuarVotando != "S" && continuarVotando != "S") {
+					cout << "Proceso de votación finalizado para este elector." << endl;
+					break; // Salir del ciclo de votación
+				}
 			}
 
 
