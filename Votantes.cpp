@@ -14,51 +14,46 @@ void Votantes::RegistrarElector() {
     std::cout << "\t Registro de Elector\n" << std::endl;
     std::string cedula, nombre, apellido;
     int prioridad = 0;
-
     while (true) {
         std::cout << "Ingrese la cedula: ";
-        std::getline(std::cin, cedula);
+        std::cin >> cedula;
+        std::cin.ignore();
         if (!Validaciones::validarCedula(cedula)) {
-            std::cout << "Cedula no valida. Debe tener entre 6 y 9 digitos y no debe contener espacios." << std::endl;
             cedula.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
         } else {
             break;
         }
     }
-
     while (true) {
         std::cout << "Ingrese el nombre: ";
-        std::getline(std::cin, nombre);
+        std::cin >> nombre;
+        std::cin.ignore(); // Limpiar el buffer de entrada
         if (!Validaciones::validarNombre(nombre)) {
-            std::cout << "Nombre no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
             nombre.clear(); // Reiniciar el nombre para asegurar que el ciclo continúa
         } else {
             break;
         }
     }
-
     while (true) {
         std::cout << "Ingrese el apellido: ";
-        std::getline(std::cin, apellido);
+        std::cin >> apellido;
+        std::cin.ignore(); // Limpiar el buffer de entrada
         if (!Validaciones::validarNombre(apellido)) {
-            std::cout << "Apellido no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
             apellido.clear(); // Reiniciar el apellido para asegurar que el ciclo continúa
         } else {
             break;
         }
     }
-
     do {
         std::cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << std::endl;
         std::cout << "Selecciona una prioridad: ";
         std::cin >> prioridad;
-        std::cin.ignore(); // Limpiar el buffer de entrada
+        std::cin.ignore();
         if (prioridad != 1 && prioridad != 2 && prioridad != 3) {
             std::cout << "Ingrese una prioridad valida (1, 2, 3)" << std::endl;
             prioridad = 0; // Reiniciar la prioridad para asegurar que el ciclo continua
         }
     } while (prioridad != 1 && prioridad != 2 && prioridad != 3);
-
     // Crear un objeto Elector y agregarlo a la lista
     Elector elector(cedula, nombre, apellido);
     if (electores.InsertarNodoOrdenado(elector, prioridad)) {
