@@ -21,15 +21,15 @@ class Votantes {
 	public:
 		Votantes(); //Constructor
 
-    //Votacion
-    void ListarCandidatos(Lista<Candidato>& candidatos, bool mostrarVotos);
-    bool ProcesarVotantes(Lista<Candidato>& candidatos); 
-    bool procesarVoto(Lista<Candidato>& candidatos, int posicion); 
-    int MenuVotacion(Lista<Candidato>& candidatos); 
-
+		//Registrar un elector
+		//void insertarElector(Elector elector, int prioridad);
+		void RegistrarElector();
+		
 		//Votacion
 		void ListarCandidatos(Lista<Candidato>& candidatos, bool mostrarVotos);
 		bool ProcesarVotantes(Lista<Candidato>& candidatos);
+		bool procesarVoto(Lista<Candidato>& candidatos, int posicion);
+		int MenuVotacion(Lista<Candidato>& candidatos);
 
 		//Metodo donde Se elimina el votante de la lista de electores y se pasa a la cola de Eliminados
 		void EliminarVotante(string cedulaVotante);
@@ -49,8 +49,8 @@ class Votantes {
 		void ReporteExcluidos();
 		//Reporte de la lista de excrutinio
 		void ReporteExcrutinio(Lista<Candidato>& candidatos);
-    // LISTA LOS GANADORES DESPUES DE LAS ELECCIONES
-    void listarGanadores(Lista<Candidato>& candidatos);
+		// LISTA LOS GANADORES DESPUES DE LAS ELECCIONES
+		void listarGanadores(Lista<Candidato>& candidatos);
 };
 
 #endif //VOTANTES_H

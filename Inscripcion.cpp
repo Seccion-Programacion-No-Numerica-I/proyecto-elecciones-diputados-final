@@ -1,7 +1,7 @@
 #include "Inscripcion.h"
 #include <iostream>
 #include <fstream>
-#include "Validaciones.h"
+#include "Libreria/Validaciones.h"
 #include <iostream>
 #include <string>
 
