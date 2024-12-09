@@ -9,6 +9,7 @@
 #include <chrono>
 #include "Candidato.h"
 #include "Libreria/Lista.h"
+#include "Libreria/Validaciones.h"
 using namespace std;
 
 class Inscripcion {
@@ -38,8 +39,9 @@ class Inscripcion {
 		//Verificar si se puede ingresar el candidato
 		bool verificarDisponibilidad(Candidato);
 
-		Lista<Candidato>& getCandidatos(); 
-		//Registrar un candidato
+		Lista<Candidato>& getCandidatos();
+
+        //Registrar un candidato
 		void Registrar();
 
 		//Buscar un candidato
@@ -61,6 +63,7 @@ class Inscripcion {
 		// reportes
 		void ReporteGeneral();
 		void MostrarReporteCompleto();
+        
 
 		//Metodos Auxiliares - Punto 5 - Reporte
 		int generarNumeroAleatorio();

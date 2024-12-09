@@ -6,128 +6,90 @@
 #include <fstream>
 #include <iostream>
 #include <bits/parse_numbers.h>
+#include "Libreria/Validaciones.h"
 
 Votantes::Votantes() {}
 
 void Votantes::RegistrarElector() {
-	cout << "\t Registro de Elector\n"
-	     << endl;
-	string cedula, nombre, apellido;
-	int prioridad = 0;
+    std::cout << "\t Registro de Elector\n" << std::endl;
+    std::string cedula, nombre, apellido;
+    int prioridad = 0;
 
-	while (cedula.empty()) {
-		cout << "Ingrese la cedula: ";
-		cin >> cedula;
-		cin.ignore();
-		if (cedula.empty()) {
-			cout << "La cedula no puede estar vacia" << endl;
-		}
-	}
+    while (true) {
+        std::cout << "Ingrese la cedula: ";
+        std::getline(std::cin, cedula);
+        if (!Validaciones::validarCedula(cedula)) {
+            std::cout << "Cedula no valida. Debe tener entre 6 y 9 digitos y no debe contener espacios." << std::endl;
+            cedula.clear(); // Reiniciar la cédula para asegurar que el ciclo continúa
+        } else {
+            break;
+        }
+    }
 
-	while (nombre.empty()) {
-		cout << "Ingrese el nombre: ";
-		cin >> nombre;
-		cin.ignore();
-		if (nombre.empty()) {
-			cout << "el nombre no puede estar vacio" << endl;
-		}
-	}
+    while (true) {
+        std::cout << "Ingrese el nombre: ";
+        std::getline(std::cin, nombre);
+        if (!Validaciones::validarNombre(nombre)) {
+            std::cout << "Nombre no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
+            nombre.clear(); // Reiniciar el nombre para asegurar que el ciclo continúa
+        } else {
+            break;
+        }
+    }
 
-	while (apellido.empty()) {
-		cout << "Ingrese el apellido: ";
-		cin >> apellido;
-		cin.ignore();
-		if (apellido.empty()) {
-			cout << "el apellido no puede estar vacio" << endl;
-		}
-	}
+    while (true) {
+        std::cout << "Ingrese el apellido: ";
+        std::getline(std::cin, apellido);
+        if (!Validaciones::validarNombre(apellido)) {
+            std::cout << "Apellido no valido. Debe tener entre 2 y 20 caracteres y no debe contener numeros, caracteres especiales ni espacios." << std::endl;
+            apellido.clear(); // Reiniciar el apellido para asegurar que el ciclo continúa
+        } else {
+            break;
+        }
+    }
 
-	do {
-		cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << endl;
-		cout << "Selecciona una prioridad: ";
-		cin >> prioridad;
-		cin.ignore();
-		if (prioridad != 1 && prioridad != 2 && prioridad != 3) {
-			cout << "Ingrese una prioridad valida (1, 2, 3)" << endl;
-			prioridad = 0; // Reiniciar la prioridad para asegurar que el ciclo continua
-		}
-	} while (prioridad != 1 && prioridad != 2 && prioridad != 3);
+    do {
+        std::cout << "Prioridades (1.- Tercera edad 2.- Embarazadas 3.- Normal)" << std::endl;
+        std::cout << "Selecciona una prioridad: ";
+        std::cin >> prioridad;
+        std::cin.ignore(); // Limpiar el buffer de entrada
+        if (prioridad != 1 && prioridad != 2 && prioridad != 3) {
+            std::cout << "Ingrese una prioridad valida (1, 2, 3)" << std::endl;
+            prioridad = 0; // Reiniciar la prioridad para asegurar que el ciclo continua
+        }
+    } while (prioridad != 1 && prioridad != 2 && prioridad != 3);
 
-	// Crear un objeto Elector y agregarlo a la lista
-	Elector elector(cedula, nombre, apellido);
-	if(electores.InsertarNodoOrdenado(elector, prioridad)) {
-		cout << "\n Registro Exitoso \n" << endl;
-	} else {
-		cout << "\n Fallo al registrar \n" << endl;
-	}
-};
-
-/*
-void Votantes::insertarElector(Elector elector, int electorPrioridad)
-{
-	Elector marca;
-	marca.setCedula("$$$$$$");
-
-	// si es el primer elector a registrar o si la prioridad es normal, insertamos al final
-	if (electores.VaciaPrioridad() || electorPrioridad == 3) {
-		electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
-		cout << "Elector registrado" << endl;
-	} else {
-		Elector elecAux;
-		int elecPrioAux;
-		bool realizado = false;
-
-		electores.InsertarNodoColaPrioridad(marca, 777);
-
-		do {
-
-			electores.RemoverNodoColaPrioridad(elecAux, elecPrioAux);
-
-			// CODIGO QUE SE EJECUTA PARA CADA ITERACION DE ELECTOR
-			// ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
-
-			// buscamos el primer elector de la prioridad siguiente para registrar antes el nuevo elector
-			if (elecPrioAux > electorPrioridad && realizado == false) {
-				electores.InsertarNodoColaPrioridad(elector, electorPrioridad);
-				realizado = true;
-				cout << "Elector registrado" << endl;
-			}
-
-			// ⬆️⬆️⬆️⬆️⬆️⬆️⬆️
-			// FIN DEL CODIGO QUE SE EJECUTA PARA CADA ITERACION DE ELECTOR
-
-			if (elecAux.getCedula() != marca.getCedula()) {
-				electores.InsertarNodoColaPrioridad(elecAux, elecPrioAux);
-			} else if (elecAux.getCedula() == marca.getCedula()) {
-				break;
-			}
-
-		} while (true);
-
-		if (!realizado) {
-			cout << "No se ha registrado el elector." << std::endl;
-		}
-	}
+    // Crear un objeto Elector y agregarlo a la lista
+    Elector elector(cedula, nombre, apellido);
+    if (electores.InsertarNodoOrdenado(elector, prioridad)) {
+        std::cout << "\n Registro Exitoso \n" << std::endl;
+    } else {
+        std::cout << "\n Fallo al registrar \n" << std::endl;
+    }
 }
-*/
 
-void Votantes::MostrarElectores() {
+
+void Votantes::MostrarElectores()
+{
 	nodoPrioridad<Elector> *actual = electores.ObtPrimeroPrioridad();
-	if (!actual) {
+	if (!actual)
+	{
 		cout << "No hay electores inscritos en la cola." << endl;
 		return;
 	}
 
 	cout << "Electores inscritos: \n"
-	     << endl;
-	while (actual) {
+		 << endl;
+	while (actual)
+	{
 		Elector electorActual = electores.ObtInfoPrioridad(actual);
 		electorActual.mostrarInfo(electores.ObtPrioridad(actual));
 		actual = electores.ObtProxPrioridad(actual);
 	}
 }
 
-void Votantes::CargarDatos() {
+void Votantes::CargarDatos()
+{
 	string dato, urlArchivo = "electores.txt";
 	fstream archivo;
 	archivo.open(urlArchivo.c_str());
@@ -135,23 +97,29 @@ void Votantes::CargarDatos() {
 	int cont = 0; // Declaramos un contador para llevar el control de la estructura de archivo
 	auto *elector = new Elector();
 	int electorPrioridad = 3;
-	while (archivo >> dato) {
+	while (archivo >> dato)
+	{
 		// leemos cada palabra del archivo y la asignamos al dato.
 		cont++;
 		// dependiendo de la estructura que se lleve, se asigna el dato al atributo
-		if (cont % 5 == 1) {
+		if (cont % 5 == 1)
+		{
 			elector->setCedula(dato);
 		}
-		if (cont % 5 == 2) {
+		if (cont % 5 == 2)
+		{
 			elector->setNombre(dato);
 		}
-		if (cont % 5 == 3) {
+		if (cont % 5 == 3)
+		{
 			elector->setApellido(dato);
 		}
-		if (cont % 5 == 4) {
+		if (cont % 5 == 4)
+		{
 			electorPrioridad = stoi(dato);
 		}
-		if (dato == ";") { // al encontrar un ; en el archivo registra el elector
+		if (dato == ";")
+		{ // al encontrar un ; en el archivo registra el elector
 
 			electores.InsertarNodoOrdenado(*elector, electorPrioridad);
 			elector = new Elector();
@@ -161,10 +129,11 @@ void Votantes::CargarDatos() {
 	archivo.close();
 	delete elector;
 	// cout << "\033[H\033[2J";
-	cout<<"\nRegistrados " << cont/5 << " electores."<< endl;
+	cout << "\nRegistrados " << cont / 5 << " electores." << endl;
 }
 
-void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos) {
+void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos)
+{
 	nodo<Candidato> *actual = cadidatos.ObtPrimero();
 	int counter = 1;
 	// if (!actual)
@@ -172,7 +141,8 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos) 
 	// 	cout << "No hay candidatos inscritos en la lista." << endl;
 
 	// }
-	while (actual) {
+	while (actual)
+	{
 		Candidato candidatoActual = cadidatos.ObtInfo(actual);
 		string info = to_string(counter) + ". " + candidatoActual.getNombre() + " " + candidatoActual.getApellido() + " - " + candidatoActual.getNombrePartido();
 		info += mostrarVotos ? "Votos: " + to_string(candidatoActual.getVotos()) : "";
@@ -182,89 +152,146 @@ void Votantes::ListarCandidatos(Lista<Candidato> &cadidatos, bool mostrarVotos) 
 	}
 }
 
-bool Votantes::ProcesarVotantes(Lista<Candidato>& candidatos) {
+bool Votantes::procesarVoto(Lista<Candidato> &candidatos, int posicion)
+{
+	nodo<Candidato> *actual = candidatos.ObtPrimero();
+
+	for (int i = 1; i < posicion; i++)
+	{
+		actual = candidatos.ObtProx(actual);
+	}
+
+	if (actual)
+	{
+
+		Candidato c = candidatos.ObtInfo(actual);
+		c.agregarVoto();
+		candidatos.AsigInfo(actual, c);
+		return true;
+	}
+
+	return false;
+}
+
+
+bool Votantes::ProcesarVotantes(Lista<Candidato> &candidatos)
+
+{
+	
+
+
+// validar cuantos votantes faltan
+	// si ya no quedan electores devolverse al menu
+
+	if (electores.VaciaPrioridad()) {
+		cout << "No quedan electores en la lista por procesar" << endl; 
+		return false; 
+	}
+	
+	// Si quedan electores:
 	// Iterar sobre los electores
 	int cantidad_candidatos = candidatos.Contar();
 
-	if (cantidad_candidatos  < 25) {
-		cout << "Es necesario inscribir 25 candidatos para poder realizar el proceso de votación." << endl;
 
+	if (cantidad_candidatos < 25)
+	{
+		cout << "Es necesario inscribir 25 candidatos para poder realizar el proceso de votación." << endl;
 		return false;
 	}
-	nodoPrioridad<Elector> *currentNode = electores.ObtPrimeroPrioridad();
-	while (currentNode) {
+
+	
+	nodoPrioridad<Elector> *currentNode = electores.SacarTope();
+
+	while (currentNode)
+	{
 		Elector currentElector = electores.ObtInfoPrioridad(currentNode);
-		// preguntamos si la persona votara o no
-		int procesarElector = 0;
-		cout << "Desea procesar el voto del ciudadano(a) " << currentElector.getNombre() << " de C.I. " << currentElector.getCedula() << " Si(1) No(2)" << endl;
-		cin >> procesarElector;
+		cout << "Procesando a: " << currentElector.getNombre() << endl;
+		int votos[5] = {0};
 
-		int elecciones[5] = {0};
-		// en caso de no procesarlo, se lleva a la cola de no votantes
-		if (procesarElector != 1) {
-			colaNoVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
-			currentNode = electores.ObtProxPrioridad(currentNode);
-			continue;
-		} else {
+		// procesamos su voto
+		bool votando = true;
+		int cantidad_votos = 1;
 
-			for (int i = 0; i < 5; i++) {
-				// mostrar las opciones para los candidatos zzzz
-				bool votoCorrecto = false;
-				while (!votoCorrecto) {
-					nodo<Candidato> *iterator = candidatos.ObtPrimero();
-					// iteracion i
-					int eleccion;
-					cout << "Escoja un candidato, ingresando el indice" << endl;
-					ListarCandidatos(candidatos, false);
-					cin >> eleccion;
+		while (votando)
+		{
 
-					if (eleccion < 1 ||
-					        eleccion == elecciones[0] ||
-					        eleccion == elecciones[1] ||
-					        eleccion == elecciones[2] ||
-					        eleccion == elecciones[3] ||
-					        eleccion == elecciones[4]) {
-						cout << "Opcion invalida, por favor ingrese un indice valido o un candidato que no haya escogido ya" << endl;
-					} else {
+			int indiceVoto = 0;
+			cout << "Los Candidatos: " << endl;
+			ListarCandidatos(candidatos, true);
+			cout << "Ingrese su voto nro " << cantidad_votos << ": ";
+			cin >> indiceVoto;
 
-						elecciones[i] = eleccion;
-						votoCorrecto = true; // se ha ingresado un voto correcto
-					}
-				}
+			// validacion de indice valido
+			if ( indiceVoto < 1 || indiceVoto > cantidad_candidatos) 
+			{
+				cout << "Índice de candidato no válido. Intente de nuevo." << endl;
+                continue; 
 			}
+			// validacion voto repetido
+			            bool votoRepetido = false;
+            for (int i = 0; i < cantidad_votos; i++)
+            {
+                if (votos[i] == indiceVoto)
+                {
+                    votoRepetido = true;
+                    break;
+                }
+            }
 
+            if (votoRepetido)
+            {
+                cout << "Ya has votado por este candidato. Intenta con otro." << endl;
+                continue; // Volver a pedir el voto
+            }
 
-			// Ahora sumamos los votos
+			//registrar el voto
 
-			nodo<Candidato> *iterator = candidatos.ObtPrimero();
-			for (int i = 1; i <= candidatos.Contar(); i++) {
+			votos[cantidad_votos - 1] = indiceVoto;
 
-				if (i  == elecciones[0] ||
-				        i == elecciones[1] ||
-				        i == elecciones[2] ||
-				        i == elecciones[3] ||
-				        i == elecciones[4]) {
-					//sumar votos al candidato que coincida
+			cout << "Voto: " << votos[cantidad_votos - 1] << endl; 
 
-					Candidato c = candidatos.ObtInfo(iterator);
-					c.agregarVoto();
-					candidatos.AsigInfo(iterator, c);
-				}
-				iterator = candidatos.ObtProx(iterator);
+			procesarVoto(candidatos, indiceVoto);
 
-			}
+			ListarCandidatos(candidatos, true);
+
+			cantidad_votos++;
+	
+			if (cantidad_votos <= 5)
+            {
+                int r; 
+                cout << "Deseas votar por otro candidato? Si (1) No (2)" << endl;
+                cin >> r;
+                votando = (r == 1);
+            }
+            else
+            {
+                cout << "Agotaste tus votos" << endl;
+                votando = false; // No se puede votar más
+            }
+
+			
+			
 		}
 
-		cout << "El elector " << currentElector.getNombre() << " ha votado por los siguientes candidatos: " << endl;
+		// colocamos al elector en la lista respectiva
+		
+		int p = colaVotantes.ObtPrioridad(currentNode); 
+		colaVotantes.InsertarNodoColaPrioridad(currentElector, p); 
 
-		// verificamos que los candidatos tengan sus votos acumulados
-		ListarCandidatos(candidatos, true);
+		MostrarElectores(); 
 
-		// sacamos el elector actual a una cola separada
-		colaVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
+		// preguntamos si queremos proseguir con otro elector
+		int procesarSiguiente; 
+		cout << "Desea procesar el siguiente elector: " << electores.ObtInfoPrioridad(electores.ObtProxPrioridad(currentNode)).getNombre() << " Si (1) No (2)" << endl; 
+		cin >> procesarSiguiente; 
 
+	// si no se quiere seguir procesando nos vamos al menu anterior
+		if (procesarSiguiente != 1) {
+			cout << "Saliendo al menu..." << endl; 
+			return true; 
+		} 
 		// pasamos al siguiente elector
-		currentNode = electores.ObtProxPrioridad(currentNode);
+		currentNode = electores.SacarTope();
 	}
 	return true;
 }
@@ -375,8 +402,39 @@ void Votantes::MostrarMenuReportes(Lista<Candidato>& candidatos) {
 				break;
 			}
 
-		}
-	} while(opcionMenu != 0);
+	// implementar Menu votantes
+// Empezar || Continuar Votacion
+// Cerrar Votacion
+			int status; 
+			int opcion; 
+           do {
+                // cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
+            cout << "\nVotacion\n" << endl;
+            cout << "\t 1. Empezar | Continuar Votacion" << endl;
+            cout << "\t 0. Cerrar Votacion" << endl;
+
+            cout << "\t Elegir una opcion "; cin >> opcion;
+
+                switch(opcion) {
+                    case 1: {
+                        ProcesarVotantes(candidatos); 
+						status = 2; 
+                        break;
+                    }
+                    case 0: {
+                        opcion = 0; 
+						status = 3;
+                        break;
+                    }
+                    default: {
+                        cout << "Opcion no valida. Intenta de nuevo." << endl;
+                    }
+                }
+
+            system("pause");
+            } while (opcion != 0);
+
+	return status; 
 
 }
 
@@ -388,7 +446,8 @@ void Votantes::ReporteDeVotantes() {
 
 	nodoPrioridad<Elector> *actual =colaVotantes.ObtPrimeroPrioridad();
 
-	if (!actual) {
+	if (!actual)
+	{
 		cout << "No hay electores inscritos en la cola." << endl;
 		return;
 	}
@@ -414,17 +473,20 @@ void Votantes::ReporteDeVotantes() {
 			}
 		}
 
-		cout<<"\t Nombre del elector:"<<" "<<electorActual.getNombre()<<" "<<electorActual.getApellido()<<endl;
-		cout<<"\t Cedula del elector:"<<" "<<electorActual.getCedula()<<" \n"<<endl;
+		cout << "\t Nombre del elector:" << " " << electorActual.getNombre() << " " << electorActual.getApellido() << endl;
+		cout << "\t Cedula del elector:" << " " << electorActual.getCedula() << " \n"
+			 << endl;
 
 		prioridadAnterior = prioridadActual;
 		prioridadActual = colaVotantes.ObtPrioridad(actual);
 		actual = colaVotantes.ObtProxPrioridad(actual);
 
 	}
-
 }
 
+void Votantes::listarGanadores(Lista<Candidato>& candidatos)
+{
+	Lista<Candidato> ganadores;
 
 void Votantes::ReporteEliminados() {
 	nodoPrioridad<Elector> *actual = colaEliminados.ObtPrimeroPrioridad();

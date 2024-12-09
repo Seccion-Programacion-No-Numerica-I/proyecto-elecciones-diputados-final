@@ -21,37 +21,6 @@ Lista<Tipo>::Lista(){
     FinalPrioridad = NULL;
 } ;
 
-/*
-template <class Tipo>
-Lista<Tipo>::Lista(const Lista<Tipo> &that) {
-    Apuntador p;
-    Apuntador thatP;
-    while (!Vacia()) {
-        p = Primero->prox;
-        delete Primero;
-        Primero = p;
-    }
-
-    if (that.Primero != NULL) {
-        thatP = that.Primero;
-        InsComienzo(thatP->info);
-        thatP = thatP->prox;
-        p = ObtPrimero();
-        while (thatP != NULL) {
-            Apuntador nuevo;
-            if (!Llena()) {
-                nuevo = new nodo<Tipo>;
-                nuevo->info = thatP->info;
-                nuevo->prox = p->prox;
-                p->prox = nuevo;
-                p = p->prox;
-            }
-            thatP = thatP->prox;
-        }
-    }
-};
-*/
-
 template <class Tipo>
 Lista<Tipo>& Lista<Tipo>::operator= (const Lista<Tipo> &that) {
     if (this != &that) {
@@ -353,6 +322,13 @@ template <class Tipo>
 nodoPrioridad<Tipo>* Lista<Tipo>::ObtPrimeroPrioridad() {
     return PrimeroPrioridad;
 };
+
+template <class Tipo>
+nodoPrioridad<Tipo>* Lista<Tipo>::SacarTope() {
+    nodoPrioridad<Tipo> *tope = ObtPrimeroPrioridad(); 
+    PrimeroPrioridad = tope->prox; 
+    return tope; 
+}
 
 template <class Tipo>
 nodoPrioridad<Tipo>* Lista<Tipo>::ObtProxPrioridad(ApuntadorPrioridad p) {
