@@ -12,7 +12,7 @@ int main() {
 	Inscripcion inscripcion;
 	Votantes votantes;
 
-	int opcionInicial;
+	int opcionInicial, statusVotacion = 0;
 	;
 
 	do {
@@ -26,7 +26,7 @@ int main() {
 		cin >> opcionInicial;
 		cin.ignore(); // Limpiar el buffer de entrada
 
-		if (opcionInicial == 1) {
+		if (opcionInicial == 1 && statusVotacion != 3) {
 			int opcion;
 			do {
 				cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
@@ -139,7 +139,7 @@ int main() {
 		}
 
 		else if (opcionInicial == 2) {
-			int opcion, statusVotacion;
+			int opcion;
 			do {
 				cout << "\033[H\033[2J"; // mantiene el menu en la parte de arriba de la terminal
 				cout << "\nModulo votantes seleccionado\n"
@@ -165,25 +165,41 @@ int main() {
 						break;
 					}
 					case 1: {
-						votantes.RegistrarElector();
+						if (statusVotacion == 3) {
+							cout << "Ya la votacion termino" << endl;
+						} else {
+							votantes.RegistrarElector();
+						}
 						break;
 					}
 					case 2: {
-						cout << "\t Cargando datos desde archivo \n"
-						     << endl;
-						votantes.CargarDatos();
+						if (statusVotacion == 3) {
+							cout << "Ya la votacion termino" << endl;
+						} else {
+							cout << "\t Cargando datos desde archivo \n" << endl;
+							votantes.CargarDatos();
+						}
 						break;
 					}
 
 					case 3: {
-						votantes.MostrarElectores();
+						if (statusVotacion == 3) {
+							cout << "Ya la votacion termino" << endl;
+						} else {
+							votantes.MostrarElectores();
+						}
 						break;
 					}
 					case 4: {
-						string cedulaAEliminar;
-						cout<<"\t Ingrese la Cedula del votante a eliminar: \n"<<endl;
-						cin>>cedulaAEliminar;
-						votantes.EliminarVotante(cedulaAEliminar);
+						if (statusVotacion == 3) {
+							cout << "Ya la votacion termino" << endl;
+						} else {
+							string cedulaAEliminar;
+							cout<<"\t Ingrese la Cedula del votante a eliminar: \n"<<endl;
+							cin>>cedulaAEliminar;
+							votantes.EliminarVotante(cedulaAEliminar);
+						}
+
 						break;
 					}
 					case 5: {
@@ -210,6 +226,9 @@ int main() {
 
 				system("pause");
 			} while (opcion != 0);
+		} else if(opcionInicial == 1 && statusVotacion == 3){
+			cout << "Ya la votacion termino" << endl;
+			opcionInicial = 0;
 		}
 
 	} while (opcionInicial == 1 || opcionInicial == 2 || opcionInicial == 0);
