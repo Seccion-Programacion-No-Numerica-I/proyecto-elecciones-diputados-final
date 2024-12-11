@@ -293,4 +293,3 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
     }
     return true;
 }
-	
