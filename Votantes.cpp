@@ -210,7 +210,9 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
         if (procesarElector != 1)
         {
             colaNoVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
+            nodoPrioridad<Elector> *tempNode = currentNode;
             currentNode = electores.ObtProxPrioridad(currentNode);
+            electores.EliminarNodoPrioridad(tempNode);
             continue;
         }
         else
@@ -282,14 +284,13 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
                 }
             }
 
-            // sacamos el elector actual a una cola separada
+            // sacamos el elector actual a la colaVotantes y eliminamos de electores
             colaVotantes.InsertarNodoCola(currentElector);
+            nodoPrioridad<Elector> *tempNode = currentNode;
+            currentNode = electores.ObtProxPrioridad(currentNode);
+            electores.EliminarNodoPrioridad(tempNode);
         }
-
-        // pasamos al siguiente elector
-        currentNode = electores.ObtProxPrioridad(currentNode);
     }
     return true;
 }
-
 	
