@@ -54,6 +54,9 @@ string Candidato::getNombrePartido() {
 int Candidato::getVotos() {
     return votos;
 }
+void Candidato::setVotos(int v) {
+    votos = v;
+}
 
 void Candidato::mostrarInformacion() {
     cout << "Cedula: " << cedula<< endl;
