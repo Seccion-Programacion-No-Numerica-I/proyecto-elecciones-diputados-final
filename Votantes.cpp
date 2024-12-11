@@ -622,7 +622,7 @@ void Votantes::listarGanadores(Lista<Candidato>& candidatos)
 
 		std::cout << "Candidatos electos: \n"
 				  << std::endl;
-		while (ganador && posicion <= 15)
+		while (ganador && posicion <= 18)
 		{
 			Candidato ganadorActual = ganadores.ObtInfo(ganador);
 
