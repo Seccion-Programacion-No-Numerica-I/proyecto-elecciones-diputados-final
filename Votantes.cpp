@@ -202,17 +202,16 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
     while (currentNode)
     {
         Elector currentElector = electores.ObtInfoPrioridad(currentNode);
-        // preguntamos si la persona votara o no
+        // Preguntar si la persona desea procesar su voto
         int procesarElector = 0;
-        cout << "Desea procesar el voto del ciudadano(a) " << currentElector.getNombre() << " de C.I. " << currentElector.getCedula() << " Si(1) No(2)" << endl;
+        cout << "Desea procesar el voto del ciudadano(a) " << currentElector.getNombre() << " de C.I. " << currentElector.getCedula() << "? Si(1) No(2)" << endl;
         cin >> procesarElector;
 
+        // Si no desea procesar su voto, mover al elector a la cola de no votantes
         if (procesarElector != 1)
         {
             colaNoVotantes.InsertarNodoColaPrioridad(currentElector, electores.ObtPrioridad(currentNode));
-            nodoPrioridad<Elector> *tempNode = currentNode;
             currentNode = electores.ObtProxPrioridad(currentNode);
-            electores.EliminarNodoPrioridad(tempNode);
             continue;
         }
         else
@@ -221,15 +220,16 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
             while (seguirVotando)
             {
                 int elecciones[5] = {0};
+
                 for (int i = 0; i < 5; i++)
                 {
-                    // mostrar las opciones para los candidatos
+                    // Mostrar las opciones para los candidatos
                     bool votoCorrecto = false;
                     while (!votoCorrecto)
                     {
                         nodo<Candidato> *iterator = candidatos.ObtPrimero();
                         int eleccion;
-                        cout << "Escoja un candidato, ingresando el indice" << endl;
+                        cout << "Escoja un candidato, ingresando el indice:" << endl;
                         ListarCandidatos(candidatos, false);
                         cin >> eleccion;
 
@@ -240,17 +240,17 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
                             eleccion == elecciones[3] ||
                             eleccion == elecciones[4])
                         {
-                            cout << "Opcion invalida, por favor ingrese un indice valido o un candidato que no haya escogido ya" << endl;
+                            cout << "Opcion invalida, por favor ingrese un indice valido o un candidato que no haya escogido ya." << endl;
                         }
                         else
                         {
                             elecciones[i] = eleccion;
-                            votoCorrecto = true; // se ha ingresado un voto correcto
+                            votoCorrecto = true;
                         }
                     }
                 }
 
-                // Ahora sumamos los votos
+                // Sumar los votos a los candidatos seleccionados
                 nodo<Candidato> *iterator = candidatos.ObtPrimero();
                 for (int i = 1; i <= candidatos.Contar(); i++)
                 {
@@ -260,7 +260,6 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
                         i == elecciones[3] ||
                         i == elecciones[4])
                     {
-                        // sumar votos al candidato que coincida
                         Candidato c = candidatos.ObtInfo(iterator);
                         c.agregarVoto();
                         candidatos.AsigInfo(iterator, c);
@@ -268,28 +267,22 @@ bool Votantes::ProcesarVotantes(Lista<Candidato> candidatos)
                     iterator = candidatos.ObtProx(iterator);
                 }
 
-                cout << "El elector " << currentElector.getNombre() << " ha votado por los siguientes candidatos: " << endl;
-
-                // verificamos que los candidatos tengan sus votos acumulados
+                cout << "El elector " << currentElector.getNombre() << " ha votado por los siguientes candidatos:" << endl;
                 ListarCandidatos(candidatos, true);
 
                 // Preguntar si desea seguir votando
-                int continuar;
-                cout << "\n¿Desea seguir votando? Si(1) No(2): ";
-                cin >> continuar;
-
-                if (continuar != 1)
-                {
-                    seguirVotando = false;
-                }
+                int opcionSeguir = 0;
+                cout << "\n\u00bfDesea seguir votando? Si(1) No(2)" << endl;
+                cin >> opcionSeguir;
+                seguirVotando = (opcionSeguir == 1);
             }
 
-            // sacamos el elector actual a la colaVotantes y eliminamos de electores
+            // Mover el elector actual a la cola de votantes procesados
             colaVotantes.InsertarNodoCola(currentElector);
-            nodoPrioridad<Elector> *tempNode = currentNode;
-            currentNode = electores.ObtProxPrioridad(currentNode);
-            electores.EliminarNodoPrioridad(tempNode);
         }
+
+        // Pasar al siguiente elector
+        currentNode = electores.ObtProxPrioridad(currentNode);
     }
     return true;
 }
