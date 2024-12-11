@@ -27,7 +27,7 @@ public:
     string getApellido();
     void setIdPartido(int idprd);
     int getIdPartido();
-    void setVotos(int vot);
+    void setVotos(int v);
     int getVotos();
     // Métodos para modificar información del candidato
     void agregarVoto() { votos++; }

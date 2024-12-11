@@ -2,6 +2,7 @@
 build/*
 !build/.gitkeep
 !build/electores.txt
+!build/candidatos.txt
 CMakeFiles/*
 CMakeLists.txt
 CMakeCache.txt
@@ -15,3 +16,6 @@ Makefile
 *.a
 *.so
 *.dylib
+Definitivo.dev
+Definitivo.layout
+Makefile.win

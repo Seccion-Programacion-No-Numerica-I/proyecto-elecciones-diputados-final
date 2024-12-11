@@ -4,12 +4,12 @@
 #include <cstdlib>
 #include <string>
 #include <ctime>
-// #include <windows.h>
 #include <algorithm>
 #include <cctype>
 #include <chrono>
 #include "Candidato.h"
 #include "Libreria/Lista.h"
+#include "Libreria/Validaciones.h"
 using namespace std;
 
 class Inscripcion {
@@ -39,8 +39,9 @@ class Inscripcion {
 		//Verificar si se puede ingresar el candidato
 		bool verificarDisponibilidad(Candidato);
 
-		Lista<Candidato> getCandidatos(); 
-		//Registrar un candidato
+		Lista<Candidato>& getCandidatos();
+
+        //Registrar un candidato
 		void Registrar();
 
 		//Buscar un candidato
@@ -62,14 +63,15 @@ class Inscripcion {
 		// reportes
 		void ReporteGeneral();
 		void MostrarReporteCompleto();
+        
 
 		//Metodos Auxiliares - Punto 5 - Reporte
-		void printCentered(const string& text);
-		void printFullLine(char symbol = '-');
-		string trim(const std::string& str);
 		int generarNumeroAleatorio();
 		string generarEsloganAletorio();
 
+		//Cargar Candidatos por archivo
+		void CargarCandidatos(); 
+		
 };
 
 #endif
